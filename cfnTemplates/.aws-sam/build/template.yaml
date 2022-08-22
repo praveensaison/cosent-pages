@@ -1,0 +1,184 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'static-site
+
+  Sample SAM Template for static-site
+
+  '
+Globals:
+  Function:
+    Timeout: 30
+Parameters:
+  EnvironmentType:
+    Description: Environment Type
+    Type: String
+Conditions:
+  EnvironmentNotProd:
+    Fn::Not:
+    - Fn::Equals:
+      - Ref: EnvironmentType
+      - production
+  EnvironmentProd:
+    Fn::Equals:
+    - Ref: EnvironmentType
+    - production
+  EnvironmentInt:
+    Fn::Equals:
+    - Ref: EnvironmentType
+    - int
+Resources:
+  customerconsentsbucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName:
+        Fn::Sub: customerconsentsbucket-${EnvironmentType}-${AWS::AccountId}-${AWS::Region}
+      AccessControl: Private
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+      WebsiteConfiguration:
+        IndexDocument: communicationborrower.html
+        ErrorDocument: Error404.html
+      Tags:
+      - Key: Service
+        Value: hawkgirl
+      - Key: Owner
+        Value: neutrons
+      - Key: Department
+        Value: Product
+      - Key: Stage
+        Value: None
+  cloudFrontOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment:
+          Fn::Sub: CloudFront OAI for customerconsentsbucket
+  customerconsentsbucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        Ref: customerconsentsbucket
+      PolicyDocument:
+        Id: PolicyForCloudFrontPrivateContent
+        Statement:
+          Effect: Allow
+          Principal:
+            AWS:
+              Fn::Join:
+              - ''
+              - - 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity '
+                - Ref: cloudFrontOriginAccessIdentity
+          Action: s3:GetObject
+          Resource:
+            Fn::Join:
+            - ''
+            - - 'arn:aws:s3:::'
+              - Ref: customerconsentsbucket
+              - /*
+  myDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: 'true'
+        DefaultRootObject: communicationBorrower.html
+        Aliases:
+        - customerconsent.qa.creditsaison.xyz
+        ViewerCertificate:
+          SslSupportMethod: sni-only
+          AcmCertificateArn: arn:aws:acm:us-east-1:961043014301:certificate/414a81fd-d451-4c80-903b-6503a4f4cf6a
+        DefaultCacheBehavior:
+          ForwardedValues:
+            QueryString: false
+          TargetOriginId:
+            Fn::Sub: customerconsentsbucket origin
+          ViewerProtocolPolicy: allow-all
+        Origins:
+        - DomainName:
+            Fn::Join:
+            - ''
+            - - Ref: customerconsentsbucket
+              - .s3.amazonaws.com
+          Id:
+            Fn::Sub: customerconsentsbucket origin
+          S3OriginConfig:
+            OriginAccessIdentity:
+              Fn::Sub: origin-access-identity/cloudfront/${cloudFrontOriginAccessIdentity}
+        CustomErrorResponses:
+        - ErrorCode: '403'
+          ResponsePagePath: /communicationBorrower.html
+          ResponseCode: '200'
+          ErrorCachingMinTTL: '300'
+        - ErrorCode: '404'
+          ResponsePagePath: /communicationBorrower.html
+          ResponseCode: '200'
+          ErrorCachingMinTTL: '300'
+        - ErrorCode: '500'
+          ResponsePagePath: /communicationBorrower.html
+          ResponseCode: '200'
+          ErrorCachingMinTTL: '300'
+      Tags:
+      - Key: Service
+        Value: hawkgirl
+      - Key: Owner
+        Value: neutrons
+      - Key: Department
+        Value: Product
+      - Key: Stage
+        Value: None
+  R53DnsRecordSet:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      AliasTarget:
+        DNSName:
+          Fn::GetAtt:
+          - myDistribution
+          - DomainName
+        EvaluateTargetHealth: false
+        HostedZoneId:
+          Fn::ImportValue: PublicAlbHostedZoneID
+      Comment:
+        Fn::Sub: DNS Record for customer consent
+      HostedZoneName:
+        Fn::If:
+        - EnvironmentProd
+        - creditsaison.in.
+        - Fn::If:
+          - EnvironmentInt
+          - Fn::Join:
+            - ''
+            - - Ref: EnvironmentType
+              - .creditsaison.in.
+          - Fn::Join:
+            - ''
+            - - Ref: EnvironmentType
+              - .creditsaison.xyz.
+      Name:
+        Fn::If:
+        - EnvironmentProd
+        - Fn::Sub: customerconsent.creditsaison.in
+        - Fn::If:
+          - EnvironmentInt
+          - Fn::Join:
+            - ''
+            - - customerconsent
+              - .
+              - Ref: EnvironmentType
+              - .creditsaison.in
+          - Fn::Join:
+            - ''
+            - - customerconsent
+              - .
+              - Ref: EnvironmentType
+              - .creditsaison.xyz
+      Type: A
+Outputs:
+  BucketName:
+    Value:
+      Ref: customerconsentsbucket
+    Description: Name of S3 bucket to hold website content
+  CloudfrontEndpoint:
+    Value:
+      Ref: myDistribution
+    Description: Endpoint for Cloudfront distribution
