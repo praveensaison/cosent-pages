@@ -67,19 +67,24 @@ Resources:
   myDistribution:
     Type: 'AWS::CloudFront::Distribution'
     Properties:
+      Fn::Transform:
+        Name: "GetSSMParameter"
+        Parameters:
+          parameterName: KSF-Wildcard-SSL-Certificate
       DistributionConfig:
         Enabled: 'true'
         DefaultRootObject: communicationBorrower.html
-        # Aliases: 
-        #   - customerconsent.qa.creditsaison.xyz
-        # ViewerCertificate: 
-        #     SslSupportMethod: 'sni-only'
-        #     AcmCertificateArn: 'arn:aws:acm:us-east-1:961043014301:certificate/414a81fd-d451-4c80-903b-6503a4f4cf6a'
+        Aliases: 
+          - customerconsent.qa.creditsaison.xyz
+        ViewerCertificate: 
+            MinimumProtocolVersion: TLSv1.2_2021
+            SslSupportMethod: 'sni-only'
+            AcmCertificateArn: "$$KSF-Wildcard-SSL-Certificate$$"
         DefaultCacheBehavior:
           ForwardedValues:
             QueryString: False
           TargetOriginId: !Sub 'customerconsentbucket origin'
-          ViewerProtocolPolicy: allow-all
+          ViewerProtocolPolicy: https-only
         Origins:
           - DomainName: !Join ['', [!Ref 'customerconsentbucket', '.s3.amazonaws.com']]
             Id: !Sub 'customerconsentbucket origin'
@@ -111,32 +116,32 @@ Resources:
  
  
 
-  # R53DnsRecordSet:
-  #   Type: AWS::Route53::RecordSet
-  #   Properties:
-  #     AliasTarget:
-  #       DNSName: !GetAtt [ myDistribution, DomainName ]
-  #       EvaluateTargetHealth: false
-  #       HostedZoneId: !ImportValue PublicAlbHostedZoneID
-  #     Comment: !Sub "DNS Record for customer consent"
-  #     HostedZoneName: !If
-  #       - EnvironmentProd
-  #       - "creditsaison.in."
-  #       - !If
-  #         - EnvironmentInt
-  #         - !Join ["", [!Ref EnvironmentType, ".creditsaison.in."]]
-  #         - !Join ["", [!Ref EnvironmentType, ".creditsaison.xyz."]]
-  #     Name: !If
-  #       - EnvironmentProd
-  #       - !Sub "customerconsent.creditsaison.in"
-  #       - !If
-  #         - EnvironmentInt
-  #         - !Join ["", ["customerconsent", ".", !Ref EnvironmentType, ".creditsaison.in"]]
-  #         - !Join [
-  #             "",
-  #             ["customerconsent", ".", !Ref EnvironmentType, ".creditsaison.xyz"],
-  #           ]
-  #     Type: A
+  R53DnsRecordSet:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      AliasTarget:
+        DNSName: !GetAtt [ myDistribution, DomainName ]
+        EvaluateTargetHealth: false
+        HostedZoneId: Z2FDTNDATAQYW2
+      Comment: !Sub "DNS Record for customer consent"
+      HostedZoneName: !If
+        - EnvironmentProd
+        - "creditsaison.in."
+        - !If
+          - EnvironmentInt
+          - !Join ["", [!Ref EnvironmentType, ".creditsaison.in."]]
+          - !Join ["", [!Ref EnvironmentType, ".creditsaison.xyz."]]
+      Name: !If
+        - EnvironmentProd
+        - !Sub "customerconsent.creditsaison.in"
+        - !If
+          - EnvironmentInt
+          - !Join ["", ["customerconsent", ".", !Ref EnvironmentType, ".creditsaison.in"]]
+          - !Join [
+              "",
+              ["customerconsent", ".", !Ref EnvironmentType, ".creditsaison.xyz"],
+            ]
+      Type: A
 
   
 
