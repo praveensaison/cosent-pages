@@ -75,7 +75,16 @@ Resources:
         Enabled: 'true'
         DefaultRootObject: communicationBorrower.html
         Aliases: 
-          - customerconsent.qa.creditsaison.xyz
+          - !If
+            - EnvironmentProd
+            - !Sub "customerconsent.creditsaison.in"
+            - !If
+              - EnvironmentInt
+              - !Join ["", ["customerconsent", ".", !Ref EnvironmentType, ".creditsaison.in"]]
+              - !Join [
+                 "",
+                 ["customerconsent", ".", !Ref EnvironmentType, ".creditsaison.xyz"],
+                 ]
         ViewerCertificate: 
             MinimumProtocolVersion: TLSv1.2_2021
             SslSupportMethod: 'sni-only'

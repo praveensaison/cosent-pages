@@ -62,6 +62,12 @@ echo "Starting deployment for distibutions"
   --profile "$AWS_PROFILE" \
   --parameter-overrides EnvironmentType="$ENV"
 
+
+  cd ..
+  cd static
+  aws s3 sync . s3://customerconsentbucket-$ENV-$ACCOUNT_ID-$AWS_REGION
+
+
 )
 
 rm -rf venv
