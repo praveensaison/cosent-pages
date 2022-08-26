@@ -1,0 +1,123 @@
+<HTML>
+
+<HEAD>
+
+    <TITLE>Your Title Here</TITLE>
+
+</HEAD>
+
+<BODY BGCOLOR="FFFFFF">
+    <div style="background-color: #F8F8F8;padding: 20px 0px">
+        <IMG SRC="img/logo.svg" width="200px" height="64px" ALIGN="BOTTOM">
+    </div>
+    <center style="margin-top: 10px;">
+        <IMG SRC="img/VectorSmartObject3.png" width="200px" height="174px" ALIGN="BOTTOM">
+
+    </center>
+    <!-- <div class="center-title">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do e
+    </div> -->
+    <p class="body-content">
+    <div class="content"> Dear Customer, </div><br>
+    <div class="content"> To kickstart your process we need your consent on the below mentioned points and you
+        can share your consent by clicking on `I Agree`.</div><br>
+    <div class="content">1. I/We hereby authorize Kisetsu Saison Finance India Private Limited (Lenders) and
+        its agents to share my/our information or data with Lenders service providers,
+        Credit Bureaus' and other statutory authorities which will help in credit assessment and underwriting.</div><br>
+    <div class="content">2. I/We hereby authorize Kisetsu Saison Finance India Private Limited and its
+        employee, agent, associate to contact me/us through SMS, calls, or any other communication mode, to provide
+        me/us transactional information and various loan offer and promotional schemes.
+    </div>
+    </p>
+    <!-- <div class="center-text">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+        magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
+        facilisis.
+    </div> -->
+    <div style="display: flex;justify-content: center;margin:20px"> <button type="submit" style="background-color: #004097;
+    width: 120px;
+    height: 50px;
+    border-radius: 10px;
+    color:  white;
+    cursor: pointer;
+    border-color: #004097;" onclick="submit()">I Agree</button> </div>
+    <div class="support-text">
+        For any help & support you can reach us at <a style="color:#1F6FDC" href="mailto:support@creditsaison-in.com" target="_blank">support@creditsaison-in.com</a>
+    </div>
+    <div style="text-align: center;color:#A7A7A8;margin: 20px 0px">© Kisetsu Saison Finance India Private Limited 2021
+    </div>
+    <script>
+        function submit() {
+            console.log("submit")
+            var param = url.searchParams.get("token"); 
+            const other_params = {
+                headers: {
+                    Origin: "https://dhd111daiq8qh.cloudfront.net",
+                    Authorization: `Bearer ${param}`
+                },
+
+                method: "POST",
+
+            };
+            var url = new URL(window.location.href);
+           
+            fetch(`https://ox7trlqtl4.execute-api.us-east-1.amazonaws.com/qa/api/v2/customerConsent`, other_params)
+                .then(response => {
+                    // handle the response
+                    console.log(response)
+                    if (response.status === 200) {
+                        window.location.href = '/ThankYou.html'
+                    }
+                    else if (response.status === 409) {
+                        window.location.href = '/consentCaptured.html'
+
+                    }
+                    return response
+                })
+                .catch(error => {
+                    // handle the error
+                    window.location.href = 'https://dhd111daiq8qh.cloudfront.net/ErrorPage.html'
+
+                });
+        }
+    </script>
+</BODY>
+<style>
+    .body {
+        margin: 20px 65px;
+        color: #161617;
+
+    }
+
+    .content {
+        margin: 0px 65px;
+    }
+
+    .center-title {
+        text-align: center;
+        letter-spacing: 0px;
+        color: #004097;
+        opacity: 1;
+        font-size: 25px;
+        font-family: 'Helvetica-Bold';
+        margin: 1% 30%;
+
+    }
+
+    .support-text {
+        background-color: #F8F8F8;
+        padding: 20px 0px;
+        text-align: center;
+        color: #A7A7A8;
+    }
+
+    .center-text {
+        text-align: center;
+        letter-spacing: 0px;
+        color: #A7A7A8;
+        opacity: 1;
+        margin: 30px 100px;
+    }
+</style>
+
+</HTML>
