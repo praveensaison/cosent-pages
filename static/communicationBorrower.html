@@ -2,13 +2,13 @@
 
 <HEAD>
 
-    <TITLE>Your Title Here</TITLE>
+    <TITLE>Consent Page</TITLE>
 
 </HEAD>
 
 <BODY BGCOLOR="FFFFFF">
     <div style="background-color: #F8F8F8;padding: 20px 0px">
-        <IMG SRC="img/logo.svg" width="200px" height="64px" ALIGN="BOTTOM">
+        <IMG SRC="img/Logo.svg" width="200px" height="64px" ALIGN="BOTTOM">
     </div>
     <center style="margin-top: 10px;">
         <IMG SRC="img/VectorSmartObject3.png" width="200px" height="174px" ALIGN="BOTTOM">
@@ -47,21 +47,28 @@
     <div style="text-align: center;color:#A7A7A8;margin: 20px 0px">© Kisetsu Saison Finance India Private Limited 2021
     </div>
     <script>
+           var url = new URL(window.location.href);
+            var token = url.searchParams.get("token");
+            if(!token){
+                window.location.href = '/ErrorPage.html'
+                
+            }
         function submit() {
             console.log("submit")
-            var param = url.searchParams.get("token"); 
+         
+
             const other_params = {
                 headers: {
-                    Origin: "https://dhd111daiq8qh.cloudfront.net",
-                    Authorization: `Bearer ${param}`
+                    Origin: window.location.origin,
+                    Authorization: `Bearer ${token}`,
                 },
-
                 method: "POST",
 
             };
-            var url = new URL(window.location.href);
+           let domain = window.location.origin.replace('customerconsent','api')
+        
            
-            fetch(`https://ox7trlqtl4.execute-api.us-east-1.amazonaws.com/qa/api/v2/customerConsent`, other_params)
+            fetch(`${domain}/api/v2/customerConsent`, other_params)
                 .then(response => {
                     // handle the response
                     console.log(response)
@@ -72,11 +79,16 @@
                         window.location.href = '/consentCaptured.html'
 
                     }
+                    else if (response.status === 500) {
+                        window.location.href = '/ErrorPage.html'
+
+                    }
                     return response
                 })
                 .catch(error => {
+                    console.log(error,'e')
                     // handle the error
-                    window.location.href = 'https://dhd111daiq8qh.cloudfront.net/ErrorPage.html'
+                    window.location.href = '/ErrorPage.html'
 
                 });
         }
