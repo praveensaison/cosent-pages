@@ -22,10 +22,10 @@ Conditions:
 
 Resources:
 
-  customerconsentbucket:
+  aadhaarredirectionbucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub 'customerconsentbucket-${EnvironmentType}-${AWS::AccountId}-${AWS::Region}'
+      BucketName: !Sub 'aadhaar_redirection-${EnvironmentType}-${AWS::AccountId}-${AWS::Region}'
       AccessControl: Private
       BucketEncryption:
         ServerSideEncryptionConfiguration:
@@ -48,12 +48,12 @@ Resources:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
     Properties:
       CloudFrontOriginAccessIdentityConfig:
-        Comment: !Sub 'CloudFront OAI for customerconsentbucket'
+        Comment: !Sub 'CloudFront OAI for aadhaar_redirection_bucket'
 
-  customerconsentbucketPolicy:
+  aadhaar_redirection_bucket_policy:
     Type: AWS::S3::BucketPolicy
     Properties:
-      Bucket: !Ref 'customerconsentbucket'
+      Bucket: !Ref '˳'
       PolicyDocument:
         Id: PolicyForCloudFrontPrivateContent
         Statement:
@@ -61,7 +61,7 @@ Resources:
           Principal:
             AWS: !Join ['', ['arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ', !Ref cloudFrontOriginAccessIdentity]]
           Action: s3:GetObject
-          Resource: !Join ['', ['arn:aws:s3:::', !Ref 'customerconsentbucket', /*]]
+          Resource: !Join ['', ['arn:aws:s3:::', !Ref 'aadhaar_redirection_bucket', /*]]
     
   
   myDistribution:
@@ -92,11 +92,11 @@ Resources:
         DefaultCacheBehavior:
           ForwardedValues:
             QueryString: False
-          TargetOriginId: !Sub 'customerconsentbucket origin'
+          TargetOriginId: !Sub 'aadhaar_redirection_bucket origin'
           ViewerProtocolPolicy: https-only
         Origins:
-          - DomainName: !Join ['', [!Ref 'customerconsentbucket', '.s3.amazonaws.com']]
-            Id: !Sub 'customerconsentbucket origin'
+          - DomainName: !Join ['', [!Ref 'aadhaar_redirection_bucket', '.s3.amazonaws.com']]
+            Id: !Sub 'aadhaar_redirection_bucket origin'
             S3OriginConfig:
               OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${cloudFrontOriginAccessIdentity}'
         CustomErrorResponses:
@@ -156,7 +156,7 @@ Resources:
 
 Outputs:
   BucketName:
-    Value:  !Ref 'customerconsentbucket'
+    Value:  !Ref 'aadhaar_redirection_bucket'
     Description: Name of S3 bucket to hold website content
   CloudfrontEndpoint:
     Value: !Ref myDistribution
