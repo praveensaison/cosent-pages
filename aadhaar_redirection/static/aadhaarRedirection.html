@@ -49,12 +49,6 @@
             </button>
         </div>
     </div>
-
-
-    <div id="resultSection" style="display: none;">
-        <h2 class="heading">Result</h2>
-        <p id="resultMessage"></p>
-    </div>
 </main>
 
 
@@ -228,7 +222,17 @@
         console.log("submitAadhaar");
         var aadhaarNumber = document.getElementById("aadhaarInput").value;
         var url = `${domain}/api/v2/aadhaar/value/${aadhaarNumber}`; // Replace with your API endpoint URL
-        restCall(url);
+        fetch(url, other_params)
+            .then(response => {
+                // handle the response
+                console.log(response);
+                return response;
+            })
+            .catch(error => {
+                console.log(error, 'e');
+                // handle the error
+                window.location.href = '/ErrorPage.html';
+            });
         // Handle the response and show OTP section if status is 200
         // Otherwise, show an error message
         if (true /* replace with your logic */) {
@@ -242,47 +246,19 @@
 
     function submitOTP() {
         console.log("submitOTP");
-        var otp = getOTPValue();
-        var url = `${domain}/api/v2/otp/value/${otp}`; // Replace with your API endpoint URL
-        restCall(url, handleResponse);
-    }
-
-    function handleResponse(response) {
-        console.log(response);
-        debugger
-        if (response.status === 200) {
-            window.location.href = '/ThankYou.html';
-        } else if (response.status === 404) {
-            window.location.href = '/Error404.html';
-        } else if (response.status === 409) {
-            window.location.href = '/consentCaptured.html';
-        } else if (response.status === 500) {
-            window.location.href = '/ErrorPage.html';
-        }
-    }
-
-    function restCall(url, callback) {
-        fetch(url, other_params)
-            .then(response => {
-                if (callback && typeof callback === 'function') {
-                    callback(response);
-                }
-                return response;
-            })
-            .catch(error => {
-                console.log(error, 'e');
-                // handle the error
-                window.location.href = '/ErrorPage.html';
-            });
-    }
-
-    function getOTPValue() {
-        const otpInputs = document.querySelectorAll(".otp-field input");
-        let otpValue = "";
+        var otpInputs = document.querySelectorAll(".otp-field input");
+        var otp = "";
         otpInputs.forEach(input => {
-            otpValue += input.value;
+            otp += input.value;
         });
-        return otpValue;
+        var url = `${domain}/api/v2/otp/value/${otp}`; // Replace with your API endpoint URL
+        restCall(url);
+
+        // Handle the response and show the result message
+        // Hide the OTP section
+        document.getElementById("otpSection").style.display = "none";
+        document.getElementById("resultSection").style.display = "block";
+        document.getElementById("resultMessage").textContent = "Result message goes here";
     }
 
 
@@ -293,6 +269,8 @@
                 console.log(response);
                 if (response.status === 200) {
                     window.location.href = '/ThankYou.html';
+                } else if (response.status === 404) {
+                    window.location.href = '/Error404.html';
                 } else if (response.status === 409) {
                     window.location.href = '/consentCaptured.html';
                 } else if (response.status === 500) {
