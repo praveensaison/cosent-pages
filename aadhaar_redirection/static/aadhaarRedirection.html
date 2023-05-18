@@ -17,9 +17,9 @@
 
     <div class="input-container">
         <div>
-            <h1 class="heading">Enter Aadhaar Number</h1>
+            <h1 class="heading">Enter Your Aadhaar Number</h1>
             <div>
-                <input type="text" id="aadhaarInput" placeholder="Enter Aadhaar Number" style="width: 200px;"
+                <input type="text" id="aadhaarInput" placeholder="12-digit number" style="width: 200px;"
                        maxlength="14" oninput="formatAndValidateAadhaarInput(this)">
             </div>
             <p id="aadhaarErrorMessage" style="color: red; display: none;">Please enter a valid Aadhaar number.</p>
@@ -28,7 +28,7 @@
     <div class="submit-button" style="display: flex;justify-content: center;margin:20px;">
         <button type="submit"
                 style="background-color: #004097; width: 120px; height: 50px; border-radius: 10px; color: white; cursor: pointer; border-color: #004097;"
-                onclick="submitAadhaar()">Submit
+                onclick="generateOtp()">Send Otp
         </button>
     </div>
 
@@ -57,7 +57,7 @@
 </main>
 
 
-<footer>
+<footer style="margin-top: auto;">
     <div class="support-text">
         For any help & support, you can reach us at <a style="color:#1F6FDC" href="mailto:support@creditsaison-in.com"
                                                        target="_blank">support@creditsaison-in.com</a>
@@ -72,11 +72,21 @@
 
 
 <style>
+
+    @font-face {
+        font-family: 'Kanit-Regular';
+        src: url('/hawkgirl/aadhaar_redirection/static/fonts/Kanit-Regular.ttf') format('truetype');
+    }
+
     body {
-        font-family: Arial, sans-serif;
+        font-family: 'Kanit-Regular', sans-serif;
         background-color: #FFFFFF;
         margin: 0;
         padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+
     }
 
     .heading {
@@ -95,12 +105,13 @@
     }
 
     .input-container input {
+        font-family: 'Kanit-Regular', sans-serif;
         width: 200px;
         height: 16px;
         padding: 10px;
         border: 1px solid #CCC;
         border-radius: 4px;
-        font-size: 14px;
+        font-size: 18px;
         margin-bottom: 10px;
         text-align: center;
     }
@@ -124,12 +135,13 @@
     }
 
     .otp-container input {
+        font-family: 'Kanit-Regular', sans-serif;
         width: 300px;
         height: 40px;
         padding: 10px;
         border: 1px solid #CCC;
         border-radius: 4px;
-        font-size: 16px;
+        font-size: 18px;
         margin-bottom: 10px;
     }
 
@@ -144,45 +156,14 @@
         cursor: pointer;
     }
 
-    .result-container h2 {
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    .result-container p {
-        font-size: 16px;
-        margin-bottom: 20px;
-    }
-
-    .support-text {
-        text-align: center;
-        font-size: 14px;
-        color: #A7A7A8;
-        margin-bottom: 20px;
-    }
-
-    main {
-        flex: 1 0 auto;
-    }
-
-    footer {
-        text-align: center;
-        color: #A7A7A8;
-        margin-top: auto;
-        padding: 20px 0;
-    }
-
-    .otp-field {
-        display: flex;
-    }
 
     .otp-field input {
-        width: 18px;
-        font-size: 20px;
-        padding: 10px;
+        width: 15px;
+        height: 17px;
+        font-size: 18px;
+        padding: 6px;
         text-align: center;
-        border-radius: 100px;
+        border-radius: 10px;
         margin: 4px;
         border: 1px solid #55525c;
         background: #ffffff;
@@ -197,13 +178,22 @@
         box-shadow: 0 0 2px 2px #a527ff6a;
     }
 
-    .disabled {
-        opacity: 0.5;
+
+    .otp-field {
+        display: flex;
     }
 
     .space {
         margin-right: 1rem !important;
     }
+
+    footer {
+        text-align: center;
+        color: #A7A7A8;
+        margin-top: auto;
+        padding: 20px 0;
+    }
+
 
 </style>
 
@@ -233,7 +223,7 @@
         input.value = value;
     }
 
-    function submitAadhaar() {
+    function generateOtp() {
         console.log("submitAadhaar");
         var aadhaarNumber = document.getElementById("aadhaarInput").value;
         if (aadhaarNumber.length !== 14) {
