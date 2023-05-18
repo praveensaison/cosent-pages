@@ -231,7 +231,6 @@
 
     var requestId = ""; // Variable to store the requestId
     var aadhaarNumber = ""; // Variable to store the aadhaarNumber
-
     function generateOtp() {
         console.log("submitAadhaar");
 
@@ -240,10 +239,9 @@
         var countdown = 10; // Countdown in seconds
 
         button.disabled = true; // Disable the button
-        button.style.backgroundColor = "gray"; // Change button color to gray
+        button.style.backgroundColor = "#CCCCCC"; // Change button color
         aadhaarInput.readOnly = true; // Make input read-only
         aadhaarInput.style.backgroundColor = "#D3D3D3"; // Change input background color
-
         // Function to update the button text with the remaining countdown
         function updateButton() {
             button.innerText = "Resend Otp (" + countdown + "s)";
@@ -273,19 +271,15 @@
             document.getElementById("aadhaarErrorMessage").style.display = "block";
             return; // Return early if Aadhaar number length is not 12
         }
-        var url = `${domain}/api/v2/aadhaar/value/${aadhaarNumber}`; // Replace with your API endpoint URL
+        const url = `${domain}/api/v2/aadhaar/value/${aadhaarNumber}`; // Replace with your API endpoint URL
         fetch(url, other_params)
             .then(response => {
                 // handle the response
                 console.log(response);
                 if (response.status === 200) {
-                    window.location.href = '/hawkgirl/aadhaar_redirection/static/ThankYou.html';
+                    return response.json(); // Parse the response JSON
                 } else if (response.status === 404) {
-                    window.location.href = '/hawkgirl/aadhaar_redirection/static/Error404.html';
-                } else if (response.status === 409) {
-                    window.location.href = '/hawkgirl/aadhaar_redirection/static/consentCaptured.html';
-                } else if (response.status === 500) {
-                    window.location.href = '/hawkgirl/aadhaar_redirection/static/ErrorPage.html';
+                    window.location.href = '/aadhaar_redirection/static/Error404.html';
                 } else {
                     throw new Error("API error"); // Throw an error if the response status is not 200
                 }
@@ -307,7 +301,7 @@
             .catch(error => {
                 console.log(error, 'e');
                 // handle the error
-                window.location.href = '/ErrorPage.html';
+                window.location.href = '/aadhaar_redirection/static/ErrorPage.html';
             });
     }
 
@@ -388,4 +382,3 @@
         }
     }
 </script>
-
