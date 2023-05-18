@@ -16,9 +16,9 @@ Parameters:
     Type: String
 
 Conditions:
-  EnvironmentNotProd: !Not [!Equals [!Ref EnvironmentType, "production"]]
-  EnvironmentProd: !Equals [!Ref EnvironmentType, "production"]
-  EnvironmentInt: !Equals [!Ref EnvironmentType, "int"]
+  EnvironmentNotProd: !Not [ !Equals [ !Ref EnvironmentType, "production" ] ]
+  EnvironmentProd: !Equals [ !Ref EnvironmentType, "production" ]
+  EnvironmentInt: !Equals [ !Ref EnvironmentType, "int" ]
 
 Resources:
 
@@ -29,11 +29,11 @@ Resources:
       AccessControl: Private
       BucketEncryption:
         ServerSideEncryptionConfiguration:
-        - ServerSideEncryptionByDefault:
-            SSEAlgorithm: AES256
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
       WebsiteConfiguration:
-        IndexDocument: communicationborrower.html
-        ErrorDocument: Error404.html
+        IndexDocument: customerconsent/static/communicationBorrower.html
+        ErrorDocument: customerconsent/static/Error404.html
       Tags:
         - Key: Service
           Value: hawkgirl
@@ -59,10 +59,10 @@ Resources:
         Statement:
           Effect: Allow
           Principal:
-            AWS: !Join ['', ['arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ', !Ref cloudFrontOriginAccessIdentity]]
+            AWS: !Join [ '', [ 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ', !Ref cloudFrontOriginAccessIdentity ] ]
           Action: s3:GetObject
-          Resource: !Join ['', ['arn:aws:s3:::', !Ref 'customerconsentbucket', /*]]
-    
+          Resource: !Join [ '', [ 'arn:aws:s3:::', !Ref 'customerconsentbucket', /* ] ]
+
   
   myDistribution:
     Type: 'AWS::CloudFront::Distribution'
@@ -73,43 +73,43 @@ Resources:
           parameterName: KSF-Wildcard-SSL-Certificate
       DistributionConfig:
         Enabled: 'true'
-        DefaultRootObject: communicationBorrower.html
-        Aliases: 
+        DefaultRootObject: customerconsent/static/communicationBorrower.html
+        Aliases:
           - !If
             - EnvironmentProd
             - !Sub "customerconsent.creditsaison.in"
             - !If
               - EnvironmentInt
-              - !Join ["", ["customerconsent", ".", !Ref EnvironmentType, ".creditsaison.in"]]
+              - !Join [ "", [ "customerconsent", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
               - !Join [
-                 "",
-                 ["customerconsent", ".", !Ref EnvironmentType, ".creditsaison.xyz"],
-                 ]
-        ViewerCertificate: 
-            MinimumProtocolVersion: TLSv1.2_2021
-            SslSupportMethod: 'sni-only'
-            AcmCertificateArn: "$$KSF-Wildcard-SSL-Certificate$$"
+                "",
+                [ "customerconsent", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
+              ]
+        ViewerCertificate:
+          MinimumProtocolVersion: TLSv1.2_2021
+          SslSupportMethod: 'sni-only'
+          AcmCertificateArn: "$$KSF-Wildcard-SSL-Certificate$$"
         DefaultCacheBehavior:
           ForwardedValues:
             QueryString: False
           TargetOriginId: !Sub 'customerconsentbucket origin'
           ViewerProtocolPolicy: https-only
         Origins:
-          - DomainName: !Join ['', [!Ref 'customerconsentbucket', '.s3.amazonaws.com']]
+          - DomainName: !Join [ '', [ !Ref 'customerconsentbucket', '.s3.amazonaws.com' ] ]
             Id: !Sub 'customerconsentbucket origin'
             S3OriginConfig:
               OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${cloudFrontOriginAccessIdentity}'
         CustomErrorResponses:
           - ErrorCode: '403'
-            ResponsePagePath: "/communicationBorrower.html"
+            ResponsePagePath: "/customerconsent/static/communicationBorrower.html"
             ResponseCode: '200'
             ErrorCachingMinTTL: '300'
           - ErrorCode: '404'
-            ResponsePagePath: "/communicationBorrower.html"
+            ResponsePagePath: "/customerconsent/static/communicationBorrower.html"
             ResponseCode: '200'
             ErrorCachingMinTTL: '300'
           - ErrorCode: '500'
-            ResponsePagePath: "/communicationBorrower.html"
+            ResponsePagePath: "/customerconsent/static/communicationBorrower.html"
             ResponseCode: '200'
             ErrorCachingMinTTL: '300'
       Tags:
@@ -122,8 +122,8 @@ Resources:
         - Key: Stage
           Value: None
 
- 
- 
+
+
 
   R53DnsRecordSet:
     Type: AWS::Route53::RecordSet
@@ -138,25 +138,25 @@ Resources:
         - "creditsaison.in."
         - !If
           - EnvironmentInt
-          - !Join ["", [!Ref EnvironmentType, ".creditsaison.in."]]
-          - !Join ["", [!Ref EnvironmentType, ".creditsaison.xyz."]]
+          - !Join [ "", [ !Ref EnvironmentType, ".creditsaison.in." ] ]
+          - !Join [ "", [ !Ref EnvironmentType, ".creditsaison.xyz." ] ]
       Name: !If
         - EnvironmentProd
         - !Sub "customerconsent.creditsaison.in"
         - !If
           - EnvironmentInt
-          - !Join ["", ["customerconsent", ".", !Ref EnvironmentType, ".creditsaison.in"]]
+          - !Join [ "", [ "customerconsent", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
           - !Join [
-              "",
-              ["customerconsent", ".", !Ref EnvironmentType, ".creditsaison.xyz"],
-            ]
+            "",
+            [ "customerconsent", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
+          ]
       Type: A
 
-  
+
 
 Outputs:
   BucketName:
-    Value:  !Ref 'customerconsentbucket'
+    Value: !Ref 'customerconsentbucket'
     Description: Name of S3 bucket to hold website content
   CloudfrontEndpoint:
     Value: !Ref myDistribution
