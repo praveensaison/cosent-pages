@@ -30,11 +30,18 @@
     </div>
     <div id="otpSection" style="display: none;">
         <div class="otp-container">
-            <h2 class="heading">Enter OTP</h2>
-            <div>
-                <input type="text" id="otpInput" placeholder="Enter 6-digit OTP">
+            <h2>Enter OTP</h2>
+            <div class="otp-field">
+                <input type="text" maxlength="1"/>
+                <input type="text" maxlength="1"/>
+                <input class="space" type="text" maxlength="1"/>
+                <input type="text" maxlength="1"/>
+                <input type="text" maxlength="1"/>
+                <input type="text" maxlength="1"/>
             </div>
+
         </div>
+
         <div class="submit-button2" style="display: flex;justify-content: center;margin:20px;">
             <button type="submit"
                     style="background-color: #004097; width: 120px; height: 50px; border-radius: 10px; color: white; cursor: pointer; border-color: #004097;"
@@ -42,6 +49,7 @@
             </button>
         </div>
     </div>
+
 
     <div id="resultSection" style="display: none;">
         <h2 class="heading">Result</h2>
@@ -62,73 +70,6 @@
 
 </body>
 </html>
-
-<script>
-    var url = new URL(window.location.href);
-    var token = url.searchParams.get("token");
-    if (!token) {
-        // window.location.href = '/ErrorPage.html';
-    }
-
-    const other_params = {
-        headers: {
-            Origin: window.location.origin,
-            Authorization: `Bearer ${token}`,
-        },
-        method: "POST",
-    };
-
-    let domain = window.location.origin.replace('aadhaar-redirection', 'api');
-
-    function submitAadhaar() {
-        console.log("submitAadhaar");
-        var aadhaarNumber = document.getElementById("aadhaarInput").value;
-        var url = `${domain}/api/v2/aadhaar/value/${aadhaarNumber}`; // Replace with your API endpoint URL
-        restCall(url);
-        // Handle the response and show OTP section if status is 200
-        // Otherwise, show an error message
-        if (true /* replace with your logic */) {
-            document.getElementById("otpSection").style.display = "block";
-            document.querySelector('.submit-button').style.display = 'none';
-        } else {
-            // Show error message
-        }
-    }
-
-    function submitOTP() {
-        console.log("submitOTP");
-        var otp = document.getElementById("otpInput").value;
-        var url = `${domain}/api/v2/otp/value/${otp}`; // Replace with your API endpoint URL
-        restCall(url);
-
-        // Handle the response and show the result message
-        // Hide the OTP section
-        document.getElementById("otpSection").style.display = "none";
-        document.getElementById("resultSection").style.display = "block";
-        document.getElementById("resultMessage").textContent = "Result message goes here";
-    }
-
-    function restCall(url) {
-        fetch(url, other_params)
-            .then(response => {
-                // handle the response
-                console.log(response);
-                if (response.status === 200) {
-                    window.location.href = '/ThankYou.html';
-                } else if (response.status === 409) {
-                    window.location.href = '/consentCaptured.html';
-                } else if (response.status === 500) {
-                    window.location.href = '/ErrorPage.html';
-                }
-                return response;
-            })
-            .catch(error => {
-                console.log(error, 'e');
-                // handle the error
-                window.location.href = '/ErrorPage.html';
-            });
-    }
-</script>
 
 
 <style>
@@ -202,7 +143,6 @@
         cursor: pointer;
     }
 
-
     .result-container h2 {
         font-size: 20px;
         font-weight: bold;
@@ -221,4 +161,153 @@
         margin-bottom: 20px;
     }
 
+    main {
+        flex: 1 0 auto;
+    }
+
+    footer {
+        text-align: center;
+        color: #A7A7A8;
+        margin-top: auto;
+        padding: 20px 0;
+    }
+
+    .otp-field {
+        display: flex;
+    }
+
+    .otp-field input {
+        width: 18px;
+        font-size: 20px;
+        padding: 10px;
+        text-align: center;
+        border-radius: 100px;
+        margin: 4px;
+        border: 1px solid #55525c;
+        background: #ffffff;
+        font-weight: bold;
+        color: #000000;
+        outline: none;
+        transition: all 0.1s;
+    }
+
+    .otp-field input:focus {
+        border: 2px solid #a527ff;
+        box-shadow: 0 0 2px 2px #a527ff6a;
+    }
+
+    .disabled {
+        opacity: 0.5;
+    }
+
+    .space {
+        margin-right: 1rem !important;
+    }
+
 </style>
+
+
+<script>
+    var url = new URL(window.location.href);
+    var token = url.searchParams.get("token");
+    if (!token) {
+        // window.location.href = '/ErrorPage.html';
+    }
+
+    const other_params = {
+        headers: {
+            Origin: window.location.origin,
+            Authorization: `Bearer ${token}`,
+        },
+        method: "POST",
+    };
+
+    let domain = window.location.origin.replace('aadhaar-redirection', 'api');
+
+    function submitAadhaar() {
+        console.log("submitAadhaar");
+        var aadhaarNumber = document.getElementById("aadhaarInput").value;
+        var url = `${domain}/api/v2/aadhaar/value/${aadhaarNumber}`; // Replace with your API endpoint URL
+        restCall(url);
+        // Handle the response and show OTP section if status is 200
+        // Otherwise, show an error message
+        if (true /* replace with your logic */) {
+            document.getElementById("otpSection").style.display = "block";
+            document.querySelector('.submit-button').style.display = 'none';
+        } else {
+            // Show error message
+        }
+    }
+
+
+    function submitOTP() {
+        console.log("submitOTP");
+        var otpInputs = document.querySelectorAll(".otp-field input");
+        var otp = "";
+        otpInputs.forEach(input => {
+            otp += input.value;
+        });
+        var url = `${domain}/api/v2/otp/value/${otp}`; // Replace with your API endpoint URL
+        restCall(url);
+
+        // Handle the response and show the result message
+        // Hide the OTP section
+        document.getElementById("otpSection").style.display = "none";
+        document.getElementById("resultSection").style.display = "block";
+        document.getElementById("resultMessage").textContent = "Result message goes here";
+    }
+
+
+    function restCall(url) {
+        fetch(url, other_params)
+            .then(response => {
+                // handle the response
+                console.log(response);
+                if (response.status === 200) {
+                    window.location.href = '/ThankYou.html';
+                } else if (response.status === 409) {
+                    window.location.href = '/consentCaptured.html';
+                } else if (response.status === 500) {
+                    window.location.href = '/ErrorPage.html';
+                }
+                return response;
+            })
+            .catch(error => {
+                console.log(error, 'e');
+                // handle the error
+                window.location.href = '/ErrorPage.html';
+            });
+    }
+
+
+    const inputs = document.querySelectorAll(".otp-field input");
+    inputs.forEach((input, index) => {
+        input.dataset.index = index;
+        input.addEventListener("keyup", handleOtp);
+        input.addEventListener("paste", handleOnPasteOtp);
+    });
+
+    function handleOtp(e) {
+        const input = e.target;
+        let value = input.value;
+        let isValidInput = value.match(/[0-9a-z]/gi);
+        input.value = "";
+        input.value = isValidInput ? value[0] : "";
+        let fieldIndex = input.dataset.index;
+        if (fieldIndex < inputs.length - 1 && isValidInput) {
+            input.nextElementSibling.focus();
+        }
+        if (e.key === "Backspace" && fieldIndex > 0) {
+            input.previousElementSibling.focus();
+        }
+    }
+
+    function handleOnPasteOtp(e) {
+        const data = e.clipboardData.getData("text");
+        const value = data.split("");
+        if (value.length === inputs.length) {
+            inputs.forEach((input, index) => (input.value = value[index]));
+        }
+    }
+
+</script>
