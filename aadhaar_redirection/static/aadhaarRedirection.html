@@ -228,10 +228,29 @@
     function generateOtp() {
         var button = document.getElementById("generateOtpButton");
         var aadhaarInput = document.getElementById("aadhaarInput");
+        var countdown = 10; // Countdown in seconds
+
         button.disabled = true; // Disable the button
         button.style.backgroundColor = "#CCCCCC"; // Change button color
         aadhaarInput.readOnly = true; // Make input read-only
         aadhaarInput.style.backgroundColor = "#D3D3D3"; // Change input background color
+
+        // Function to update the button text with the remaining countdown
+        function updateButton() {
+            button.innerText = "Resend Otp (" + countdown + "s)";
+            countdown--;
+            if (countdown >= 0) {
+                setTimeout(updateButton, 1000); // Update every 1 second
+            } else {
+                button.disabled = false; // Enable the button after countdown
+                button.style.backgroundColor = "#004097"; // Restore button color
+                aadhaarInput.readOnly = false; // Make input editable again
+                aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
+                button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
+            }
+        }
+
+        updateButton(); // Start the countdown
         setTimeout(function () {
             button.disabled = false; // Enable the button after 10 seconds
             button.style.backgroundColor = "#004097"; // Restore button color
