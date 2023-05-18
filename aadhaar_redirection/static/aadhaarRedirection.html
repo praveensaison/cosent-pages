@@ -242,19 +242,47 @@
 
     function submitOTP() {
         console.log("submitOTP");
-        var otpInputs = document.querySelectorAll(".otp-field input");
-        var otp = "";
-        otpInputs.forEach(input => {
-            otp += input.value;
-        });
+        var otp = getOTPValue();
         var url = `${domain}/api/v2/otp/value/${otp}`; // Replace with your API endpoint URL
-        restCall(url);
+        restCall(url, handleResponse);
+    }
 
-        // Handle the response and show the result message
-        // Hide the OTP section
-        document.getElementById("otpSection").style.display = "none";
-        document.getElementById("resultSection").style.display = "block";
-        document.getElementById("resultMessage").textContent = "Result message goes here";
+    function handleResponse(response) {
+        console.log(response);
+        debugger
+        if (response.status === 200) {
+            window.location.href = '/ThankYou.html';
+        } else if (response.status === 404) {
+            window.location.href = '/Error404.html';
+        } else if (response.status === 409) {
+            window.location.href = '/consentCaptured.html';
+        } else if (response.status === 500) {
+            window.location.href = '/ErrorPage.html';
+        }
+    }
+
+    function restCall(url, callback) {
+        fetch(url, other_params)
+            .then(response => {
+                if (callback && typeof callback === 'function') {
+                    callback(response);
+                }
+                return response;
+            })
+            .catch(error => {
+                console.log(error, 'e');
+                // handle the error
+                window.location.href = '/ErrorPage.html';
+            });
+    }
+
+    function getOTPValue() {
+        const otpInputs = document.querySelectorAll(".otp-field input");
+        let otpValue = "";
+        otpInputs.forEach(input => {
+            otpValue += input.value;
+        });
+        return otpValue;
     }
 
 
