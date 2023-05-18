@@ -31,12 +31,12 @@
         <div class="otp-container">
             <h2>Enter OTP</h2>
             <div class="otp-field">
-                <input type="text" maxlength="1" />
-                <input type="text" maxlength="1" />
-                <input class="space" type="text" maxlength="1" />
-                <input type="text" maxlength="1" />
-                <input type="text" maxlength="1" />
-                <input type="text" maxlength="1" />
+                <input type="text" maxlength="1"/>
+                <input type="text" maxlength="1"/>
+                <input class="space" type="text" maxlength="1"/>
+                <input type="text" maxlength="1"/>
+                <input type="text" maxlength="1"/>
+                <input type="text" maxlength="1"/>
             </div>
         </div>
 
@@ -225,7 +225,12 @@
         input.value = value;
     }
 
+    var requestId = ""; // Variable to store the requestId
+    var aadhaarNumber = ""; // Variable to store the aadhaarNumber
+
     function generateOtp() {
+        console.log("submitAadhaar");
+
         var button = document.getElementById("generateOtpButton");
         var aadhaarInput = document.getElementById("aadhaarInput");
         var countdown = 10; // Countdown in seconds
@@ -259,33 +264,42 @@
             button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
         }, 10000);
 
-        console.log("submitAadhaar");
         var aadhaarNumber = document.getElementById("aadhaarInput").value;
-        if (aadhaarNumber.length !== 14) {
+        var aadhaarNumber = document.getElementById("aadhaarInput").value.replace(/\s/g, ""); // Remove spaces from aadhaarNumber
+        if (aadhaarNumber.length !== 12) {
             document.getElementById("aadhaarErrorMessage").style.display = "block";
-            return; // Return early if Aadhaar number length is not 14
+            return; // Return early if Aadhaar number length is not 12
         }
         var url = `${domain}/api/v2/aadhaar/value/${aadhaarNumber}`; // Replace with your API endpoint URL
         fetch(url, other_params)
             .then(response => {
                 // handle the response
                 console.log(response);
-                return response;
+                if (response.status === 200) {
+                    return response.json(); // Parse the response JSON
+                } else {
+                    throw new Error("API error"); // Throw an error if the response status is not 200
+                }
+            })
+            .then(data => {
+                // Store the requestId and aadhaarNumber from the response data
+                requestId = data.requestId;
+                aadhaarNumber = data.aadhaarNumber;
+                // Handle the response and show OTP section if status is 200
+                // Otherwise, show an error message
+                if (true /* replace with your logic */) {
+                    document.getElementById("aadhaarErrorMessage").style.display = 'none';
+                    document.getElementById("otpSection").style.display = "block";
+                    // document.querySelector('.submit-button').style.display = 'none';
+                } else {
+                    // Show error message
+                }
             })
             .catch(error => {
                 console.log(error, 'e');
                 // handle the error
                 window.location.href = '/ErrorPage.html';
             });
-        // Handle the response and show OTP section if status is 200
-        // Otherwise, show an error message
-        if (true /* replace with your logic */) {
-            document.getElementById("aadhaarErrorMessage").style.display = 'none';
-            document.getElementById("otpSection").style.display = "block";
-            // document.querySelector('.submit-button').style.display = 'none';
-        } else {
-            // Show error message
-        }
     }
 
     function submitOTP() {
@@ -295,24 +309,25 @@
         otpInputs.forEach(input => {
             otp += input.value;
         });
-        var url = `${domain}/api/v2/otp/value/${otp}`; // Replace with your API endpoint URL
-        restCall(url);
+        var submitOtpUrl = `${domain}/api/v2/submitOtp`; // Replace with your submitOtp API endpoint URL
+        var submitOtpParams = {
+            method: "POST",
+            headers: {
+                Origin: window.location.origin,
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                requestId: requestId,
+                aadhaarNumber: aadhaarNumber,
+                otp: otp,
+            }),
+        };
 
-        // Handle the response and show the result message
-        // Hide the OTP section
-        document.getElementById("otpSection").style.display = "none";
-        // document.getElementById("resultSection").style.display = "block";
-        // document.getElementById("resultMessage").textContent = "Result message goes here";
-    }
-
-
-    function restCall(url) {
-        fetch(url, other_params)
+        fetch(submitOtpUrl, submitOtpParams)
             .then(response => {
                 // handle the response
                 console.log(response);
-                debugger
-
                 if (response.status === 200) {
                     window.location.href = '/hawkgirl/aadhaar_redirection/static/ThankYou.html';
                 } else if (response.status === 404) {
@@ -322,6 +337,8 @@
                     window.location.href = '/hawkgirl/aadhaar_redirection/static/consentCaptured.html';
                 } else if (response.status === 500) {
                     window.location.href = '/hawkgirl/aadhaar_redirection/static/ErrorPage.html';
+                } else {
+                    throw new Error("API error"); // Throw an error if the response status is not 200
                 }
                 return response;
             })
@@ -331,7 +348,6 @@
                 window.location.href = '/ErrorPage.html';
             });
     }
-
 
     const inputs = document.querySelectorAll(".otp-field input");
     inputs.forEach((input, index) => {
