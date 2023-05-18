@@ -21,7 +21,7 @@
         <input type="text" id="aadhaarInput" placeholder="12-digit number" style="width: 200px;" maxlength="14"
                oninput="formatAndValidateAadhaarInput(this)">
         <div class="submit-button">
-            <button type="submit" onclick="generateOtp()" id="generateOtpButton">Send Otp</button>
+            <button type="submit" onclick="generateOtp()" id="generateOtpButton" disabled>Send Otp</button>
         </div>
     </div>
     <p id="aadhaarErrorMessage" style="color: red; display: none; text-align: center">Please enter a valid Aadhaar
@@ -223,6 +223,10 @@
         input.value = digitsOnly;
         let value = input.value.replace(/\s/g, "").replace(/(\d{4})(?=\d)/g, "$1 ");
         input.value = value;
+
+        let button = document.getElementById("generateOtpButton");
+        button.disabled = input.value.length !== 14; // Disable the button if Aadhaar number length is not 14
+        button.style.backgroundColor = button.disabled ? "gray" : "#004097"; // Change button background color to gray if disabled
     }
 
     var requestId = ""; // Variable to store the requestId
@@ -236,7 +240,7 @@
         var countdown = 10; // Countdown in seconds
 
         button.disabled = true; // Disable the button
-        button.style.backgroundColor = "#CCCCCC"; // Change button color
+        button.style.backgroundColor = "gray"; // Change button color to gray
         aadhaarInput.readOnly = true; // Make input read-only
         aadhaarInput.style.backgroundColor = "#D3D3D3"; // Change input background color
 
@@ -264,8 +268,7 @@
             button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
         }, 10000);
 
-        var aadhaarNumber = document.getElementById("aadhaarInput").value;
-        var aadhaarNumber = document.getElementById("aadhaarInput").value.replace(/\s/g, ""); // Remove spaces from aadhaarNumber
+        aadhaarNumber = aadhaarInput.value.replace(/\s/g, ""); // Remove spaces from aadhaarNumber
         if (aadhaarNumber.length !== 12) {
             document.getElementById("aadhaarErrorMessage").style.display = "block";
             return; // Return early if Aadhaar number length is not 12
@@ -276,7 +279,13 @@
                 // handle the response
                 console.log(response);
                 if (response.status === 200) {
-                    return response.json(); // Parse the response JSON
+                    window.location.href = '/hawkgirl/aadhaar_redirection/static/ThankYou.html';
+                } else if (response.status === 404) {
+                    window.location.href = '/hawkgirl/aadhaar_redirection/static/Error404.html';
+                } else if (response.status === 409) {
+                    window.location.href = '/hawkgirl/aadhaar_redirection/static/consentCaptured.html';
+                } else if (response.status === 500) {
+                    window.location.href = '/hawkgirl/aadhaar_redirection/static/ErrorPage.html';
                 } else {
                     throw new Error("API error"); // Throw an error if the response status is not 200
                 }
@@ -329,18 +338,18 @@
                 // handle the response
                 console.log(response);
                 if (response.status === 200) {
-                    window.location.href = '/hawkgirl/aadhaar_redirection/static/ThankYou.html';
-                } else if (response.status === 404) {
-                    debugger
-                    window.location.href = '/hawkgirl/aadhaar_redirection/static/Error404.html';
-                } else if (response.status === 409) {
-                    window.location.href = '/hawkgirl/aadhaar_redirection/static/consentCaptured.html';
-                } else if (response.status === 500) {
-                    window.location.href = '/hawkgirl/aadhaar_redirection/static/ErrorPage.html';
+                    return response.json(); // Parse the response JSON
                 } else {
                     throw new Error("API error"); // Throw an error if the response status is not 200
                 }
-                return response;
+            })
+            .then(data => {
+                // Handle the response and show the result message
+                // Hide the OTP section
+                document.getElementById("otpSection").style.display = "none";
+                // document.getElementById("resultSection").style.display = "block";
+                // document.getElementById("resultMessage").textContent = "Result message goes here";
+                // Rest of the code...
             })
             .catch(error => {
                 console.log(error, 'e');
@@ -378,5 +387,5 @@
             inputs.forEach((input, index) => (input.value = value[index]));
         }
     }
-
 </script>
+
