@@ -32,8 +32,8 @@ Resources:
           - ServerSideEncryptionByDefault:
               SSEAlgorithm: AES256
       WebsiteConfiguration:
-        IndexDocument: aadhaar_redirection/static/aadhaarRedirection.html
-        ErrorDocument: aadhaar_redirection/static/Error404.html
+        IndexDocument: AadhaarRedirection.html
+        ErrorDocument: Error404.html
       Tags:
         - Key: Service
           Value: hawkgirl
@@ -73,7 +73,7 @@ Resources:
           parameterName: KSF-Wildcard-SSL-Certificate
       DistributionConfig:
         Enabled: 'true'
-        DefaultRootObject: aadhaar_redirection/static/aadhaarRedirection.html
+        DefaultRootObject: AadhaarRedirection.html
         Aliases:
           - !If
             - EnvironmentProd
@@ -101,15 +101,15 @@ Resources:
               OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${cloudFrontOriginAccessIdentity}'
         CustomErrorResponses:
           - ErrorCode: '403'
-            ResponsePagePath: "/aadhaar_redirection/static/aadhaarRedirection.html"
+            ResponsePagePath: "/AadhaarRedirection.html"
             ResponseCode: '200'
             ErrorCachingMinTTL: '300'
           - ErrorCode: '404'
-            ResponsePagePath: "/aadhaar_redirection/static/aadhaarRedirection.html"
+            ResponsePagePath: "/AadhaarRedirection.html"
             ResponseCode: '200'
             ErrorCachingMinTTL: '300'
           - ErrorCode: '500'
-            ResponsePagePath: "/aadhaar_redirection/static/aadhaarRedirection.html"
+            ResponsePagePath: "/AadhaarRedirection.html"
             ResponseCode: '200'
             ErrorCachingMinTTL: '300'
       Tags:

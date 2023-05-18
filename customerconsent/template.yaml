@@ -25,15 +25,15 @@ Resources:
   customerconsentbucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub 'customerconsent-${EnvironmentType}-${AWS::AccountId}-${AWS::Region}'
+      BucketName: !Sub 'customerconsentbucket-${EnvironmentType}-${AWS::AccountId}-${AWS::Region}'
       AccessControl: Private
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
               SSEAlgorithm: AES256
       WebsiteConfiguration:
-        IndexDocument: customerconsent/static/communicationBorrower.html
-        ErrorDocument: customerconsent/static/Error404.html
+        IndexDocument: communicationborrower.html
+        ErrorDocument: Error404.html
       Tags:
         - Key: Service
           Value: hawkgirl
@@ -63,7 +63,7 @@ Resources:
           Action: s3:GetObject
           Resource: !Join [ '', [ 'arn:aws:s3:::', !Ref 'customerconsentbucket', /* ] ]
 
-  
+
   myDistribution:
     Type: 'AWS::CloudFront::Distribution'
     Properties:
@@ -73,7 +73,7 @@ Resources:
           parameterName: KSF-Wildcard-SSL-Certificate
       DistributionConfig:
         Enabled: 'true'
-        DefaultRootObject: customerconsent/static/communicationBorrower.html
+        DefaultRootObject: communicationBorrower.html
         Aliases:
           - !If
             - EnvironmentProd
@@ -101,15 +101,15 @@ Resources:
               OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${cloudFrontOriginAccessIdentity}'
         CustomErrorResponses:
           - ErrorCode: '403'
-            ResponsePagePath: "/customerconsent/static/communicationBorrower.html"
+            ResponsePagePath: "/communicationBorrower.html"
             ResponseCode: '200'
             ErrorCachingMinTTL: '300'
           - ErrorCode: '404'
-            ResponsePagePath: "/customerconsent/static/communicationBorrower.html"
+            ResponsePagePath: "/communicationBorrower.html"
             ResponseCode: '200'
             ErrorCachingMinTTL: '300'
           - ErrorCode: '500'
-            ResponsePagePath: "/customerconsent/static/communicationBorrower.html"
+            ResponsePagePath: "/communicationBorrower.html"
             ResponseCode: '200'
             ErrorCachingMinTTL: '300'
       Tags:
