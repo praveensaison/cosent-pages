@@ -14,12 +14,15 @@
     <div style="margin-top: 10px; text-align: center;">
         <img src="img/VectorSmartObject3.png" width="200px" height="174px" align="bottom">
     </div>
+
     <div class="input-container">
         <div>
             <h1 class="heading">Enter Aadhaar Number</h1>
             <div>
-                <input type="text" id="aadhaarInput" placeholder="Enter Aadhaar Number">
+                <input type="text" id="aadhaarInput" placeholder="Enter Aadhaar Number" style="width: 200px;"
+                       maxlength="14" oninput="formatAndValidateAadhaarInput(this)">
             </div>
+            <p id="aadhaarErrorMessage" style="color: red; display: none;">Please enter a valid Aadhaar number.</p>
         </div>
     </div>
     <div class="submit-button" style="display: flex;justify-content: center;margin:20px;">
@@ -28,6 +31,8 @@
                 onclick="submitAadhaar()">Submit
         </button>
     </div>
+
+
     <div id="otpSection" style="display: none;">
         <div class="otp-container">
             <h2>Enter OTP</h2>
@@ -86,6 +91,7 @@
         justify-content: center;
         flex-direction: column;
         margin-bottom: 20px;
+        text-align: center;
     }
 
     .input-container input {
@@ -96,6 +102,7 @@
         border-radius: 4px;
         font-size: 14px;
         margin-bottom: 10px;
+        text-align: center;
     }
 
     .input-container button {
@@ -218,9 +225,21 @@
 
     let domain = window.location.origin.replace('aadhaar-redirection', 'api');
 
+    function formatAndValidateAadhaarInput(input) {
+        var inputValue = input.value;
+        var digitsOnly = inputValue.replace(/\D/g, ""); // Remove non-digit characters
+        input.value = digitsOnly;
+        let value = input.value.replace(/\s/g, "").replace(/(\d{4})(?=\d)/g, "$1 ");
+        input.value = value;
+    }
+
     function submitAadhaar() {
         console.log("submitAadhaar");
         var aadhaarNumber = document.getElementById("aadhaarInput").value;
+        if (aadhaarNumber.length !== 14) {
+            document.getElementById("aadhaarErrorMessage").style.display = "block";
+            return; // Return early if Aadhaar number length is not 12
+        }
         var url = `${domain}/api/v2/aadhaar/value/${aadhaarNumber}`; // Replace with your API endpoint URL
         fetch(url, other_params)
             .then(response => {
@@ -236,6 +255,7 @@
         // Handle the response and show OTP section if status is 200
         // Otherwise, show an error message
         if (true /* replace with your logic */) {
+            document.getElementById("aadhaarErrorMessage").style.display = 'none';
             document.getElementById("otpSection").style.display = "block";
             document.querySelector('.submit-button').style.display = 'none';
         } else {
@@ -257,8 +277,8 @@
         // Handle the response and show the result message
         // Hide the OTP section
         document.getElementById("otpSection").style.display = "none";
-        document.getElementById("resultSection").style.display = "block";
-        document.getElementById("resultMessage").textContent = "Result message goes here";
+        // document.getElementById("resultSection").style.display = "block";
+        // document.getElementById("resultMessage").textContent = "Result message goes here";
     }
 
 
@@ -267,14 +287,17 @@
             .then(response => {
                 // handle the response
                 console.log(response);
+                debugger
+
                 if (response.status === 200) {
-                    window.location.href = '/ThankYou.html';
+                    window.location.href = '/hawkgirl/aadhaar_redirection/static/ThankYou.html';
                 } else if (response.status === 404) {
-                    window.location.href = '/Error404.html';
+                    debugger
+                    window.location.href = '/hawkgirl/aadhaar_redirection/static/Error404.html';
                 } else if (response.status === 409) {
-                    window.location.href = '/consentCaptured.html';
+                    window.location.href = '/hawkgirl/aadhaar_redirection/static/consentCaptured.html';
                 } else if (response.status === 500) {
-                    window.location.href = '/ErrorPage.html';
+                    window.location.href = '/hawkgirl/aadhaar_redirection/static/ErrorPage.html';
                 }
                 return response;
             })
