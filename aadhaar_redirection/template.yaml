@@ -77,13 +77,13 @@ Resources:
         Aliases:
           - !If
             - EnvironmentProd
-            - !Sub "aadhaar_redirection.creditsaison.in"
+            - !Sub "redirection.aadhaar.creditsaison.in"
             - !If
               - EnvironmentInt
-              - !Join [ "", [ "aadhaar_redirection", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
+              - !Join [ "", [ "redirection.aadhaar", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
               - !Join [
                 "",
-                [ "aadhaar_redirection", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
+                [ "redirection.aadhaar", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
               ]
         ViewerCertificate:
           MinimumProtocolVersion: TLSv1.2_2021
@@ -123,8 +123,6 @@ Resources:
           Value: None
 
 
-
-
   R53DnsRecordSet:
     Type: AWS::Route53::RecordSet
     Properties:
@@ -142,13 +140,13 @@ Resources:
           - !Join [ "", [ !Ref EnvironmentType, ".creditsaison.xyz." ] ]
       Name: !If
         - EnvironmentProd
-        - !Sub "aadhaar_redirection.creditsaison.in"
+        - !Sub "redirection.aadhaar.creditsaison.in"
         - !If
           - EnvironmentInt
-          - !Join [ "", [ "aadhaar_redirection", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
+          - !Join [ "", [ "redirection.aadhaar", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
           - !Join [
             "",
-            [ "aadhaar_redirection", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
+            [ "redirection.aadhaar", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
           ]
       Type: A
 
