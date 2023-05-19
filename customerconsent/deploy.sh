@@ -12,7 +12,7 @@ getIndex() {
   return -1
 }
 
-STACK_NAME=hawkgirl-CDN-distribution
+STACK_NAME=hawkgirl-customer-consent
 AWS_PROFILE=default
 
 PS3='Please enter the environment (enter corresponding number): '

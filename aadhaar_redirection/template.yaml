@@ -22,7 +22,7 @@ Conditions:
 
 Resources:
 
-  aadhaar_redirection_bucket:
+  aadhaarRedirectionBucket:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Sub 'aadhaar_redirection-${EnvironmentType}-${AWS::AccountId}-${AWS::Region}'
@@ -48,12 +48,12 @@ Resources:
     Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
     Properties:
       CloudFrontOriginAccessIdentityConfig:
-        Comment: !Sub 'CloudFront OAI for aadhaar_redirection_bucket'
+        Comment: !Sub 'CloudFront OAI for aadhaar redirection bucket'
 
-  aadhaar_redirection_bucket_policy:
+  aadhaarRedirectionBucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
-      Bucket: !Ref 'aadhaar_redirection_bucket'
+      Bucket: !Ref 'aadhaarRedirectionBucket'
       PolicyDocument:
         Id: PolicyForCloudFrontPrivateContent
         Statement:
@@ -61,7 +61,7 @@ Resources:
           Principal:
             AWS: !Join [ '', [ 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ', !Ref cloudFrontOriginAccessIdentity ] ]
           Action: s3:GetObject
-          Resource: !Join [ '', [ 'arn:aws:s3:::', !Ref 'aadhaar_redirection_bucket', /* ] ]
+          Resource: !Join [ '', [ 'arn:aws:s3:::', !Ref 'aadhaarRedirectionBucket', /* ] ]
 
   
   aadhaarRedirectionDistribution:
@@ -88,15 +88,15 @@ Resources:
         ViewerCertificate:
           MinimumProtocolVersion: TLSv1.2_2021
           SslSupportMethod: 'sni-only'
-#          AcmCertificateArn: "arn:aws:acm:us-east-1:961043014301:certificate/0f8e3cfc-65a8-4827-bd94-f349b9d89a69"
-          AcmCertificateArn: "$$KSF-Wildcard-SSL-Certificate$$"
+          AcmCertificateArn: "arn:aws:acm:us-east-1:961043014301:certificate/0f8e3cfc-65a8-4827-bd94-f349b9d89a69"
+#          AcmCertificateArn: "$$KSF-Wildcard-SSL-Certificate$$"
         DefaultCacheBehavior:
           ForwardedValues:
             QueryString: False
           TargetOriginId: !Sub 'aadhaar_redirection_bucket origin'
           ViewerProtocolPolicy: https-only
         Origins:
-          - DomainName: !Join [ '', [ !Ref 'aadhaar_redirection_bucket', '.s3.amazonaws.com' ] ]
+          - DomainName: !Join [ '', [ !Ref 'aadhaarRedirectionBucket', '.s3.amazonaws.com' ] ]
             Id: !Sub 'aadhaar_redirection_bucket origin'
             S3OriginConfig:
               OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${cloudFrontOriginAccessIdentity}'
@@ -155,7 +155,7 @@ Resources:
 
 Outputs:
   BucketName:
-    Value: !Ref 'aadhaar_redirection_bucket'
+    Value: !Ref 'aadhaarRedirectionBucket'
     Description: Name of S3 bucket to hold website content
   CloudfrontEndpoint:
     Value: !Ref aadhaarRedirectionDistribution
