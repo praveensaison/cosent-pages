@@ -63,7 +63,7 @@ echo "Starting deployment for distibutions"
     --parameter-overrides EnvironmentType="$ENV"
 
   cd static
-  aws s3 sync . s3://aadhaar_redirection-$ENV-$ACCOUNT_ID-$AWS_REGION
+  aws s3 sync . s3://aadhaar-redirection-$ENV-$ACCOUNT_ID-$AWS_REGION
 )
 
 rm -rf venv

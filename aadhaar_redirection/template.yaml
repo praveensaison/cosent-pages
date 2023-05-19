@@ -25,7 +25,7 @@ Resources:
   aadhaarRedirectionBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub 'aadhaar_redirection-${EnvironmentType}-${AWS::AccountId}-${AWS::Region}'
+      BucketName: !Sub 'aadhaar-redirection-${EnvironmentType}-${AWS::AccountId}-${AWS::Region}'
       AccessControl: Private
       BucketEncryption:
         ServerSideEncryptionConfiguration:
