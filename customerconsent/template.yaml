@@ -64,7 +64,7 @@ Resources:
           Resource: !Join [ '', [ 'arn:aws:s3:::', !Ref 'customerconsentbucket', /* ] ]
 
 
-  myDistribution:
+  customerConsentDistribution:
     Type: 'AWS::CloudFront::Distribution'
     Properties:
       Fn::Transform:
@@ -89,6 +89,7 @@ Resources:
           MinimumProtocolVersion: TLSv1.2_2021
           SslSupportMethod: 'sni-only'
           AcmCertificateArn: "$$KSF-Wildcard-SSL-Certificate$$"
+#          AcmCertificateArn: "arn:aws:acm:us-east-1:961043014301:certificate/0f8e3cfc-65a8-4827-bd94-f349b9d89a69"
         DefaultCacheBehavior:
           ForwardedValues:
             QueryString: False
@@ -123,13 +124,11 @@ Resources:
           Value: None
 
 
-
-
   R53DnsRecordSet:
     Type: AWS::Route53::RecordSet
     Properties:
       AliasTarget:
-        DNSName: !GetAtt [ myDistribution, DomainName ]
+        DNSName: !GetAtt [ customerConsentDistribution, DomainName ]
         EvaluateTargetHealth: false
         HostedZoneId: Z2FDTNDATAQYW2
       Comment: !Sub "DNS Record for customer consent"
@@ -152,12 +151,10 @@ Resources:
           ]
       Type: A
 
-
-
 Outputs:
   BucketName:
     Value: !Ref 'customerconsentbucket'
     Description: Name of S3 bucket to hold website content
   CloudfrontEndpoint:
-    Value: !Ref myDistribution
+    Value: !Ref customerConsentDistribution
     Description: Endpoint for Cloudfront distribution
