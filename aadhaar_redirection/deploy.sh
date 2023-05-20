@@ -1,4 +1,4 @@
-# !/usr/bin/env bash
+#!/usr/bin/env bash
 
 declare -a ENV_ARRAY
 ENV_ARRAY=('dev' 'qa' 'qa2' 'uat' 'int' 'production')

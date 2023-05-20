@@ -68,7 +68,7 @@
 
     @font-face {
         font-family: 'Kanit-Regular';
-        src: url('/hawkgirl/aadhaar_redirection/static/fonts/Kanit-Regular.ttf') format('truetype');
+        src: url('/fonts/Kanit-Regular.ttf') format('truetype');
     }
 
     body {
@@ -203,8 +203,8 @@
 <script>
     var url = new URL(window.location.href);
     var token = url.searchParams.get("token");
-    if (!token) {
-        // window.location.href = '/ErrorPage.html';
+    if(!token){
+        window.location.href = '/ErrorPage.html'
     }
 
     const other_params = {
@@ -279,7 +279,7 @@
                 if (response.status === 200) {
                     return response.json(); // Parse the response JSON
                 } else if (response.status === 404) {
-                    window.location.href = '/aadhaar_redirection/static/Error404.html';
+                    window.location.href = '/Error404.html';
                 } else {
                     throw new Error("API error"); // Throw an error if the response status is not 200
                 }
@@ -301,7 +301,7 @@
             .catch(error => {
                 console.log(error, 'e');
                 // handle the error
-                window.location.href = '/aadhaar_redirection/static/ErrorPage.html';
+                window.location.href = '/ErrorPage.html';
             });
     }
 
