@@ -77,13 +77,13 @@ Resources:
         Aliases:
           - !If
             - EnvironmentProd
-            - !Sub "redirection.aadhaar.creditsaison.in"
+            - !Sub "aadhaarredirection.creditsaison.in"
             - !If
               - EnvironmentInt
-              - !Join [ "", [ "redirection.aadhaar", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
+              - !Join [ "", [ "aadhaarredirection", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
               - !Join [
                 "",
-                [ "redirection.aadhaar", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
+                [ "aadhaarredirection", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
               ]
         ViewerCertificate:
           MinimumProtocolVersion: TLSv1.2_2021
@@ -141,13 +141,13 @@ Resources:
           - !Join [ "", [ !Ref EnvironmentType, ".creditsaison.xyz." ] ]
       Name: !If
         - EnvironmentProd
-        - !Sub "redirection.aadhaar.creditsaison.in"
+        - !Sub "aadhaarredirection.creditsaison.in"
         - !If
           - EnvironmentInt
-          - !Join [ "", [ "redirection.aadhaar", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
+          - !Join [ "", [ "aadhaarredirection", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
           - !Join [
             "",
-            [ "redirection.aadhaar", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
+            [ "aadhaarredirection", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
           ]
       Type: A
 

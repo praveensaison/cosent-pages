@@ -215,7 +215,7 @@
         method: "POST",
     };
 
-    let domain = window.location.origin.replace('aadhaar-redirection', 'api');
+    let domain = window.location.origin.replace('aadhaarredirection', 'api');
 
     function formatAndValidateAadhaarInput(input) {
         var inputValue = input.value;
@@ -271,6 +271,7 @@
             document.getElementById("aadhaarErrorMessage").style.display = "block";
             return; // Return early if Aadhaar number length is not 12
         }
+        debugger
         const url = `${domain}/api/v2/aadhaar/value/${aadhaarNumber}`; // Replace with your API endpoint URL
         fetch(url, other_params)
             .then(response => {
