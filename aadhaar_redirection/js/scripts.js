@@ -6,14 +6,6 @@ const error404Page = 'pages/Error404.html';
 //     window.location.href = errorPage;
 // }
 
-const other_params = {
-    headers: {
-        Origin: window.location.origin,
-        Authorization: `Bearer ${token}`,
-    },
-    method: "POST",
-};
-
 let domain = window.location.origin.replace('aadhaarredirection', 'api');
 
 function formatAndValidateAadhaarInput(input) {
@@ -120,14 +112,6 @@ function generateOtp() {
         });
 }
 
-
-const inputs = document.querySelectorAll(".otp-field input");
-inputs.forEach((input, index) => {
-    input.dataset.index = index;
-    input.addEventListener("keyup", handleOtp);
-    input.addEventListener("paste", handleOnPasteOtp);
-});
-
 function handleOtp(event) {
     const input = event.target;
     let value = input.value;
@@ -138,7 +122,7 @@ function handleOtp(event) {
     if (fieldIndex < inputs.length - 1 && isValidInput) {
         input.nextElementSibling.focus();
     }
-    if (e.key === "Backspace" && fieldIndex > 0) {
+    if (event.key === "Backspace" && fieldIndex > 0) {
         input.previousElementSibling.focus();
     }
 }
@@ -197,3 +181,4 @@ function submitOTP() {
             window.location.href = errorPage;
         });
 }
+
