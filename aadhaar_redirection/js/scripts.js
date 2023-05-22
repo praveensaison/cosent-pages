@@ -3,9 +3,9 @@ const token = url.searchParams.get("token");
 const errorPage = 'pages/ErrorPage.html';
 const error404Page = 'pages/Error404.html';
 const thankYouPage = 'pages/ThankYou.html';
-// if (!token) {
-//     window.location.href = errorPage;
-// }
+if (!token) {
+    window.location.href = errorPage;
+}
 
 let domain = window.location.origin.replace('aadhaarredirection', 'api');
 
@@ -22,8 +22,8 @@ function formatAndValidateAadhaarInput(input) {
     button.style.backgroundColor = button.disabled ? "gray" : "#004097"; // Change button background color to gray if disabled
 }
 
-var requestId = ""; // Variable to store the requestId
-var aadhaarNumber = ""; // Variable to store the aadhaarNumber
+var requestId = "";
+var aadhaarNumber = "";
 
 function generateOtp() {
     console.log("submitAadhaar");
@@ -50,6 +50,7 @@ function generateOtp() {
             button.style.backgroundColor = "#004097"; // Restore button color
             aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
             button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
+            countdown = 30;
         }
     }
 
@@ -59,7 +60,7 @@ function generateOtp() {
         button.style.backgroundColor = "#004097"; // Restore button color
         aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
         button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
-    }, 10000);
+    }, 30000);
 
     aadhaarNumber = aadhaarInput.value.replace(/\s/g, ""); // Remove spaces from aadhaarNumber
     if (aadhaarNumber.length !== 12) {
@@ -87,28 +88,26 @@ function generateOtp() {
             if (response.status === 200) {
                 return response.json(); // Parse the response JSON
             } else if (response.status === 404) {
-                //window.location.href = error404Page;
+                window.location.href = error404Page;
             } else {
                 throw new Error("API error"); // Throw an error if the response status is not 200
             }
         })
         .then(data => {
             // Store the requestId and aadhaarNumber from the response data
-            requestId = '23';//data.requestId;
+            requestId = '23';//data.requestId; @Todo Uncomment this
             aadhaarNumber = '333';//data.aadhaarNumber;
             // Handle the response and show OTP section if status is 200
             // Otherwise, show an error message
             if (requestId) {
                 document.getElementById("aadhaarErrorMessage").style.display = 'none';
                 document.getElementById("otpSection").style.display = "block";
-                // document.querySelector('.submit-button').style.display = 'none';
             } else {
                 window.location.href = errorPage;
             }
         })
         .catch(error => {
             console.log(error, 'e');
-            // handle the error
             window.location.href = errorPage;
         });
 }
