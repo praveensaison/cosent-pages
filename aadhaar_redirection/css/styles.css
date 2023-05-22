@@ -1,0 +1,129 @@
+@font-face {
+    font-family: 'Kanit-Regular';
+    src: url('../static/fonts/Kanit-Regular.ttf') format('truetype');
+}
+
+body {
+    font-family: 'Kanit-Regular', sans-serif;
+    background-color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+}
+
+.heading {
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.input-container input {
+    font-family: 'Kanit-Regular', sans-serif;
+    width: 200px;
+    height: 16px;
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    font-size: 18px;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.input-container input:read-only {
+    background-color: #D3D3D3;
+}
+
+.input-container button {
+    font-family: 'Kanit-Regular', sans-serif;
+    margin: 20px;
+    background-color: #004097;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10px;
+    cursor: pointer;
+    border-color: #004097;
+}
+
+.otp-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.otp-container input {
+    font-family: 'Kanit-Regular', sans-serif;
+    width: 300px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.otp-container button {
+    margin-left: 10px;
+    background-color: #004097;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+.otp-field input {
+    width: 15px;
+    height: 17px;
+    font-size: 18px;
+    padding: 6px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 4px;
+    border: 1px solid #55525c;
+    background: #ffffff;
+    font-weight: bold;
+    color: #000000;
+    outline: none;
+    transition: all 0.1s;
+}
+
+.otp-field input:focus {
+    border: 2px solid #a527ff;
+    box-shadow: 0 0 2px 2px #a527ff6a;
+}
+
+
+.otp-field {
+    display: flex;
+}
+
+.space {
+    margin-right: 1rem !important;
+}
+
+footer {
+    text-align: center;
+    color: #A7A7A8;
+    margin-top: auto;
+    padding: 20px 0;
+}
