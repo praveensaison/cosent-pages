@@ -81,15 +81,15 @@ function generateOtp() {
             if (response.status === 200) {
                 return response.json(); // Parse the response JSON
             } else if (response.status === 404) {
-                //window.location.href = error404Page;
+                window.location.href = error404Page;
             } else {
                 throw new Error("API error"); // Throw an error if the response status is not 200
             }
         })
         .then(data => {
             // Store the requestId and aadhaarNumber from the response data
-            requestId = '23';//data.requestId; @Todo Uncomment this
-            aadhaarNo = '333';//data.aadhaarNumber;
+            requestId = data.requestId;
+            aadhaarNo = data.aadhaarNumber;
             // Handle the response and show OTP section if status is 200
             // Otherwise, show an error message
             if (requestId) {
@@ -155,7 +155,6 @@ function submitOTP() {
 
     fetch(api_url, submitOtpParams)
         .then(response => {
-            // handle the response
             console.log(response);
             if (response.status === 200) {
                 window.location.href = thankYouPage;
