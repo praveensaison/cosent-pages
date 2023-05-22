@@ -41,26 +41,19 @@ function generateOtp() {
     // Function to update the button text with the remaining countdown
     function updateButton() {
         button.innerText = "Resend Otp (" + countdown + "s)";
-        aadhaarInput.readOnly = true;
         countdown--;
         if (countdown >= 0) {
             setTimeout(updateButton, 1000); // Update every 1 second
         } else {
             button.disabled = false; // Enable the button after countdown
             button.style.backgroundColor = "#004097"; // Restore button color
+            aadhaarInput.readOnly = false; // Make input editable again
             aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
             button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
-            countdown = 30;
         }
     }
 
     updateButton(); // Start the countdown
-    setTimeout(function () {
-        button.disabled = false; // Enable the button after 30 seconds
-        button.style.backgroundColor = "#004097"; // Restore button color
-        aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
-        button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
-    }, 30000);
 
     aadhaarNumber = aadhaarInput.value.replace(/\s/g, ""); // Remove spaces from aadhaarNumber
     if (aadhaarNumber.length !== 12) {
@@ -88,7 +81,7 @@ function generateOtp() {
             if (response.status === 200) {
                 return response.json(); // Parse the response JSON
             } else if (response.status === 404) {
-                window.location.href = error404Page;
+                //window.location.href = error404Page;
             } else {
                 throw new Error("API error"); // Throw an error if the response status is not 200
             }
