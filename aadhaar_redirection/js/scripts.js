@@ -1,15 +1,17 @@
 let url = new URL(window.location.href);
 const token = url.searchParams.get("token");
-const errorPage = 'pages/ErrorPage.html'
-const error404Page = 'pages/Error404.html'
+const errorPage = 'pages/ErrorPage.html';
+const error404Page = 'pages/Error404.html';
 // if (!token) {
-//     window.location.href = errorPage
+//     window.location.href = errorPage;
 // }
 
 const other_params = {
     headers: {
-        Origin: window.location.origin, Authorization: `Bearer ${token}`,
-    }, method: "POST",
+        Origin: window.location.origin,
+        Authorization: `Bearer ${token}`,
+    },
+    method: "POST",
 };
 
 let domain = window.location.origin.replace('aadhaarredirection', 'api');
@@ -28,17 +30,20 @@ function formatAndValidateAadhaarInput(input) {
 
 var requestId = ""; // Variable to store the requestId
 var aadhaarNumber = ""; // Variable to store the aadhaarNumber
+
 function generateOtp() {
     console.log("submitAadhaar");
 
+    var countdown = 10; // Countdown in seconds
+
     var button = document.getElementById("generateOtpButton");
     var aadhaarInput = document.getElementById("aadhaarInput");
-    var countdown = 10; // Countdown in seconds
 
     button.disabled = true; // Disable the button
     button.style.backgroundColor = "#CCCCCC"; // Change button color
     aadhaarInput.readOnly = true; // Make input read-only
     aadhaarInput.style.backgroundColor = "#D3D3D3"; // Change input background color
+
     // Function to update the button text with the remaining countdown
     function updateButton() {
         button.innerText = "Resend Otp (" + countdown + "s)";
@@ -96,16 +101,16 @@ function generateOtp() {
         })
         .then(data => {
             // Store the requestId and aadhaarNumber from the response data
-            // requestId = data.requestId;
-            aadhaarNumber = aadhaarNumber;
+            requestId = '23';//data.requestId;
+            aadhaarNumber = '333';//data.aadhaarNumber;
             // Handle the response and show OTP section if status is 200
             // Otherwise, show an error message
-            if (true /* replace with your logic */) {
+            if (requestId) {
                 document.getElementById("aadhaarErrorMessage").style.display = 'none';
                 document.getElementById("otpSection").style.display = "block";
                 // document.querySelector('.submit-button').style.display = 'none';
             } else {
-                // Show error message
+                window.location.href = errorPage;
             }
         })
         .catch(error => {
@@ -123,8 +128,8 @@ inputs.forEach((input, index) => {
     input.addEventListener("paste", handleOnPasteOtp);
 });
 
-function handleOtp(e) {
-    const input = e.target;
+function handleOtp(event) {
+    const input = event.target;
     let value = input.value;
     let isValidInput = value.match(/[0-9a-z]/gi);
     input.value = "";
@@ -138,8 +143,8 @@ function handleOtp(e) {
     }
 }
 
-function handleOnPasteOtp(e) {
-    const data = e.clipboardData.getData("text");
+function handleOnPasteOtp(event) {
+    const data = event.clipboardData.getData("text");
     const value = data.split("");
     if (value.length === inputs.length) {
         inputs.forEach((input, index) => (input.value = value[index]));
@@ -155,10 +160,16 @@ function submitOTP() {
     });
     var submitOtpUrl = `${domain}/api/v2/submitOtp`; // Replace with your submitOtp API endpoint URL
     var submitOtpParams = {
-        method: "POST", headers: {
-            Origin: window.location.origin, Authorization: `Bearer ${token}`, "Content-Type": "application/json",
-        }, body: JSON.stringify({
-            requestId: requestId, aadhaarNumber: aadhaarNumber, otp: otp,
+        method: "POST",
+        headers: {
+            Origin: window.location.origin,
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            requestId: requestId,
+            aadhaarNumber: aadhaarNumber,
+            otp: otp,
         }),
     };
 
