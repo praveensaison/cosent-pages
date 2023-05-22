@@ -2,6 +2,7 @@ let url = new URL(window.location.href);
 const token = url.searchParams.get("token");
 const errorPage = 'pages/ErrorPage.html';
 const error404Page = 'pages/Error404.html';
+const thankYouPage = 'pages/ThankYou.html';
 // if (!token) {
 //     window.location.href = errorPage;
 // }
@@ -39,13 +40,13 @@ function generateOtp() {
     // Function to update the button text with the remaining countdown
     function updateButton() {
         button.innerText = "Resend Otp (" + countdown + "s)";
+        aadhaarInput.readOnly = true;
         countdown--;
         if (countdown >= 0) {
             setTimeout(updateButton, 1000); // Update every 1 second
         } else {
             button.disabled = false; // Enable the button after countdown
             button.style.backgroundColor = "#004097"; // Restore button color
-            aadhaarInput.readOnly = false; // Make input editable again
             aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
             button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
         }
@@ -55,7 +56,6 @@ function generateOtp() {
     setTimeout(function () {
         button.disabled = false; // Enable the button after 10 seconds
         button.style.backgroundColor = "#004097"; // Restore button color
-        aadhaarInput.readOnly = true; // Make input editable again
         aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
         button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
     }, 10000);
@@ -115,8 +115,7 @@ function generateOtp() {
 function handleOtp(event) {
     const input = event.target;
     let value = input.value;
-    let isValidInput = value.match(/[0-9a-z]/gi);
-    input.value = "";
+    let isValidInput = value.match(/\d/); // Only allow digits
     input.value = isValidInput ? value[0] : "";
     let fieldIndex = input.dataset.index;
     if (fieldIndex < inputs.length - 1 && isValidInput) {
@@ -126,6 +125,7 @@ function handleOtp(event) {
         input.previousElementSibling.focus();
     }
 }
+
 
 function handleOnPasteOtp(event) {
     const data = event.clipboardData.getData("text");
@@ -142,6 +142,10 @@ function submitOTP() {
     otpInputs.forEach(input => {
         otp += input.value;
     });
+    if (otp.length !== 6) {
+        document.getElementById("otpErrorMessage").style.display = "block";
+        return; // Return early if Aadhaar number length is not 12
+    }
     var submitOtpUrl = `${domain}/api/v2/submitOtp`; // Replace with your submitOtp API endpoint URL
     var submitOtpParams = {
         method: "POST",
@@ -162,22 +166,16 @@ function submitOTP() {
             // handle the response
             console.log(response);
             if (response.status === 200) {
-                return response.json(); // Parse the response JSON
+                window.location.href = thankYouPage;
             } else {
                 throw new Error("API error"); // Throw an error if the response status is not 200
             }
         })
         .then(data => {
-            // Handle the response and show the result message
-            // Hide the OTP section
             document.getElementById("otpSection").style.display = "none";
-            // document.getElementById("resultSection").style.display = "block";
-            // document.getElementById("resultMessage").textContent = "Result message goes here";
-            // Rest of the code...
         })
         .catch(error => {
             console.log(error, 'e');
-            // handle the error
             window.location.href = errorPage;
         });
 }
