@@ -89,7 +89,7 @@ Resources:
           MinimumProtocolVersion: TLSv1.2_2021
           SslSupportMethod: 'sni-only'
           AcmCertificateArn: "arn:aws:acm:us-east-1:961043014301:certificate/0f8e3cfc-65a8-4827-bd94-f349b9d89a69"
-#          AcmCertificateArn: "$$KSF-Wildcard-SSL-Certificate$$"
+        #          AcmCertificateArn: "$$KSF-Wildcard-SSL-Certificate$$"
         DefaultCacheBehavior:
           ForwardedValues:
             QueryString: False

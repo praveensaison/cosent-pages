@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Aadhaar Redirection Page</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link href="css/styles.css" rel="stylesheet">
     <script src="js/scripts.js"></script>
 </head>
 
@@ -11,19 +11,19 @@
 <main>
 
     <div style="background-color: #F8F8F8; padding: 20px 0px;">
-        <img src="static/img/Logo.svg" width="200px" height="64px" align="bottom">
+        <img align="bottom" height="64px" src="img/Logo.svg" width="200px">
     </div>
     <div style="margin-top: 10px; text-align: center;">
-        <img src="static/img/VectorSmartObject3.png" width="200px" height="174px" align="bottom">
+        <img align="bottom" height="174px" src="img/VectorSmartObject3.png" width="200px">
     </div>
 
     <h1 class="heading">Enter Your Aadhaar Number</h1>
 
     <div class="input-container">
-        <input type="text" id="aadhaarInput" placeholder="12-digit number" style="width: 200px;" maxlength="14"
-               oninput="formatAndValidateAadhaarInput(this)">
+        <input id="aadhaarInput" maxlength="14" oninput="formatAndValidateAadhaarInput(this)" placeholder="12-digit number" style="width: 200px;"
+               type="text">
         <div class="submit-button">
-            <button type="submit" onclick="generateOtp()" id="generateOtpButton" disabled>Send Otp</button>
+            <button disabled id="generateOtpButton" onclick="generateOtp()" type="submit">Send Otp</button>
         </div>
     </div>
     <p id="aadhaarErrorMessage" style="color: red; display: none; text-align: center">Please enter a valid Aadhaar
@@ -33,21 +33,21 @@
         <div class="otp-container">
             <h2>Enter OTP</h2>
             <div class="otp-field">
-                <input type="text" maxlength="1"/>
-                <input type="text" maxlength="1"/>
-                <input class="space" type="text" maxlength="1"/>
-                <input type="text" maxlength="1"/>
-                <input type="text" maxlength="1"/>
-                <input type="text" maxlength="1"/>
+                <input maxlength="1" type="text"/>
+                <input maxlength="1" type="text"/>
+                <input class="space" maxlength="1" type="text"/>
+                <input maxlength="1" type="text"/>
+                <input maxlength="1" type="text"/>
+                <input maxlength="1" type="text"/>
             </div>
         </div>
 
         <p id="otpErrorMessage" style="color: red; display: none; text-align: center">Please enter complete OTP</p>
 
         <div class="submit-button2" style="display: flex;justify-content: center;margin:20px;">
-            <button type="submit"
+            <button onclick="submitOTP()"
                     style="background-color: #004097; width: 120px; height: 50px; border-radius: 10px; color: white; cursor: pointer; border-color: #004097;"
-                    onclick="submitOTP()">Submit
+                    type="submit">Submit
             </button>
         </div>
     </div>
@@ -56,7 +56,7 @@
 
 <footer style="margin-top: auto;">
     <div class="support-text">
-        For any help & support, you can reach us at <a style="color:#1F6FDC" href="mailto:support@creditsaison-in.com"
+        For any help & support, you can reach us at <a href="mailto:support@creditsaison-in.com" style="color:#1F6FDC"
                                                        target="_blank">support@creditsaison-in.com</a>
     </div>
     <div style="text-align: center; color:#A7A7A8; margin: 20px 0px;">

@@ -1,14 +1,15 @@
+let domain = window.location.origin.replace('aadhaarredirection', 'api');
+
 let url = new URL(window.location.href);
 const token = url.searchParams.get("token");
 const errorPage = 'pages/ErrorPage.html';
 const error404Page = 'pages/Error404.html';
 const thankYouPage = 'pages/ThankYou.html';
+const api_url = `${domain}/api/v1/process-aadhaar`;
+
 if (!token) {
     window.location.href = errorPage;
 }
-
-let domain = window.location.origin.replace('aadhaarredirection', 'api');
-
 
 function formatAndValidateAadhaarInput(input) {
     var inputValue = input.value;
@@ -61,7 +62,6 @@ function generateOtp() {
         return; // Return early if Aadhaar number length is not 12
     }
 
-    const url = `${domain}/api/v2/testad`;
     const requestBody = {
         aadhaarNumber: aadhaarNumber
     };
@@ -74,7 +74,7 @@ function generateOtp() {
         body: JSON.stringify(requestBody)
     };
 
-    fetch(url, other_params)
+    fetch(api_url, other_params)
         .then(response => {
             // handle the response
             console.log(response);
@@ -139,7 +139,6 @@ function submitOTP() {
         document.getElementById("otpErrorMessage").style.display = "block";
         return; // Return early if Aadhaar number length is not 12
     }
-    var submitOtpUrl = `${domain}/api/v2/submitOtp`; // Replace with your submitOtp API endpoint URL
     var submitOtpParams = {
         method: "POST",
         headers: {
@@ -154,7 +153,7 @@ function submitOTP() {
         }),
     };
 
-    fetch(submitOtpUrl, submitOtpParams)
+    fetch(api_url, submitOtpParams)
         .then(response => {
             // handle the response
             console.log(response);
