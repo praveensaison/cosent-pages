@@ -24,7 +24,7 @@ function formatAndValidateAadhaarInput(input) {
 }
 
 var requestId = "";
-var aadhaarNumber = "";
+var aadhaarNo = "";
 
 function generateOtp() {
     console.log("submitAadhaar");
@@ -56,14 +56,14 @@ function generateOtp() {
 
     updateButton(); // Start the countdown
 
-    aadhaarNumber = aadhaarInput.value.replace(/\s/g, ""); // Remove spaces from aadhaarNumber
-    if (aadhaarNumber.length !== 12) {
+    aadhaarNo = aadhaarInput.value.replace(/\s/g, ""); // Remove spaces from aadhaarNumber
+    if (aadhaarNo.length !== 12) {
         document.getElementById("aadhaarErrorMessage").style.display = "block";
         return; // Return early if Aadhaar number length is not 12
     }
 
     const requestBody = {
-        aadhaarNumber: aadhaarNumber
+        aadhaarNo: aadhaarNo
     };
     const other_params = {
         method: 'POST',
@@ -89,7 +89,7 @@ function generateOtp() {
         .then(data => {
             // Store the requestId and aadhaarNumber from the response data
             requestId = '23';//data.requestId; @Todo Uncomment this
-            aadhaarNumber = '333';//data.aadhaarNumber;
+            aadhaarNo = '333';//data.aadhaarNumber;
             // Handle the response and show OTP section if status is 200
             // Otherwise, show an error message
             if (requestId) {
@@ -148,7 +148,7 @@ function submitOTP() {
         },
         body: JSON.stringify({
             requestId: requestId,
-            aadhaarNumber: aadhaarNumber,
+            aadhaarNo: aadhaarNo,
             otp: otp,
         }),
     };
