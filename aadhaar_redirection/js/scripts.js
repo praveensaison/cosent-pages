@@ -9,6 +9,7 @@ const thankYouPage = 'pages/ThankYou.html';
 
 let domain = window.location.origin.replace('aadhaarredirection', 'api');
 
+
 function formatAndValidateAadhaarInput(input) {
     var inputValue = input.value;
     var digitsOnly = inputValue.replace(/\D/g, ""); // Remove non-digit characters
@@ -27,7 +28,7 @@ var aadhaarNumber = ""; // Variable to store the aadhaarNumber
 function generateOtp() {
     console.log("submitAadhaar");
 
-    var countdown = 10; // Countdown in seconds
+    var countdown = 30; // Countdown in seconds
 
     var button = document.getElementById("generateOtpButton");
     var aadhaarInput = document.getElementById("aadhaarInput");
@@ -54,7 +55,7 @@ function generateOtp() {
 
     updateButton(); // Start the countdown
     setTimeout(function () {
-        button.disabled = false; // Enable the button after 10 seconds
+        button.disabled = false; // Enable the button after 30 seconds
         button.style.backgroundColor = "#004097"; // Restore button color
         aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
         button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
