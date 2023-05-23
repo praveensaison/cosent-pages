@@ -5,6 +5,8 @@ const token = url.searchParams.get("token");
 const errorPage = 'pages/ErrorPage.html';
 const error404Page = 'pages/Error404.html';
 const thankYouPage = 'pages/ThankYou.html';
+const homePage = 'AadhaarRedirection.html';
+
 const api_url = `https://a8fm3nym3g.execute-api.eu-west-1.amazonaws.com/qa2/api/v1/process-aadhaar`;
 
 if (!token) {
@@ -27,9 +29,7 @@ var requestId = "";
 var aadhaarNo = "";
 
 function generateOtp() {
-    console.log("submitAadhaar");
-
-    var countdown = 30; // Countdown in seconds
+    console.log("generateOtp");
 
     var button = document.getElementById("generateOtpButton");
     var aadhaarInput = document.getElementById("aadhaarInput");
@@ -38,23 +38,6 @@ function generateOtp() {
     button.style.backgroundColor = "#CCCCCC"; // Change button color
     aadhaarInput.readOnly = true; // Make input read-only
     aadhaarInput.style.backgroundColor = "#D3D3D3"; // Change input background color
-
-    // Function to update the button text with the remaining countdown
-    function updateButton() {
-        button.innerText = "Resend Otp (" + countdown + "s)";
-        countdown--;
-        if (countdown >= 0) {
-            setTimeout(updateButton, 1000); // Update every 1 second
-        } else {
-            button.disabled = false; // Enable the button after countdown
-            button.style.backgroundColor = "#004097"; // Restore button color
-            aadhaarInput.readOnly = false; // Make input editable again
-            aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
-            button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
-        }
-    }
-
-    updateButton(); // Start the countdown
 
     aadhaarNo = aadhaarInput.value.replace(/\s/g, ""); // Remove spaces from aadhaarNumber
     if (aadhaarNo.length !== 12) {
@@ -94,6 +77,31 @@ function generateOtp() {
             if (requestId) {
                 document.getElementById("aadhaarErrorMessage").style.display = 'none';
                 document.getElementById("otpSection").style.display = "block";
+
+                var countdown = 30; // Countdown in seconds
+
+                // Function to update the button text with the remaining countdown
+                function updateButton() {
+                    button.innerText = "Resend Otp (" + countdown + "s)";
+                    countdown--;
+                    if (countdown >= 0) {
+                        setTimeout(updateButton, 1000); // Update every 1 second
+                    } else {
+                        button.disabled = false; // Enable the button after countdown
+                        button.style.backgroundColor = "#004097"; // Restore button color
+                        aadhaarInput.readOnly = false; // Make input editable again
+                        aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
+                        button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
+                    }
+                }
+
+                updateButton(); // Start the countdown
+                // Disable caching of the thank you page
+                window.history.pushState({}, '', window.location.href);
+                window.onpopstate = function (event) {
+                    window.location.href = homePage;
+                };
+
             } else {
                 window.location.href = errorPage;
             }
@@ -103,6 +111,7 @@ function generateOtp() {
             window.location.href = errorPage;
         });
 }
+
 
 function handleOtp(event) {
     const input = event.target;
