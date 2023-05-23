@@ -89,7 +89,6 @@ function generateOtp() {
         .then(data => {
             // Store the requestId and aadhaarNumber from the response data
             requestId = data.requestId;
-            aadhaarNo = data.aadhaarNumber;
             // Handle the response and show OTP section if status is 200
             // Otherwise, show an error message
             if (requestId) {
