@@ -28,7 +28,7 @@
     <p id="aadhaarErrorMessage" style="color: red; display: none; text-align: center">Please enter a valid Aadhaar
         number.</p>
 
-    <div id="otpSection" style="display: none;">
+    <div class="otp-section">
         <div class="otp-container">
             <h2>Enter OTP</h2>
             <p>An OTP is sent to your registered mobile number for verification</p>
@@ -44,9 +44,14 @@
 
         <p id="otpErrorMessage" style="color: red; display: none; text-align: center">Please enter complete OTP</p>
 
+        <div class="consent-checkbox">
+            <input type="checkbox" id="consentCheckbox" onchange="toggleSubmitButton()">
+            <label for="consentCheckbox">I consent to the terms and conditions</label>
+        </div>
+
         <div class="submit-button2" style="display: flex;justify-content: center;margin:20px;">
-            <button onclick="submitOTP()"
-                    style="background-color: #004097; width: 120px; height: 50px; border-radius: 10px; color: white; cursor: pointer; border-color: #004097;"
+            <button disabled id="submitButton" onclick="submitOTP()"
+                    style="background-color: gray; width: 120px; height: 50px; border-radius: 10px; color: #ffffff; cursor: pointer; border-color: #004097;"
                     type="submit">Submit
             </button>
         </div>
@@ -75,4 +80,9 @@
         input.addEventListener("paste", handleOnPasteOtp);
     });
 
+    // Call the toggleSubmitButton function initially to set the initial state of the submit button
+    toggleSubmitButton();
+    // Add event listener for checkbox change
+    const consentCheckbox = document.getElementById("consentCheckbox");
+    consentCheckbox.addEventListener("change", handleCheckboxChange);
 </script>

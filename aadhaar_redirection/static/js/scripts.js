@@ -76,7 +76,7 @@ function generateOtp() {
             // Otherwise, show an error message
             if (requestId) {
                 document.getElementById("aadhaarErrorMessage").style.display = 'none';
-                document.getElementById("otpSection").style.display = "block";
+                document.getElementById("otp-section").style.display = "block";
 
                 var countdown = 30; // Countdown in seconds
 
@@ -171,7 +171,7 @@ function submitOTP() {
             }
         })
         .then(data => {
-            document.getElementById("otpSection").style.display = "none";
+            document.getElementById("otp-section").style.display = "none";
         })
         .catch(error => {
             console.log(error, 'e');
@@ -179,3 +179,24 @@ function submitOTP() {
         });
 }
 
+function toggleSubmitButton() {
+    let consentCheckbox = false;
+    consentCheckbox = document.getElementById("consentCheckbox");
+    const submitButton = document.getElementById("submitButton");
+
+    submitButton.disabled = !consentCheckbox.checked;
+
+    if (submitButton.disabled) {
+        submitButton.style.backgroundColor = "gray";
+        submitButton.style.borderColor = "gray";
+    } else {
+        submitButton.style.backgroundColor = "#004097";
+    }
+}
+
+function handleCheckboxChange(event) {
+    const checkbox = event.target;
+    const submitButton = document.getElementById("submitButton");
+
+    submitButton.disabled = !checkbox.checked;
+}
