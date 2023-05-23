@@ -77,6 +77,7 @@ function generateOtp() {
             if (requestId) {
                 document.getElementById("aadhaarErrorMessage").style.display = 'none';
                 document.getElementById("otp-section").style.display = "block";
+                clearOtpInputs();
 
                 var countdown = 30; // Countdown in seconds
 
@@ -199,4 +200,11 @@ function handleCheckboxChange(event) {
     const submitButton = document.getElementById("submitButton");
 
     submitButton.disabled = !checkbox.checked;
+}
+
+function clearOtpInputs() {
+    const otpInputs = document.querySelectorAll(".otp-field input");
+    otpInputs.forEach(input => {
+        input.value = "";
+    });
 }
