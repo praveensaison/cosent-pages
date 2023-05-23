@@ -61,7 +61,7 @@ button {
     border: none #004097;
 }
 
-.otp-section {
+#otpSection {
     display: none;
 }
 

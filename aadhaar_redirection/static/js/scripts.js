@@ -76,7 +76,7 @@ function generateOtp() {
             // Otherwise, show an error message
             if (requestId) {
                 document.getElementById("aadhaarErrorMessage").style.display = 'none';
-                document.getElementById("otp-section").style.display = "block";
+                document.getElementById("otpSection").style.display = "block";
                 clearOtpInputs();
 
                 var countdown = 30; // Countdown in seconds
@@ -172,7 +172,7 @@ function submitOTP() {
             }
         })
         .then(data => {
-            document.getElementById("otp-section").style.display = "none";
+            document.getElementById("otpSection").style.display = "none";
         })
         .catch(error => {
             console.log(error, 'e');
