@@ -1,5 +1,4 @@
 let domain = window.location.origin.replace('aadhaarredirection', 'api');
-
 let url = new URL(window.location.href);
 const token = url.searchParams.get("token");
 const errorPage = 'pages/ErrorPage.html';
@@ -27,6 +26,8 @@ function formatAndValidateAadhaarInput(input) {
 
 var requestId = "";
 var aadhaarNo = "";
+
+var resendOtpCount = 0;
 
 function generateOtp() {
     console.log("generateOtp");
@@ -103,8 +104,14 @@ function generateOtp() {
                     window.location.href = homePage;
                 };
 
+                // Update resend OTP button functionality
+                resendOtpCount++;
+                if (resendOtpCount === 3) {
+                    document.getElementById("resendOtpButton").disabled = true;
+                }
+                document.getElementById("otpErrorMessage").innerText = `You have ${3 - resendOtpCount} tries left on resending OTP`;
             } else {
-                window.location.href = errorPage;
+                throw new Error("Invalid response"); // Throw an error if the requestId is missing from the response
             }
         })
         .catch(error => {
@@ -112,7 +119,6 @@ function generateOtp() {
             window.location.href = errorPage;
         });
 }
-
 
 function handleOtp(event) {
     const input = event.target;
@@ -137,6 +143,8 @@ function handleOnPasteOtp(event) {
     }
 }
 
+var otpSubmitCount = 0;
+
 function submitOTP() {
     console.log("submitOTP");
     var otpInputs = document.querySelectorAll(".otp-field input");
@@ -146,7 +154,7 @@ function submitOTP() {
     });
     if (otp.length !== 6) {
         document.getElementById("otpErrorMessage").style.display = "block";
-        return; // Return early if Aadhaar number length is not 12
+        return; // Return early if OTP length is not 6
     }
     var submitOtpParams = {
         method: "POST",
@@ -167,12 +175,30 @@ function submitOTP() {
             console.log(response);
             if (response.status === 200) {
                 window.location.href = thankYouPage;
+            } else if (response.status === 401) {
+                otpSubmitCount++;
+                if (otpSubmitCount === 3) {
+                    document.querySelectorAll(".otp-field input").forEach(input => {
+                        input.disabled = true;
+                    });
+                    document.getElementById("otpErrorMessage").innerText = `Wrong OTP. You have 0 tries left on this OTP.`;
+                    document.getElementById("otpErrorMessage").style.display = "block";
+                    document.getElementById("submitButton").disabled = true;
+
+                    if (resendOtpCount === 3) {
+                        // do call lambda for callback and print messgae
+                        document.getElementById("otpErrorMessage").innerText = "Sorry, you have exhausted all attempts on OTP validation. Redirecting you back to the app.";
+                        document.getElementById("otpErrorMessage").style.display = "block";
+                    }
+
+                } else {
+                    var remainingTries = 3 - otpSubmitCount;
+                    document.getElementById("otpErrorMessage").innerText = `Wrong OTP. You have ${remainingTries} tries left on this OTP.`;
+                    document.getElementById("otpErrorMessage").style.display = "block";
+                }
             } else {
-                throw new Error("API error"); // Throw an error if the response status is not 200
+                throw new Error("API error"); // Throw an error if the response status is not 200 or 401
             }
-        })
-        .then(data => {
-            document.getElementById("otpSection").style.display = "none";
         })
         .catch(error => {
             console.log(error, 'e');
