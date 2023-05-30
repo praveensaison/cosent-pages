@@ -28,6 +28,7 @@ var requestId = "";
 var aadhaarNo = "";
 
 var resendOtpCount = 0;
+var otpSubmitCount = 0;
 
 function generateOtp() {
     console.log("generateOtp");
@@ -77,7 +78,12 @@ function generateOtp() {
             // Otherwise, show an error message
             if (requestId) {
                 document.getElementById("aadhaarErrorMessage").style.display = 'none';
+                document.getElementById("otpErrorMessage").style.display = 'none';
                 document.getElementById("otpSection").style.display = "block";
+                document.querySelectorAll(".otp-field input").forEach(input => {
+                    input.disabled = false;
+                });
+                otpSubmitCount = 0;
                 clearOtpInputs();
 
                 var countdown = 30; // Countdown in seconds
@@ -109,7 +115,8 @@ function generateOtp() {
                 if (resendOtpCount === 3) {
                     document.getElementById("resendOtpButton").disabled = true;
                 }
-                document.getElementById("otpErrorMessage").innerText = `You have ${3 - resendOtpCount} tries left on resending OTP`;
+                document.getElementById("aadhaarErrorMessage").innerText = `You have ${3 - resendOtpCount} tries left on resending OTP`;
+                document.getElementById("aadhaarErrorMessage").style.display = "block";
             } else {
                 throw new Error("Invalid response"); // Throw an error if the requestId is missing from the response
             }
@@ -143,7 +150,6 @@ function handleOnPasteOtp(event) {
     }
 }
 
-var otpSubmitCount = 0;
 
 function submitOTP() {
     console.log("submitOTP");
@@ -184,7 +190,8 @@ function submitOTP() {
                     document.getElementById("otpErrorMessage").innerText = `Wrong OTP. You have 0 tries left on this OTP.`;
                     document.getElementById("otpErrorMessage").style.display = "block";
                     document.getElementById("submitButton").disabled = true;
-
+                    submitButton.style.backgroundColor = "gray";
+                    submitButton.style.borderColor = "gray";
                     if (resendOtpCount === 3) {
                         // do call lambda for callback and print messgae
                         document.getElementById("otpErrorMessage").innerText = "Sorry, you have exhausted all attempts on OTP validation. Redirecting you back to the app.";
