@@ -32,6 +32,7 @@ var otpSubmitCount = 0;
 
 function generateOtp() {
     console.log("generateOtp");
+    document.getElementById("consentCheckbox").checked = false;
 
     var button = document.getElementById("generateOtpButton");
     var aadhaarInput = document.getElementById("aadhaarInput");
@@ -85,6 +86,7 @@ function generateOtp() {
                 });
                 otpSubmitCount = 0;
                 clearOtpInputs();
+                document.getElementById("consentCheckbox").disabled = false;
 
                 var countdown = 30; // Countdown in seconds
 
@@ -100,6 +102,7 @@ function generateOtp() {
                         aadhaarInput.readOnly = false; // Make input editable again
                         aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
                         button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
+
                     }
                 }
 
@@ -190,6 +193,7 @@ function submitOTP() {
                     document.getElementById("otpErrorMessage").innerText = `Wrong OTP. You have 0 tries left on this OTP.`;
                     document.getElementById("otpErrorMessage").style.display = "block";
                     document.getElementById("submitButton").disabled = true;
+                    document.getElementById("consentCheckbox").disabled = true;
                     submitButton.style.backgroundColor = "gray";
                     submitButton.style.borderColor = "gray";
                     if (resendOtpCount === 3) {
