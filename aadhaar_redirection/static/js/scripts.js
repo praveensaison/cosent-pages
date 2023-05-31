@@ -113,7 +113,7 @@ function generateOtp() {
                 // Disable caching of the thank you page
                 window.history.pushState({}, '', window.location.href);
                 window.onpopstate = function (event) {
-                    window.location.href = homePage; //@Todo Change to Error Page
+                    window.location.href = errorPage;
                 };
 
                 document.getElementById("aadhaarErrorMessage").innerText = `You have ${3 - resendOtpCount} tries left on resending OTP`;
