@@ -4,43 +4,61 @@
 <head>
     <title>Aadhaar Redirection Error Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-color: #FFFFFF;
+            padding: 15px 50px;
+        }
+
+        .center-title {
+            text-align: center;
+            letter-spacing: 0px;
+            color: #004097;
+            opacity: 1;
+            font-size: 25px;
+            font-family: 'Helvetica-Bold';
+            margin: 1% 30%;
+        }
+
+        .body-content {
+            text-align: center;
+        }
+
+        .logo {
+            display: block;
+            height: 42px;
+            width: 54px;
+        }
+
+        .error-img {
+            display: block;
+            margin: 10px auto;
+            height: 250px;
+            width: 300px;
+        }
+
+        .content-wrapper {
+            margin: 10px auto;
+            max-width: 400px;
+        }
+    </style>
 </head>
 
-<body style="background-color: #FFFFFF">
-
-<div style="padding: 15px 50px">
-    <img align="bottom" height="42px" src="../img/Logo.svg" width="54px">
+<body>
+<div>
+    <img class="logo" src="../img/Logo.svg" alt="Logo">
 </div>
-<div style="margin: 10px 200px;">
-    <div style="margin-top: 10px; text-align: center;">
-        <img align="bottom" height="250px" src="../img/ErrorPage.png" width="300px">
+<div class="content-wrapper">
+    <div>
+        <img class="error-img" src="../img/ErrorPage.png" alt="Error Image">
     </div>
     <div class="center-title">
         Oops!
     </div>
     <p class="body-content">
-        The link you are trying to visit is expired or removed.
+        Aadhaar could not be fetched, please try again later. Redirecting you back to the app
     </p>
-
 </div>
-
 </body>
-
-<style>
-    .center-title {
-        text-align: center;
-        letter-spacing: 0px;
-        color: #004097;
-        opacity: 1;
-        font-size: 25px;
-        font-family: 'Helvetica-Bold';
-        margin: 1% 30%;
-    }
-
-    .body-content {
-        text-align: center;
-    }
-
-</style>
 
 </html>
