@@ -47,7 +47,8 @@ body {
     background-color: #D3D3D3;
 }
 
-button {
+button,
+.submit-button2 button {
     font-family: 'Kanit-Regular', sans-serif;
     margin: 15px;
     background-color: #004097;
@@ -56,10 +57,32 @@ button {
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    border-radius: 10px;
-    cursor: pointer;
-    border: none #004097;
+    border: none;
+    outline: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
+button:hover:not([disabled]),
+.submit-button2 button:hover:not([disabled]) {
+    background-color: #002f5b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:active:not([disabled]),
+.submit-button2 button:active:not([disabled]) {
+    background-color: #001d38;
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+button:disabled,
+.submit-button2 button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
 
 #otpSection {
     display: none;
