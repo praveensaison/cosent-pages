@@ -1,10 +1,8 @@
-let domain = window.location.origin.replace('aadhaarredirection', 'api');
 let url = new URL(window.location.href);
 const token = url.searchParams.get("token");
 const errorPage = 'pages/ErrorPage.html';
 const error404Page = 'pages/Error404.html';
 const thankYouPage = 'pages/ThankYou.html';
-const homePage = 'AadhaarRedirection.html';
 
 const api_url = `https://a8fm3nym3g.execute-api.eu-west-1.amazonaws.com/qa2/api/v1/process-aadhaar`;
 
@@ -12,12 +10,11 @@ if (!token) {
     window.location.href = errorPage;
 }
 
-var requestId = "";
-var aadhaarNo = "";
+let requestId = "";
+let aadhaarNo = "";
 
-var resendOtpCount = 0;
-var otpSubmitCount = 0;
-let limitExceeded = false;
+let resendOtpCount = 0;
+let otpSubmitCount = 0;
 
 function formatAndValidateAadhaarInput(input) {
     var inputValue = input.value;
@@ -100,7 +97,6 @@ function generateOtp() {
                         aadhaarInput.readOnly = false; // Make input editable again
                         aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
                         button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
-
                     }
                 }
 
@@ -110,7 +106,7 @@ function generateOtp() {
                 } else {
                     updateButton(); // Start the countdown
                 }
-                // Disable caching of the thank you page
+                // Disable caching of the thank-you page
                 window.history.pushState({}, '', window.location.href);
                 window.onpopstate = function (event) {
                     window.location.href = errorPage;
@@ -164,15 +160,11 @@ function submitOTP() {
         return; // Return early if OTP length is not 6
     }
 
-    if (resendOtpCount >= 3 && otpSubmitCount >= 3) {
-        limitExceeded = true
-    }
-
     var submitOtpParams = {
         method: "POST", headers: {
             Origin: window.location.origin, Authorization: `Bearer ${token}`, "Content-Type": "application/json",
         }, body: JSON.stringify({
-            requestId: requestId, aadhaarNo: aadhaarNo, otp: otp, limitExceeded: limitExceeded
+            requestId: requestId, aadhaarNo: aadhaarNo, otp: otp
         }),
     };
 
@@ -189,19 +181,36 @@ function submitOTP() {
                     });
                     document.getElementById("otpErrorMessage").innerText = `Wrong OTP. You have 0 tries left on this OTP.`;
                     document.getElementById("otpErrorMessage").style.display = "block";
-                    document.getElementById("submitButton").disabled = true;
                     document.getElementById("consentCheckbox").disabled = true;
+                    const submitButton = document.getElementById("submitButton");
+                    submitButton.disabled = true
                     submitButton.style.backgroundColor = "gray";
                     submitButton.style.borderColor = "gray";
                     if (resendOtpCount >= 3) {
-                        // do call lambda for callback and print messgae
+                        const exceedParam = {
+                            method: "POST", headers: {
+                                Origin: window.location.origin,
+                                Authorization: `Bearer ${token}`,
+                                "Content-Type": "application/json",
+                            }, body: JSON.stringify({
+                                aadhaarNo: aadhaarNo, limitExceeded: true
+                            }),
+                        };
                         document.getElementById("otpErrorMessage").innerText = "Sorry, you have exhausted all attempts on OTP validation. Redirecting you back to the app.";
                         document.getElementById("otpErrorMessage").style.display = "block";
                         document.getElementById("submitButton").disabled = true;
+                        fetch(api_url, exceedParam).then(response => {
+                            console.log(response)
+                            if (response.status === 410) {
+                                //do nothing
+                            } else {
+                                window.location.href = error404Page;
+                            }
+                        })
                     }
 
                 } else {
-                    var remainingTries = 3 - otpSubmitCount;
+                    const remainingTries = 3 - otpSubmitCount;
                     document.getElementById("otpErrorMessage").innerText = `Wrong OTP. You have ${remainingTries} tries left on this OTP.`;
                     document.getElementById("otpErrorMessage").style.display = "block";
                 }
@@ -216,8 +225,7 @@ function submitOTP() {
 }
 
 function toggleSubmitButton() {
-    let consentCheckbox = false;
-    consentCheckbox = document.getElementById("consentCheckbox");
+    let consentCheckbox = document.getElementById("consentCheckbox");
     const submitButton = document.getElementById("submitButton");
 
     submitButton.disabled = !consentCheckbox.checked;
