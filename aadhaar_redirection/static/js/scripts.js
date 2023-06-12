@@ -4,7 +4,7 @@ const errorPage = 'pages/ErrorPage.html';
 const error404Page = 'pages/Error404.html';
 const thankYouPage = 'pages/ThankYou.html';
 
-const api_url = `https://a8fm3nym3g.execute-api.eu-west-1.amazonaws.com/qa2/api/v1/process-aadhaar`;
+const api_url = `https://jn7tpygcmb.execute-api.us-east-1.amazonaws.com/int/api/v1/process-aadhaar`;
 
 if (!token) {
     window.location.href = errorPage;
