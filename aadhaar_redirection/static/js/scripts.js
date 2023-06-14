@@ -4,12 +4,7 @@ const errorPage = 'pages/ErrorPage.html';
 const error404Page = 'pages/Error404.html';
 const thankYouPage = 'pages/ThankYou.html';
 
-let api_url = `{{BASE_URL}}`;
-const env = `{{ENV}}`
-
-if (env === 'qa2') {
-    api_url = window.location.origin.replace('aadhaarredirection', 'api')
-}
+const api_url = `{{API_BASE_URL}}`;
 
 if (!token) {
     window.location.href = errorPage;
