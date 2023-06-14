@@ -4,7 +4,12 @@ const errorPage = 'pages/ErrorPage.html';
 const error404Page = 'pages/Error404.html';
 const thankYouPage = 'pages/ThankYou.html';
 
-const api_url = `https://jn7tpygcmb.execute-api.us-east-1.amazonaws.com/int/api/v1/process-aadhaar`;
+let api_url = `{{BASE_URL}}`;
+const env = `{{ENV}}`
+
+if (env === 'qa2') {
+    api_url = window.location.origin.replace('aadhaarredirection', 'api')
+}
 
 if (!token) {
     window.location.href = errorPage;
