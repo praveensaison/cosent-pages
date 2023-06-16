@@ -4,7 +4,7 @@ const errorPage = 'pages/ErrorPage.html';
 const error404Page = 'pages/Error404.html';
 const thankYouPage = 'pages/ThankYou.html';
 
-const api_url = `{{API_BASE_URL}}`;
+const api_url = `{{API_BASE_URL}}/api/v1/process-aadhaar`;
 
 if (!token) {
     window.location.href = errorPage;
