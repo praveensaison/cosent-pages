@@ -12,7 +12,7 @@ getIndex() {
   return -1
 }
 
-STACK_NAME=hawkgirl-CDN-distribution
+STACK_NAME=hawkgirl-customer-consent
 AWS_PROFILE=default
 
 PS3='Please enter the environment (enter corresponding number): '
@@ -56,18 +56,14 @@ echo "Starting deployment for distibutions"
   sam build
 
   sam deploy --stack-name $STACK_NAME --template-file ./.aws-sam/build/template.yaml \
-  --capabilities CAPABILITY_AUTO_EXPAND CAPABILITY_NAMED_IAM \
-  --s3-bucket "$BUCKET_NAME" \
-  --region "$AWS_REGION" \
-  --profile "$AWS_PROFILE" \
-  --parameter-overrides EnvironmentType="$ENV"
+    --capabilities CAPABILITY_AUTO_EXPAND CAPABILITY_NAMED_IAM \
+    --s3-bucket "$BUCKET_NAME" \
+    --region "$AWS_REGION" \
+    --profile "$AWS_PROFILE" \
+    --parameter-overrides EnvironmentType="$ENV"
 
-
-  cd ..
   cd static
   aws s3 sync . s3://customerconsentbucket-$ENV-$ACCOUNT_ID-$AWS_REGION
-
-
 )
 
 rm -rf venv
