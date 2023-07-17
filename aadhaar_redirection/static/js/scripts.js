@@ -1,13 +1,11 @@
 let url = new URL(window.location.href);
 const token = url.searchParams.get("token");
-const errorPage = 'pages/ErrorPage.html';
-const error404Page = 'pages/Error404.html';
-const thankYouPage = 'pages/ThankYou.html';
+const tokenErrorPage = 'pages/ErrorPage.html';
 
 const api_url = `{{API_BASE_URL}}/api/v1/process-aadhaar`;
 
 if (!token) {
-    window.location.href = errorPage;
+    window.location.href = tokenErrorPage;
 }
 
 let requestId = "";
@@ -15,6 +13,27 @@ let aadhaarNo = "";
 
 let resendOtpCount = 0;
 let otpSubmitCount = 0;
+
+const callbackUrl = getCallbackUrlFromToken()
+
+const errorPage = 'pages/ErrorPage.html?callbackUrl=' + callbackUrl;
+const error404Page = 'pages/Error404.html?callbackUrl=' + callbackUrl;
+const thankYouPage = 'pages/ThankYou.html?callbackUrl=' + callbackUrl;
+
+function getCallbackUrlFromToken() {
+    var tokenJson = parseJwt(token);
+    return tokenJson['payload']['callbackUrl'];
+}
+
+function parseJwt(token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+}
 
 function formatAndValidateAadhaarInput(input) {
     var inputValue = input.value;
