@@ -1,11 +1,13 @@
 let url = new URL(window.location.href);
 const token = url.searchParams.get("token");
-const tokenErrorPage = 'pages/ErrorPage.html';
+const errorPage = 'pages/ErrorPage.html?token=' + token;
+const error404Page = 'pages/Error404.html?token=' + token;
+const thankYouPage = 'pages/ThankYou.html?token=' + token;
 
 const api_url = `{{API_BASE_URL}}/api/v1/process-aadhaar`;
 
 if (!token) {
-    window.location.href = tokenErrorPage;
+    window.location.href = errorPage;
 }
 
 let requestId = "";
@@ -15,10 +17,6 @@ let resendOtpCount = 0;
 let otpSubmitCount = 0;
 
 const callbackUrl = getCallbackUrlFromToken()
-
-const errorPage = 'pages/ErrorPage.html?callbackUrl=' + callbackUrl;
-const error404Page = 'pages/Error404.html?callbackUrl=' + callbackUrl;
-const thankYouPage = 'pages/ThankYou.html?callbackUrl=' + callbackUrl;
 
 function getCallbackUrlFromToken() {
     var tokenJson = parseJwt(token);
