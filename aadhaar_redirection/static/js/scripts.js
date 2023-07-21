@@ -81,12 +81,12 @@ function generateOtp() {
             if (response.status === 200) {
                 return response.json(); // Parse the response JSON
             } else if (response.status === 400) {
+                // Show invalid aadhaar number message
                 document.getElementById("aadhaarErrorMessage").innerText = 'Please enter a valid Aadhaar number.'
                 document.getElementById("aadhaarErrorMessage").style.display = "block";
                 button.style.backgroundColor = "#004097"; // Restore button color
                 aadhaarInput.readOnly = false; // Make input editable again
                 aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
-                aadhaarInput.value = '' // Reset input value
             } else if (response.status === 500) {
                 window.location.href = error404Page;
             } else {
@@ -99,6 +99,7 @@ function generateOtp() {
             // Handle the response and show OTP section if status is 200
             // Otherwise, show an error message
             if (requestId) {
+                // Remove error message if any
                 document.getElementById("aadhaarErrorMessage").style.display = 'none';
                 document.getElementById("otpErrorMessage").style.display = 'none';
                 document.getElementById("otpSection").style.display = "block";
@@ -114,6 +115,7 @@ function generateOtp() {
                 // Function to update the button text with the remaining countdown
                 function updateButton() {
                     button.innerText = "Resend Otp (" + countdown + "s)";
+                    button.color = "black" // Update button color to black
                     countdown--;
                     if (countdown >= 0) {
                         setTimeout(updateButton, 1000); // Update every 1 second
@@ -123,6 +125,7 @@ function generateOtp() {
                         aadhaarInput.readOnly = false; // Make input editable again
                         aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
                         button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
+                        button.style.color = "white" // Restore button color to white
                     }
                 }
 
