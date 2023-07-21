@@ -4,7 +4,7 @@ const errorPage = 'pages/ErrorPage.html?token=' + token;
 const error404Page = 'pages/Error404.html?token=' + token;
 const thankYouPage = 'pages/ThankYou.html?token=' + token;
 
-const api_url = `{{API_BASE_URL}}/api/v1/process-aadhaar`;
+const api_url = `https://a8fm3nym3g.execute-api.eu-west-1.amazonaws.com/qa2/api/v1/process-aadhaar`;
 
 if (!token) {
     window.location.href = errorPage;
@@ -52,6 +52,8 @@ function generateOtp() {
     var button = document.getElementById("generateOtpButton");
     var aadhaarInput = document.getElementById("aadhaarInput");
 
+    document.getElementById("aadhaarErrorMessage").style.display = "none";
+
     button.disabled = true; // Disable the button
     button.style.backgroundColor = "#CCCCCC"; // Change button color
     aadhaarInput.readOnly = true; // Make input read-only
@@ -81,6 +83,11 @@ function generateOtp() {
             } else if (response.status === 400) {
                 document.getElementById("aadhaarErrorMessage").innerText = 'Please enter a valid Aadhaar number.'
                 document.getElementById("aadhaarErrorMessage").style.display = "block";
+                button.disabled = false; // Enable the button after countdown
+                button.style.backgroundColor = "#004097"; // Restore button color
+                aadhaarInput.readOnly = false; // Make input editable again
+                aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
+                aadhaarInput.value = ''
             } else if (response.status === 500) {
                 window.location.href = error404Page;
             } else {
@@ -139,8 +146,7 @@ function generateOtp() {
             }
         })
         .catch(error => {
-            console.log(error, 'e');
-            window.location.href = errorPage;
+            console.log(error, 'error');
         });
 }
 
