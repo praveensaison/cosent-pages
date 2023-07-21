@@ -78,7 +78,10 @@ function generateOtp() {
             console.log(response);
             if (response.status === 200) {
                 return response.json(); // Parse the response JSON
-            } else if (response.status === 404) {
+            } else if (response.status === 400) {
+                document.getElementById("aadhaarErrorMessage").innerText = 'Please enter a valid Aadhaar number.'
+                document.getElementById("aadhaarErrorMessage").style.display = "block";
+            } else if (response.status === 500) {
                 window.location.href = error404Page;
             } else {
                 throw new Error("API error"); // Throw an error if the response status is not 200
@@ -100,7 +103,7 @@ function generateOtp() {
                 clearOtpInputs();
                 document.getElementById("consentCheckbox").disabled = false;
 
-                var countdown = 30; // Countdown in seconds
+                var countdown = 60; // Countdown in seconds
 
                 // Function to update the button text with the remaining countdown
                 function updateButton() {
@@ -190,7 +193,7 @@ function submitOTP() {
             console.log(response);
             if (response.status === 200) {
                 window.location.href = thankYouPage;
-            } else if (response.status === 401) {
+            } else if (response.status === 400) {
                 otpSubmitCount++;
                 if (otpSubmitCount >= 3) {
                     document.querySelectorAll(".otp-field input").forEach(input => {
