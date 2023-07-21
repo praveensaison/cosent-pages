@@ -115,7 +115,7 @@ function generateOtp() {
                 // Function to update the button text with the remaining countdown
                 function updateButton() {
                     button.innerText = "Resend Otp (" + countdown + "s)";
-                    button.color = "black" // Update button color to black
+                    button.style.color = "black" // Update button color to black
                     countdown--;
                     if (countdown >= 0) {
                         setTimeout(updateButton, 1000); // Update every 1 second
