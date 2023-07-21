@@ -83,11 +83,10 @@ function generateOtp() {
             } else if (response.status === 400) {
                 document.getElementById("aadhaarErrorMessage").innerText = 'Please enter a valid Aadhaar number.'
                 document.getElementById("aadhaarErrorMessage").style.display = "block";
-                button.disabled = false; // Enable the button after countdown
                 button.style.backgroundColor = "#004097"; // Restore button color
                 aadhaarInput.readOnly = false; // Make input editable again
                 aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
-                aadhaarInput.value = ''
+                aadhaarInput.value = '' // Reset input value
             } else if (response.status === 500) {
                 window.location.href = error404Page;
             } else {
