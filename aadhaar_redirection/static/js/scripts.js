@@ -193,6 +193,9 @@ function submitOTP() {
         }),
     };
 
+    const submitButton = document.getElementById("submitButton");
+    submitButton.disabled = true
+
     fetch(api_url, submitOtpParams)
         .then(response => {
             console.log(response);
@@ -238,6 +241,8 @@ function submitOTP() {
                     const remainingTries = 3 - otpSubmitCount;
                     document.getElementById("otpErrorMessage").innerText = `Wrong OTP. You have ${remainingTries} tries left on this OTP.`;
                     document.getElementById("otpErrorMessage").style.display = "block";
+                    const submitButton = document.getElementById("submitButton");
+                    submitButton.disabled = false
                 }
             } else {
                 throw new Error("API error"); // Throw an error if the response status is not 200 or 401
