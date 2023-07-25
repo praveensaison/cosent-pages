@@ -175,6 +175,11 @@ function handleOnPasteOtp(event) {
     }
 }
 
+function redirectUrl() {
+    if (callbackUrl != null) {
+        document.location.href = callbackUrl;
+    }
+}
 
 function submitOTP() {
     console.log("submitOTP");
@@ -233,7 +238,7 @@ function submitOTP() {
                         fetch(api_url, exceedParam).then(response => {
                             console.log(response)
                             if (response.status === 410) {
-                                //do nothing
+                                setTimeout(redirectUrl, 4000);
                             } else {
                                 window.location.href = error404Page;
                             }
