@@ -122,8 +122,7 @@ function generateOtp() {
                     } else {
                         button.disabled = false; // Enable the button after countdown
                         button.style.backgroundColor = "#004097"; // Restore button color
-                        aadhaarInput.readOnly = false; // Make input editable again
-                        aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
+                        aadhaarInput.readOnly = true; // Make input read only
                         button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
                         button.style.color = "white" // Restore button color to white
                     }
