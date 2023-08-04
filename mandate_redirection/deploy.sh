@@ -46,7 +46,7 @@ deploy_environment() {
     ;;
   esac
 
-  echo "Replacing API_BASE_URL in script.js with $API_BASE_URL"
+  echo "Replacing API_BASE_URL in scripts.js with $API_BASE_URL"
   sed "s~{{API_BASE_URL}}~$API_BASE_URL~g" static/js/scripts.js > static/js/scripts_modified.tmp && mv static/js/scripts_modified.tmp static/js/scripts.js
 
   echo "Deploying $ENV environment"
