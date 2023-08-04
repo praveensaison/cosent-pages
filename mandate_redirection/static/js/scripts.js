@@ -5,16 +5,12 @@ const errorPage = "ErrorPage.html?token=" + token;
 
 if (!token) window.location.href = errorPage;
 
-window.history.forward();
-function noBack() {
-  window.history.forward();
-}
 
 const { callbackUrl, orderId, customerId, appFormId } =
   parseJwt(token)["payload"];
 
 var rzp = new Razorpay({
-  key: "rzp_test_yfErT76MqVVxrq",
+  key: '{{RAZORPAY_API_KEY}}',
   order_id: orderId,
   customer_id: customerId,
   recurring: "1",
@@ -68,16 +64,15 @@ function redirectToPtnr() {
 }
 
 const isMandateCreated = () => {
-  let apiUrl = `https://jn7tpygcmb.execute-api.us-east-1.amazonaws.com/int/api/v1/app-form/${appFormId}/mandate`;
+  let apiUrl = `{{API_BASE_URL}}/api/v1/app-form/${appFormId}/mandate`;
 
-  // fetch(apiUrl, {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     authorization: `Bearer ${token}`,
-  //   },
-  // })
-  Promise.resolve({status:400})
+  fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      'Content-Type': "application/json",
+      'Authorization': `Bearer ${token}`,
+    },
+  })
   .then((res) => {
     if (res.status === 200 || res.status === 500) {
       document
