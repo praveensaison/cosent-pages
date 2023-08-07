@@ -3,11 +3,15 @@ let token = url.searchParams.get("token");
 
 const errorPage = "ErrorPage.html?token=" + token;
 
-if (!token) window.location.href = errorPage;
-
 
 const { callbackUrl, orderId, customerId, appFormId } =
   parseJwt(token)["payload"];
+const exp = parseJwt(token).exp * 1000;
+
+if (!token || isExpiredToken()) window.location.href = errorPage;
+function isExpiredToken (){
+  return new Date(exp) < new Date()
+}
 
 var rzp = new Razorpay({
   key: '{{RAZORPAY_API_KEY}}',
