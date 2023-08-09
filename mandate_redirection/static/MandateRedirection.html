@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Mandate Redirection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div>
+      <div class="container-sm header">
+        <img style="height: 3.5rem; width: 8rem" src="images/Logo.svg" />
+      </div>
+      <div class="center-content align-center">
+        <div class="loader"></div>
+        <div data-msg="rz-redirect" class="hidden">Redirecting you to Razorpay...</div>
+        <div data-msg="prtnr-redirect" class="hidden">
+          Mandate registration has been successfully completed in a previous
+          attempt. Redirecting you back to Airtel app...
+        </div>
+        <div data-msg="mandate-fail" class="hidden">
+         Mandate failed. Redirecting you back to Airtel app...
+        </div>
+      </div>
+    </div>
+    <script src="js/scripts.js" async>
+      
+    </script>
+  </body>
+</html>

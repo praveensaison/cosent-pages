@@ -20,7 +20,7 @@
     <div class="input-container">
         <input id="aadhaarInput" maxlength="14" oninput="formatAndValidateAadhaarInput(this)"
                placeholder="12-digit number" style="width: 200px;"
-               type="text">
+               type="text" inputmode="numeric">
         <div class="submit-button">
             <button disabled id="generateOtpButton" onclick="generateOtp()" type="submit">Send Otp</button>
         </div>
@@ -33,12 +33,12 @@
             <h2>Enter OTP</h2>
             <p>An OTP is sent to your registered mobile number for verification</p>
             <div class="otp-field">
-                <input maxlength="1" type="text"/>
-                <input maxlength="1" type="text"/>
-                <input class="space" maxlength="1" type="text"/>
-                <input maxlength="1" type="text"/>
-                <input maxlength="1" type="text"/>
-                <input maxlength="1" type="text"/>
+                <input maxlength="1" type="text" inputmode="numeric"/>
+                <input maxlength="1" type="text" inputmode="numeric"/>
+                <input class="space" maxlength="1" type="text" inputmode="numeric"/>
+                <input maxlength="1" type="text" inputmode="numeric"/>
+                <input maxlength="1" type="text" inputmode="numeric"/>
+                <input maxlength="1" type="text" inputmode="numeric"/>
             </div>
         </div>
 
