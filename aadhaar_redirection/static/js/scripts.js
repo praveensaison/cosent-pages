@@ -148,6 +148,7 @@ function generateOtp() {
         })
         .catch(error => {
             console.log(error, 'error');
+             window.location.href = errorPage;
         });
 }
 
