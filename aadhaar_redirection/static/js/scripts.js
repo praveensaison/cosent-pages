@@ -97,6 +97,7 @@ function generateOtp() {
             // Handle the response and show OTP section if status is 200
             // Otherwise, show an error message
             if (data !== undefined && "requestId" in data) {
+                requestId = data.requestId
                 // Remove error message if any
                 document.getElementById("aadhaarErrorMessage").style.display = 'none';
                 document.getElementById("otpErrorMessage").style.display = 'none';
