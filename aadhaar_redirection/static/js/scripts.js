@@ -4,7 +4,7 @@ const errorPage = 'pages/ErrorPage.html?token=' + token;
 const error404Page = 'pages/Error404.html?token=' + token;
 const thankYouPage = 'pages/ThankYou.html?token=' + token;
 
-const api_url = `{{API_BASE_URL}}/api/v1/process-aadhaar`;
+const api_url = `https://jn7tpygcmb.execute-api.us-east-1.amazonaws.com/int/api/v1/process-aadhaar`;
 
 if (!token) {
     window.location.href = errorPage;
@@ -97,6 +97,7 @@ function generateOtp() {
             // Handle the response and show OTP section if status is 200
             // Otherwise, show an error message
             if (data !== undefined && "requestId" in data) {
+                // Store the requestId and aadhaarNumber from the response data
                 requestId = data.requestId
                 // Remove error message if any
                 document.getElementById("aadhaarErrorMessage").style.display = 'none';
