@@ -94,11 +94,11 @@ function generateOtp() {
             }
         })
         .then(data => {
-            // Store the requestId and aadhaarNumber from the response data
-            requestId = data.requestId;
             // Handle the response and show OTP section if status is 200
             // Otherwise, show an error message
-            if (requestId) {
+            if (data !== undefined && "requestId" in data) {
+                // Store the requestId and aadhaarNumber from the response data
+                requestId = data.requestId
                 // Remove error message if any
                 document.getElementById("aadhaarErrorMessage").style.display = 'none';
                 document.getElementById("otpErrorMessage").style.display = 'none';
@@ -143,12 +143,12 @@ function generateOtp() {
                 document.getElementById("aadhaarErrorMessage").innerText = `You have ${3 - resendOtpCount} tries left on resending OTP`;
                 document.getElementById("aadhaarErrorMessage").style.display = "block";
             } else {
-                throw new Error("Invalid response"); // Throw an error if the requestId is missing from the response
+                console.log("Invalid response: ", data); // Log error if the requestId is missing from the response
             }
         })
         .catch(error => {
-            console.log(error, 'error');
-             window.location.href = errorPage;
+            console.log("error: ", error);
+            window.location.href = errorPage;
         });
 }
 
