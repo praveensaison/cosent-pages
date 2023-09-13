@@ -15,19 +15,24 @@
         <img align="bottom" height="64px" src="img/Logo.svg" width="200px">
     </div>
 
-    <h1 class="heading">Enter Your Aadhaar Number</h1>
-
-    <div class="input-container">
-        <input id="aadhaarInput" maxlength="14" oninput="formatAndValidateAadhaarInput(this)"
-               placeholder="12-digit number" style="width: 200px;"
-               type="text" inputmode="numeric">
-        <div class="submit-button">
-            <button disabled id="generateOtpButton" onclick="generateOtp()" type="submit">Send Otp</button>
-        </div>
+    <div class="center-content align-center" id="loader">
+        <div class="loader"></div>
     </div>
-    <p id="aadhaarErrorMessage" style="color: red; display: none; text-align: center">Please enter a valid Aadhaar
-        number.</p>
 
+    <div id="aadhaarSection">
+        <h1 class="heading">Enter Your Aadhaar Number</h1>
+
+        <div class="input-container">
+            <input id="aadhaarInput" maxlength="14" oninput="formatAndValidateAadhaarInput(this)"
+                   placeholder="12-digit number" style="width: 200px;"
+                   type="text" inputmode="numeric">
+            <div class="submit-button">
+                <button disabled id="generateOtpButton" onclick="generateOtp()" type="submit">Send Otp</button>
+            </div>
+        </div>
+        <p id="aadhaarErrorMessage" style="color: red; display: none; text-align: center">Please enter a valid Aadhaar
+            number.</p>
+    </div>
     <div id="otpSection">
         <div class="otp-container">
             <h2>Enter OTP</h2>

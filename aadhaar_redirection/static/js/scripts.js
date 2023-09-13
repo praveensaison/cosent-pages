@@ -18,6 +18,9 @@ let otpSubmitCount = 0;
 
 const callbackUrl = getCallbackUrlFromToken()
 
+// Validate Aadhaar Pull Status
+validateAadhaarStatus()
+
 function getCallbackUrlFromToken() {
     var tokenJson = parseJwt(token);
     return tokenJson['payload']['callbackUrl'];
@@ -43,6 +46,35 @@ function formatAndValidateAadhaarInput(input) {
     let button = document.getElementById("generateOtpButton");
     button.disabled = input.value.length !== 14; // Disable the button if Aadhaar number length is not 14
     button.style.backgroundColor = button.disabled ? "gray" : "#004097"; // Change button background color to gray if disabled
+}
+
+function validateAadhaarStatus() {
+    console.log("validateAadhaarPull")
+
+    var aadhaarStatusParams = {
+            method: "POST", headers: {
+                Origin: window.location.origin, Authorization: `Bearer ${token}`, "Content-Type": "application/json",
+            }, body: JSON.stringify({
+                aadhaarStatus: true
+            }),
+        };
+
+    fetch(api_url, aadhaarStatusParams)
+        .then(response => {
+            console.log(response);
+            if (response.status === 200) {
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("aadhaarSection").style.display = "block";
+            } else if (response.status === 400 || response.status === 500) {
+                window.location.href = errorPage;
+            } else {
+                throw new Error("API error"); // Throw an error if the response status is not 200 or 400 or 500
+            }
+        })
+        .catch(error => {
+            console.log("error: ", error);
+            window.location.href = error404Page;
+        });
 }
 
 function generateOtp() {
