@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: rgba(0, 0, 0, 0.5); /* Greyed-out background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #p-bold {
+            font-size: large;
+            font-weight: 600;
+        }
+
+        .popup {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 90%; /* Adjust as needed for smaller screens */
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            overflow-wrap: break-word;
+        }
+
+        .popup-top {
+            background-color: #ffffff;
+            border-radius: 10px 10px 0 0;
+            padding: 0px;
+        }
+
+        .popup-bottom {
+            background-color: #0074cc; /* Blue background */
+            color: white;
+            border-radius: 0 0 10px 10px;
+        }
+
+        #logo {
+            position: relative;
+            top: 10px;
+            left: 10px;
+            width: 95px;
+            height: 82px;
+        }
+
+        #close-button {
+            border: none;
+            background-color: #007BFF;
+            color: #fff;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .popup {
+                width: 80%; /* Adjust for smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .popup {
+                width: 95%; /* Adjust for even smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="popup">
+    <img id="logo" src="img/logo.png" alt="Logo">
+
+    <div class="popup-top">
+        <img style="height: auto; width: 100%;" id="status-image" src="img/failure.png" alt="Status Image">
+    </div>
+    <div class="popup-bottom">
+
+        <p id="p-bold">Payment Details:</p>
+        <p id="status-text">Order Id: </p>
+        <br>
+
+    </div>
+</div>
+
+<script>
+    // Function to get URL parameters
+    function getParameterByName(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+    }
+
+    const statusMessage = 'Payment Successful';
+
+    // Check for the 'status' parameter and set the image accordingly
+    const status = getParameterByName('status');
+
+    const orderId = getParameterByName('order_id');
+
+    const statusImage = document.getElementById('status-image');
+    const statusText = document.getElementById('status-text');
+
+    if (status === 'CHARGED') {
+        statusImage.src = 'img/success.png';
+    } else {
+        statusImage.src = 'img/failure.png';
+    }
+
+    // Create the new content (a <span> element with text)
+    const newContent = document.createElement("span");
+    newContent.textContent = orderId;
+
+    // Append the new content to the existing <p> element
+    statusText.appendChild(newContent);
+
+</script>
+</body>
+</html>
