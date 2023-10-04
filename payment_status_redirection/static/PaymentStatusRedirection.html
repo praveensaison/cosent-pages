@@ -46,10 +46,10 @@
 
         #logo {
             position: relative;
-            top: 10px;
-            left: 10px;
-            width: 95px;
-            height: 82px;
+            top: 20px;
+            left: 20px;
+            width: 52px;
+            height: 45px;
         }
 
         #close-button {
@@ -60,6 +60,11 @@
             padding: 10px 20px;
             cursor: pointer;
             margin-top: 10px;
+        }
+
+        #payment-text {
+            font-size: 27px;
+            color: #363636;
         }
 
         /* Responsive Styles */
@@ -79,14 +84,21 @@
 <body>
 <div class="popup">
     <img id="logo" src="img/logo.png" alt="Logo">
-
+    <br>
+    <br>
+    <br>
     <div class="popup-top">
-        <img style="height: auto; width: 100%;" id="status-image" src="img/failure.png" alt="Status Image">
+        <img style="height: 134px; width: 134px;" id="status-image" src="img/failure.png" alt="Status Image">
+        <p id="payment-text"> </p>
+
     </div>
     <div class="popup-bottom">
 
+        <p id="pending-text"> </p>
+
         <p id="p-bold">Payment Details:</p>
-        <p id="status-text">Order Id: </p>
+        <p id="status-text"> </p>
+
         <br>
 
     </div>
@@ -108,16 +120,38 @@
 
     const statusImage = document.getElementById('status-image');
     const statusText = document.getElementById('status-text');
+    const paymentText = document.getElementById('payment-text');
+    const pendingText = document.getElementById('pending-text');
 
-    if (status === 'CHARGED') {
-        statusImage.src = 'img/success.png';
-    } else {
-        statusImage.src = 'img/failure.png';
+
+    switch(status)
+    {
+        case 'CHARGED': 
+            statusImage.src = 'img/success.png';
+            paymentText.textContent = 'Payment Successful!'
+            break;
+        case 'PENDING_VBV':
+            statusImage.src = 'img/pending.png';
+            paymentText.textContent = 'Processing!'
+
+            const pendingNote = document.createElement("span");
+            pendingNote.textContent = 'We are verifying payment with your bank.';
+            pendingText.append(pendingNote);
+
+            const linebreak = document.createElement('br');
+            const paymentDetails = document.getElementById('p-bold');
+            paymentDetails.before(linebreak);
+
+            break;
+        default: 
+            statusImage.src = 'img/failure.png';
+            paymentText.textContent = 'Payment Failed!'
+            break;
     }
 
     // Create the new content (a <span> element with text)
     const newContent = document.createElement("span");
-    newContent.textContent = orderId;
+    newContent.textContent = 'Order Id:  '+ orderId;
 
     // Append the new content to the existing <p> element
     statusText.appendChild(newContent);
