@@ -77,13 +77,13 @@ Resources:
         Aliases:
           - !If
             - EnvironmentProd
-            - !Sub "paymentredirection.creditsaison.in"
+            - !Sub "paymentstatus.creditsaison.in"
             - !If
               - EnvironmentInt
-              - !Join [ "", [ "paymentredirection", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
+              - !Join [ "", [ "paymentstatus", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
               - !Join [
                 "",
-                [ "paymentredirection", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
+                [ "paymentstatus", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
               ]
         ViewerCertificate:
           MinimumProtocolVersion: TLSv1.2_2021
@@ -140,13 +140,13 @@ Resources:
           - !Join [ "", [ !Ref EnvironmentType, ".creditsaison.xyz." ] ]
       Name: !If
         - EnvironmentProd
-        - !Sub "paymentredirection.creditsaison.in"
+        - !Sub "paymentstatus.creditsaison.in"
         - !If
           - EnvironmentInt
-          - !Join [ "", [ "paymentredirection", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
+          - !Join [ "", [ "paymentstatus", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
           - !Join [
             "",
-            [ "paymentredirection", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
+            [ "paymentstatus", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
           ]
       Type: A
 
