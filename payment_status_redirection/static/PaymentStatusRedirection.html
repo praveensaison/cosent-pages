@@ -130,7 +130,13 @@
             statusImage.src = 'img/success.png';
             paymentText.textContent = 'Payment Successful!'
             break;
-        case 'PENDING_VBV':
+        
+        case 'AUTHENTICATION_FAILED': 
+        case 'AUTHORIZATION_FAILED': 
+            statusImage.src = 'img/failure.png';
+            paymentText.textContent = 'Payment Failed!'
+            break;
+        default:
             statusImage.src = 'img/pending.png';
             paymentText.textContent = 'Processing!'
 
@@ -141,11 +147,6 @@
             const linebreak = document.createElement('br');
             const paymentDetails = document.getElementById('p-bold');
             paymentDetails.before(linebreak);
-
-            break;
-        default: 
-            statusImage.src = 'img/failure.png';
-            paymentText.textContent = 'Payment Failed!'
             break;
     }
 
