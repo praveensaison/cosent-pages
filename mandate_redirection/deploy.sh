@@ -44,8 +44,8 @@ deploy_environment() {
   "production")
     AWS_REGION=ap-south-1
     BUCKET_NAME="cfn-oneaboveall-templates-production"
-    API_BASE_URL="https://nupb32mlsh.execute-api.ap-south-1.amazonaws.com/production"
-    RAZORPAY_API_KEY="rzp_live_k2kQN5XeOUPX1y"
+    API_BASE_URL=""
+    RAZORPAY_API_KEY=""
     ;;
   *)
     echo "Invalid environment: $ENV"
