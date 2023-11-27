@@ -22,22 +22,18 @@ body {
 }
 
 .input-container {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 20px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
+    margin: 20px;
+  
 }
 
 .input-container input {
     font-family: 'Kanit-Regular', sans-serif;
-    width: 200px;
+    width: 80%;
     height: 16px;
     padding: 10px;
-    border: 1px solid #CCC;
-    border-radius: 4px;
-    font-size: 18px;
+    /* border: 1px solid #CCC;
+    border-radius: 4px; */
+    font-size: 14px;
     text-align: center;
     background-color: #ffffff;
     margin-left: 6px;
@@ -46,14 +42,18 @@ body {
 .input-container input:read-only {
     background-color: #D3D3D3;
 }
-
+.input-container input:focus {
+    outline:none;
+}
 button,
 .submit-button2 button {
+    width: 100%;
+    border-radius: 20px;
     font-family: 'Kanit-Regular', sans-serif;
     margin: 15px;
-    background-color: #004097;
+    background-color: #E2E2E2;
+    background: linear-gradient(to right, #1D478E , #1C4488);
     color: white;
-    border-radius: 4px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -65,14 +65,14 @@ button,
 
 button:hover:not([disabled]),
 .submit-button2 button:hover:not([disabled]) {
-    background-color: #002f5b;
+    background: linear-gradient(to right, #1D478E , #1C4488);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 button:active:not([disabled]),
 .submit-button2 button:active:not([disabled]) {
-    background-color: #001d38;
+    background: linear-gradient(to right, #1D478E , #1C4488);
     transform: translateY(1px);
     box-shadow: none;
 }
@@ -83,21 +83,23 @@ button:disabled,
     opacity: 0.6;
 }
 
-#otpSection {
+/* #otpSection {
     display: none;
-}
+} */
 
 #aadhaarSection {
-    display: none;
+    /* display: none; */
+    margin:20px;
+    margin-top:10vh;
 }
 
 .otp-container {
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
     flex-direction: column;
-    margin-bottom: 20px;
-    text-align: center;
+    margin: 20px;
+    /* text-align: center; */
 }
 
 .otp-container input {
@@ -112,25 +114,25 @@ button:disabled,
 }
 
 .otp-field input {
-    width: 15px;
-    height: 17px;
-    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
     padding: 6px;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 0px;
     margin: 4px;
-    border: 1px solid #55525c;
+    border: 1px solid #1D478E;
     background: #ffffff;
     font-weight: bold;
-    color: #000000;
+    color: #1D478E;
     outline: none;
     transition: all 0.1s;
 }
 
-.otp-field input:focus {
+/* .otp-field input:focus {
     border: 2px solid #a527ff;
     box-shadow: 0 0 2px 2px #a527ff6a;
-}
+} */
 
 
 .otp-field {
@@ -142,8 +144,11 @@ button:disabled,
 }
 
 .consent-checkbox {
-    text-align: center;
-}
+    display:flex;
+    margin: 20px 20px;
+    font-size: 10px;
+    color:#707070;
+    }
 
 .center-content {
   position: absolute;
@@ -187,4 +192,10 @@ button:disabled,
   100% {
     box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
   }
+}
+
+.submit-section {
+    margin-top:40vh;
+    display: flex;
+    flex-direction: column;
 }

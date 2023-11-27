@@ -1,10 +1,12 @@
 let url = new URL(window.location.href);
-const token = url.searchParams.get("token");
+// const token = url.searchParams.get("token");
+const token = 'eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI3Y2FmNTlhNS00NmE3LTQwZmQtYTJlYy01NjQ1ZWVjNGI3ZmUiLCJwYXlsb2FkIjp7ImVudGl0eUlkIjoiQUlSU0FJTlQ2NzdjYzc4NzY2IiwiZW50aXR5VHlwZSI6InBhcnRuZXJMb2FuSWQiLCJscGMiOiJBSVIiLCJjYWxsYmFja1VybCI6Ind3dy5nb29nbGUuY29tIn0sImV4cCI6MTcwMDczNzczMywiaWF0IjoxNzAwNzM1OTMzfQ.TYMAmx-haPxOAsBpmyax6McKoToAlFschoap7gm1tzOa0MTkIf1foFXFT8oBFiwyK-Xi6CbIoyxCqKqRAL82QiAcDJgBCY_ioo6Mx_FcfQloic_lBfFTZ3aS_JOV7HTQm-Fxb6TEIFMbKOtpuoKjsIl_UvvxinxyCBl42Gc9GAoP2JwP-1InzOID9N4AsX20edMNTTvX8TVSIHwONmQRWAodFkPqcCuACh1DaeEDBa2ldA3KV2vQbyXCuUiJD0Ck2Hc6YGiQYp9yDhjPrG5bnvQ7O0fmereqr1szPEYchUeOIeFRnz5Wc6mKjXD1XIQdsi0jRdoGmT6t1SbkNencDQ'
 const errorPage = 'pages/ErrorPage.html?token=' + token;
 const error404Page = 'pages/Error404.html?token=' + token;
 const thankYouPage = 'pages/ThankYou.html?token=' + token;
+const successPage = 'pages/SuccessPage.html?token=' + token;
 
-const api_url = `{{API_BASE_URL}}/api/v1/process-aadhaar`;
+const api_url = `https://a8fm3nym3g.execute-api.eu-west-1.amazonaws.com/qa2/api/v1/process-aadhaar`;
 
 if (!token) {
     window.location.href = errorPage;
@@ -19,7 +21,9 @@ let otpSubmitCount = 0;
 const callbackUrl = getCallbackUrlFromToken()
 
 // Validate Aadhaar Pull Status
-validateAadhaarStatus()
+// validateAadhaarStatus()
+// document.getElementById("loader").style.display = "none";
+// document.getElementById("aadhaarSection").style.display = "block";
 
 function getCallbackUrlFromToken() {
     var tokenJson = parseJwt(token);
@@ -240,7 +244,7 @@ function submitOTP() {
         .then(response => {
             console.log(response);
             if (response.status === 200) {
-                window.location.href = thankYouPage;
+                window.location.href = successPage;
             } else if (response.status === 400) {
                 otpSubmitCount++;
                 if (otpSubmitCount >= 3) {

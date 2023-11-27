@@ -4,39 +4,39 @@
     <title>Aadhaar Redirection Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/styles.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="js/scripts.js"></script>
 </head>
 
 <body>
 
-<main>
+<main style="display:flex;flex-direction:column;align-items: center;">
+    <div id="error-popup">
 
-    <div style="background-color: #F8F8F8; padding: 20px 0px;">
-        <img align="bottom" height="64px" src="img/Logo.svg" width="200px">
     </div>
 
-    <div class="center-content align-center" id="loader">
+    <div style="background-color: #FFFFFF; padding: 10px 20px;display:flex;justify-content: flex-start;">
+       <p style="font-size:16">KYC Verification</p>
+    </div>
+
+    <!-- <div class="center-content align-center" id="loader">
         <div class="loader"></div>
-    </div>
+    </div> -->
 
     <div id="aadhaarSection">
-        <h1 class="heading">Enter Your Aadhaar Number</h1>
-
         <div class="input-container">
+        <img class="id-img" src="img/ID.png" alt="Id Image"/>
             <input id="aadhaarInput" maxlength="14" oninput="formatAndValidateAadhaarInput(this)"
-                   placeholder="12-digit number" style="width: 200px;"
+                   placeholder="Aadhar number" style="width: 200px;border:none;border-bottom:1px solid #707070"
                    type="text" inputmode="numeric">
-            <div class="submit-button">
-                <button disabled id="generateOtpButton" onclick="generateOtp()" type="submit">Send Otp</button>
-            </div>
         </div>
-        <p id="aadhaarErrorMessage" style="color: red; display: none; text-align: center">Please enter a valid Aadhaar
-            number.</p>
+        <p id="aadhaarErrorMessage" style="color: red;text-align: center;font-size: 10px;">Please enter a valid Aadhaar
+            number</p>
     </div>
     <div id="otpSection">
         <div class="otp-container">
-            <h2>Enter OTP</h2>
-            <p>An OTP is sent to your registered mobile number for verification</p>
+            <p style="font-size: 14px;color:#707070;">Enter OTP</p>
+            <p style="font-size: 10px;color:#707070;">An OTP is sent to your registered mobile number for verification</p>
             <div class="otp-field">
                 <input maxlength="1" type="text" inputmode="numeric"/>
                 <input maxlength="1" type="text" inputmode="numeric"/>
@@ -47,20 +47,35 @@
             </div>
         </div>
 
-        <p id="otpErrorMessage" style="color: red; display: none; text-align: center">Please enter complete OTP</p>
+        <p id="otpErrorMessage" style="color: red;  text-align: center;font-size:10px">Invalid OTP entered</p>
 
-        <div class="consent-checkbox">
-            <input type="checkbox" id="consentCheckbox" onchange="toggleSubmitButton()">
-            <label for="consentCheckbox">I allow Kisetsu Saison Finance (India) Private Limited to fetch my Aadhaar XML
-                details from UIDAI</label>
-        </div>
-        <div class="submit-button2" style="display: flex;justify-content: center">
+        <!-- <div class="submit-button2" style="display: flex;justify-content: center">
             <button disabled id="submitButton" onclick="submitOTP()" type="submit">Submit
             </button>
+        </div> -->
+    </div>
+    <div class="submit-section">
+        <div class="consent-checkbox">
+            <input type="checkbox" id="consentCheckbox" onchange="toggleSubmitButton()">
+            <label for="consentCheckbox" style="margin-left:8px">I allow Kisetsu Saison Finance (India) Private Limited to fetch my Aadhaar XML
+                details from UIDAI</label>
+        </div>
+        <!-- <div class="submit-button">
+            <button disabled id="generateOtpButton" onclick="generateOtp()" type="submit">Send Otp</button>
+        </div> -->
+          <div class="submit-button2" style="display: flex;justify-content: center">
+            <button disabled id="submitButton" onclick="submitOTP()" type="submit">Submit
+            </button>
+            
+        </div>
+        <div style="align-self: center;">
+            <p style="font-size: 10px;color:#707070">
+                Powered by Credit Saison
+            </p>
         </div>
     </div>
+   
 </main>
-
 </body>
 </html>
 
