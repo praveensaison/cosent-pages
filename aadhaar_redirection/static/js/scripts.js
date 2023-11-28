@@ -47,7 +47,7 @@ function formatAndValidateAadhaarInput(input) {
 
     let button = document.getElementById("generateOtpButton");
     button.disabled = input.value.length !== 14; // Disable the button if Aadhaar number length is not 14
-    button.style.backgroundColor = button.disabled ? "gray" : "#004097"; // Change button background color to gray if disabled
+    button.style.backgroundColor = button.disabled ? "gray" : "#1D478E"; // Change button background color to gray if disabled
 }
 
 function validateAadhaarStatus() {
