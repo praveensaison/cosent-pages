@@ -86,6 +86,8 @@ function generateOtp() {
 
     var button = document.getElementById("generateOtpButton");
     var aadhaarInput = document.getElementById("aadhaarInput");
+    document.getElementById("resendOtp").style.display = "none";
+
 
     document.getElementById("aadhaarErrorMessage").style.display = "none";
 
@@ -139,7 +141,7 @@ function generateOtp() {
                 document.getElementById("otpErrorMessage").style.display = 'none';
                 document.getElementById("otpSection").style.display = "block";
                 document.getElementById("submitButton").style.display = "block";
-                document.getElementById("id-consent-section").style.display = "block";
+                document.getElementById("id-consent-section").style.display = "flex";
                 document.getElementById("generateOtpButton").style.display = "none";
                 document.querySelectorAll(".otp-field input").forEach(input => {
                     input.disabled = false;
@@ -154,24 +156,21 @@ function generateOtp() {
                 function updateButton() {
                     document.getElementById("resendCounter").style.display = "block";
                     document.getElementById("resendCounter").innerText = "Resend in " + countdown + "s";
-                    // document.getElementById("aadhaarErrorMessage").style.display = "block";
-                    button.innerText = "Resend Otp";
-                    // button.style.color = "black" // Update button color to black
                     countdown--;
                     if (countdown >= 0) {
                         setTimeout(updateButton, 1000); // Update every 1 second
                     } else {
-                        button.disabled = false; // Enable the button after countdown
-                        button.style.backgroundColor = "#1D478E"; // Restore button color
+                        document.getElementById("resendCounter").style.display = "none";
+                        document.getElementById("resendOtp").style.display = "block";
                         aadhaarInput.readOnly = true; // Make input read only
-                        button.innerText = "Resend Otp"; // Update button text to "Resend Otp"
-                        button.style.color = "white" // Restore button color to white
+                        
                     }
                 }
 
                 resendOtpCount++;
                 if (resendOtpCount >= 3) {
                     document.getElementById("submitButton").disabled = true;
+                    document.getElementById("resendOtp").style.display = "none";
                 } else {
                     updateButton(); // Start the countdown
                 }
@@ -224,6 +223,7 @@ function redirectUrl() {
 
 function submitOTP() {
     console.log("submitOTP");
+    document.getElementById("id-error-popup").style.display = "none";
     var otpInputs = document.querySelectorAll(".otp-field input");
     var otp = "";
     otpInputs.forEach(input => {
