@@ -279,7 +279,7 @@ function submitOTP() {
                             console.log(response)
                             if (response.status === 410) {
                                 window.location.href = failurePage;
-                                setTimeout(redirectUrl, 4000);
+                                // setTimeout(redirectUrl, 4000);
                             } else {
                                 window.location.href = error404Page;
                             }
