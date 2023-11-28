@@ -9,7 +9,7 @@
 </head>
 
 <body>
-<main style="display:flex;flex-direction:column;align-items: center;">
+<main class="main-container">
     <div class="center-content align-center" id="loader">
         <div class="loader"></div>
     </div>
@@ -68,33 +68,26 @@
           <div class="submit-button2">
             <button style="display:none" disabled id="submitButton" onclick="submitOTP()" type="submit">Submit
             </button>
-            
         </div>
-        
     </div>
-    <div style="align-self: center;margin-top:4%">
+    <div style="margin-top:4%">
         <p style="font-size: 10px;color:#707070">
             Powered by Credit Saison
         </p>
     </div>
-    
 </main>
-
 </body>
 </html>
 
 
 <script>
-
     const aadhaarInput = document.getElementById("aadhaarInput");
-
     aadhaarInput.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
             event.preventDefault();
             generateOtp();
         }
     });
-
     const inputs = document.querySelectorAll(".otp-field input");
     inputs.forEach((input, index) => {
         input.dataset.index = index;

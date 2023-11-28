@@ -92,7 +92,7 @@ function generateOtp() {
     button.disabled = true; // Disable the button
     button.style.backgroundColor = "#CCCCCC"; // Change button color
     aadhaarInput.readOnly = true; // Make input read-only
-    aadhaarInput.style.backgroundColor = "#D3D3D3"; // Change input background color
+    aadhaarInput.style.backgroundColor = "#f7f7f5"; // Change input background color
 
     aadhaarNo = aadhaarInput.value.replace(/\s/g, ""); // Remove spaces from aadhaarNumber
     if (aadhaarNo.length !== 12) {
@@ -152,8 +152,9 @@ function generateOtp() {
 
                 // Function to update the button text with the remaining countdown
                 function updateButton() {
-                    document.getElementById("resendCounter").innerText = "Resend Otp (" + countdown + "s)"
-                    document.getElementById("aadhaarErrorMessage").style.display = "block";
+                    document.getElementById("resendCounter").style.display = "block";
+                    document.getElementById("resendCounter").innerText = "Resend in " + countdown + "s";
+                    // document.getElementById("aadhaarErrorMessage").style.display = "block";
                     button.innerText = "Resend Otp";
                     // button.style.color = "black" // Update button color to black
                     countdown--;
