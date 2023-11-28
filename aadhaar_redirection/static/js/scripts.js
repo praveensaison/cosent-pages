@@ -6,7 +6,7 @@ const thankYouPage = 'pages/ThankYou.html?token=' + token;
 const successPage = 'pages/SuccessPage.html?token=' + token;
 const failurePage = 'pages/AadhaarpullFailPage.html?token=' + token;
 
-const api_url = `https://a8fm3nym3g.execute-api.eu-west-1.amazonaws.com/qa2/api/v1/process-aadhaar`;;
+const api_url = `{{API_BASE_URL}}/api/v1/process-aadhaar`;
 
 if (!token) {
     window.location.href = errorPage;
