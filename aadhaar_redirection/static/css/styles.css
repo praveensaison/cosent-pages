@@ -28,7 +28,7 @@ body {
 
 .input-container input {
     font-family: 'Kanit-Regular', sans-serif;
-    width: 80%;
+    width: 85%;
     height: 16px;
     padding: 10px;
     /* border: 1px solid #CCC;
@@ -50,7 +50,7 @@ button,
     width: 100%;
     border-radius: 20px;
     font-family: 'Kanit-Regular', sans-serif;
-    margin: 15px;
+    /* margin: 15px; */
     background-color: #E2E2E2;
     background: linear-gradient(to right, #1D478E , #1C4488);
     color: white;
@@ -83,12 +83,12 @@ button:disabled,
     opacity: 0.6;
 }
 
-/* #otpSection {
+#otpSection {
     display: none;
-} */
+}
 
 #aadhaarSection {
-    /* display: none; */
+    display: none;
     margin:20px;
     margin-top:10vh;
 }
@@ -145,7 +145,7 @@ button:disabled,
 
 .consent-checkbox {
     display:flex;
-    margin: 20px 20px;
+    margin: 0px 20px 20px 20px;
     font-size: 10px;
     color:#707070;
     }
@@ -164,7 +164,7 @@ button:disabled,
   justify-content: center;
 }
 
-.loader {
+/* .loader {
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -192,10 +192,36 @@ button:disabled,
   100% {
     box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
   }
+} */
+
+.loader {
+    background:linear-gradient(#149B3B, #004097);
+    -webkit-mask:radial-gradient(farthest-side,#0000 calc(100% - 5px),#fff 0);
+            mask:radial-gradient(farthest-side,#0000 calc(100% - 5px),#fff 0);
+    border-radius: 50%;  
+    position: fixed;
+    inset : calc(50% - 50px);
+    animation: rot 1s linear infinite; 
+    height:80px;
+    width:80px
+  }
+  @keyframes rot {
+    100% { transform: rotate(360deg); }
+ }
+  
+.submit-section {
+    margin-top:20vh;
+    display: flex;
+    width: 350px; 
+    flex-direction: column;
+    display:none;
 }
 
-.submit-section {
-    margin-top:40vh;
-    display: flex;
-    flex-direction: column;
+.error-popup{
+    height:40px;
+    background-color:#FFF3EB ;
+    width:100%;
+    display:flex;
+    justify-content: space-around;
+    display:none;
 }

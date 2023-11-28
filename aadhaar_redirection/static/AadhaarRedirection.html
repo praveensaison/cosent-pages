@@ -9,28 +9,29 @@
 </head>
 
 <body>
-
 <main style="display:flex;flex-direction:column;align-items: center;">
-    <div id="error-popup">
-
+    <div class="center-content align-center" id="loader">
+        <div class="loader"></div>
     </div>
+   
+    <div id="id-error-popup" class="error-popup">
+        <div style="display:flex;align-items:center">
+        <img class="info-img" src="img/information-button.png" alt="Info Image"/>
+        <div style="font-size: 10px;margin-left:5px;font-weight: 500;" id="otpRetryMessage"></div></div></div>
 
     <div style="background-color: #FFFFFF; padding: 10px 20px;display:flex;justify-content: flex-start;">
        <p style="font-size:16">KYC Verification</p>
     </div>
-
-    <!-- <div class="center-content align-center" id="loader">
-        <div class="loader"></div>
-    </div> -->
-
     <div id="aadhaarSection">
         <div class="input-container">
         <img class="id-img" src="img/ID.png" alt="Id Image"/>
             <input id="aadhaarInput" maxlength="14" oninput="formatAndValidateAadhaarInput(this)"
-                   placeholder="Aadhar number" style="width: 200px;border:none;border-bottom:1px solid #707070"
+                   placeholder="Aadhar number" style="border:none;border-bottom:1px solid #707070"
                    type="text" inputmode="numeric">
         </div>
-        <p id="aadhaarErrorMessage" style="color: red;text-align: center;font-size: 10px;">Please enter a valid Aadhaar
+        <p id="aadhaarDescription" style="color: #707070;text-align: center;font-size: 10px;font-style: italic;">Enter the 12-digit Aadhaar number linked to your
+            registered mobile number </p>
+        <p id="aadhaarErrorMessage" style="color: red;text-align: center;font-size: 10px;display:none">Please enter a valid Aadhaar
             number</p>
     </div>
     <div id="otpSection">
@@ -47,7 +48,8 @@
             </div>
         </div>
 
-        <p id="otpErrorMessage" style="color: red;  text-align: center;font-size:10px">Invalid OTP entered</p>
+        <p id="otpErrorMessage" style="color: red;  text-align: center;font-size:10px; display:none">Invalid OTP entered</p>
+        <p id="resendCounter" style="color:blue;  text-align: center;font-size:10px;display:none"></p>
 
         <!-- <div class="submit-button2" style="display: flex;justify-content: center">
             <button disabled id="submitButton" onclick="submitOTP()" type="submit">Submit
@@ -55,27 +57,29 @@
         </div> -->
     </div>
     <div class="submit-section">
-        <div class="consent-checkbox">
+        <div id="id-consent-section" class="consent-checkbox" style="display:none">
             <input type="checkbox" id="consentCheckbox" onchange="toggleSubmitButton()">
             <label for="consentCheckbox" style="margin-left:8px">I allow Kisetsu Saison Finance (India) Private Limited to fetch my Aadhaar XML
                 details from UIDAI</label>
         </div>
-        <!-- <div class="submit-button">
-            <button disabled id="generateOtpButton" onclick="generateOtp()" type="submit">Send Otp</button>
-        </div> -->
-          <div class="submit-button2" style="display: flex;justify-content: center">
-            <button disabled id="submitButton" onclick="submitOTP()" type="submit">Submit
+        <div class="submit-button2">
+            <button style="display:none" disabled id="generateOtpButton" onclick="generateOtp()" type="submit">Send Otp</button>
+        </div>
+          <div class="submit-button2">
+            <button style="display:none" disabled id="submitButton" onclick="submitOTP()" type="submit">Submit
             </button>
             
         </div>
-        <div style="align-self: center;">
-            <p style="font-size: 10px;color:#707070">
-                Powered by Credit Saison
-            </p>
-        </div>
+        
     </div>
-   
+    <div style="align-self: center;margin-top:4%">
+        <p style="font-size: 10px;color:#707070">
+            Powered by Credit Saison
+        </p>
+    </div>
+    
 </main>
+
 </body>
 </html>
 
