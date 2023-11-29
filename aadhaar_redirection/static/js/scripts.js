@@ -4,7 +4,7 @@ const errorPage = 'pages/ErrorPage.html?token=' + token;
 const error404Page = 'pages/Error404.html?token=' + token;
 const thankYouPage = 'pages/ThankYou.html?token=' + token;
 const successPage = 'pages/SuccessPage.html?token=' + token;
-const failurePage = 'pages/AadhaarpullFailPage.html?token=' + token;
+const failurePage = 'pages/KycErrorPage.html?token=' + token;
 
 const api_url = `https://jn7tpygcmb.execute-api.us-east-1.amazonaws.com/int/api/v1/process-aadhaar`;
 
@@ -114,8 +114,6 @@ function generateOtp() {
     fetch(api_url, other_params)
         .then(response => {
             // handle the response
-            button.style.display = "none"
-            document.getElementById("button-loader").style.display = "flex"
             console.log(response);
             if (response.status === 200) {
                 return response.json(); // Parse the response JSON
@@ -123,8 +121,6 @@ function generateOtp() {
                 // Show invalid aadhaar number message
                 document.getElementById("aadhaarErrorMessage").innerText = 'Please enter a valid Aadhaar number.'
                 document.getElementById("aadhaarErrorMessage").style.display = "block";
-                button.style.display = "block"
-                document.getElementById("button-loader").style.display = "none"
                 button.style.backgroundColor = "#1D478E"; // Restore button color
                 aadhaarInput.readOnly = false; // Make input editable again
                 aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
@@ -223,7 +219,7 @@ function handleOnPasteOtp(event) {
 
 function redirectUrl() {
     if (callbackUrl != null) {
-        window.location.href = callbackUrl;
+        window.location.replace = callbackUrl;
     }
 }
 
@@ -255,9 +251,6 @@ function submitOTP() {
         .then(response => {
             console.log(response);
             if (response.status === 200) {
-                document.getElementById("button-loader").style.display = "flex"
-                document.getElementById("id-consent-section").style.display = "none";
-                document.getElementById("submitButton").style.display = "none";
                 window.location.href = successPage;
             } else if (response.status === 400) {
                 otpSubmitCount++;
