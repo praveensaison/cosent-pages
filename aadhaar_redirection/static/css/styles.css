@@ -191,7 +191,7 @@ button:disabled,
 }
 
 .error-popup{
-    height:80px;
+    height:40px;
     background-color:#FFF3EB ;
     width:100%;
     display:flex;

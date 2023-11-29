@@ -236,7 +236,7 @@ function submitOTP() {
         document.getElementById("otpErrorMessage").style.display = "block";
         return; // Return early if OTP length is not 6
     }
-
+    document.getElementById("otpErrorMessage").style.display = 'none';
     var submitOtpParams = {
         method: "POST", headers: {
             Origin: window.location.origin, Authorization: `Bearer ${token}`, "Content-Type": "application/json",
