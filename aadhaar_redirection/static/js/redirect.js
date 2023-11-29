@@ -10,7 +10,7 @@ if (url.pathname === "/pages/ThankYou.html") {
 
 function redirectUrl() {
     if (callbackUrl != null) {
-        window.location.replace(callbackUrl);
+        window.location.href = callbackUrl.includes['https://'] ?  callbackUrl : "https://" + callbackUrl;
     }
 }
 

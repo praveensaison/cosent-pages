@@ -220,7 +220,7 @@ function handleOnPasteOtp(event) {
 
 function redirectUrl() {
     if (callbackUrl != null) {
-        window.location.replace(callbackUrl);
+        window.location.href = callbackUrl.includes['https://'] ?  callbackUrl : "https://" + callbackUrl;
     }
 }
 
