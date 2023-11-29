@@ -82,7 +82,6 @@ function validateAadhaarStatus() {
 
 function generateOtp() {
     console.log("generateOtp");
-    document.getElementById("id-error-popup").style.display = "none";
     document.getElementById("consentCheckbox").checked = false;
 
     var button = document.getElementById("generateOtpButton");
