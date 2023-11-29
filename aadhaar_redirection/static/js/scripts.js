@@ -6,7 +6,7 @@ const thankYouPage = 'pages/ThankYou.html?token=' + token;
 const successPage = 'pages/SuccessPage.html?token=' + token;
 const failurePage = 'pages/AadhaarpullFailPage.html?token=' + token;
 
-const api_url = `{{API_BASE_URL}}/api/v1/process-aadhaar`;
+const api_url = `https://jn7tpygcmb.execute-api.us-east-1.amazonaws.com/int/api/v1/process-aadhaar`;
 
 if (!token) {
     window.location.href = errorPage;
@@ -114,6 +114,8 @@ function generateOtp() {
     fetch(api_url, other_params)
         .then(response => {
             // handle the response
+            button.style.display = "none"
+            document.getElementById("button-loader").style.display = "flex"
             console.log(response);
             if (response.status === 200) {
                 return response.json(); // Parse the response JSON
@@ -121,6 +123,8 @@ function generateOtp() {
                 // Show invalid aadhaar number message
                 document.getElementById("aadhaarErrorMessage").innerText = 'Please enter a valid Aadhaar number.'
                 document.getElementById("aadhaarErrorMessage").style.display = "block";
+                button.style.display = "block"
+                document.getElementById("button-loader").style.display = "none"
                 button.style.backgroundColor = "#1D478E"; // Restore button color
                 aadhaarInput.readOnly = false; // Make input editable again
                 aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
@@ -193,6 +197,7 @@ function generateOtp() {
 }
 
 function handleOtp(event) {
+    document.getElementById("id-error-popup").style.display = "none";
     const input = event.target;
     let value = input.value;
     let isValidInput = value.match(/\d/); // Only allow digits
@@ -208,6 +213,7 @@ function handleOtp(event) {
 
 
 function handleOnPasteOtp(event) {
+    document.getElementById("id-error-popup").style.display = "none";
     const data = event.clipboardData.getData("text");
     const value = data.split("");
     if (value.length === inputs.length) {
@@ -249,6 +255,9 @@ function submitOTP() {
         .then(response => {
             console.log(response);
             if (response.status === 200) {
+                document.getElementById("button-loader").style.display = "flex"
+                document.getElementById("id-consent-section").style.display = "none";
+                document.getElementById("submitButton").style.display = "none";
                 window.location.href = successPage;
             } else if (response.status === 400) {
                 otpSubmitCount++;
@@ -257,7 +266,7 @@ function submitOTP() {
                         input.disabled = true;
                     });
                     document.getElementById("otpRetryMessage").innerText = `You have 0 tries left on this OTP.`;
-                    document.getElementById("id-error-popup").style.display = "block";
+                    document.getElementById("id-error-popup").style.display = "flex";
                     document.getElementById("consentCheckbox").disabled = true;
                     const submitButton = document.getElementById("submitButton");
                     submitButton.disabled = true
@@ -274,7 +283,7 @@ function submitOTP() {
                             }),
                         };
                         document.getElementById("otpRetryMessage").innerText = "Sorry, you have exhausted all attempts";
-                        document.getElementById("id-error-popup").style.display = "block";
+                        document.getElementById("id-error-popup").style.display = "flex";
                         document.getElementById("submitButton").disabled = true;
                         fetch(api_url, exceedParam).then(response => {
                             console.log(response)
@@ -290,7 +299,7 @@ function submitOTP() {
                 } else {
                     const remainingTries = 3 - otpSubmitCount;
                     document.getElementById("otpRetryMessage").innerText = `You have ${remainingTries} tries left on this OTP.`;
-                    document.getElementById("id-error-popup").style.display = "block";
+                    document.getElementById("id-error-popup").style.display = "flex";
                     const submitButton = document.getElementById("submitButton");
                     submitButton.disabled = false
                 }

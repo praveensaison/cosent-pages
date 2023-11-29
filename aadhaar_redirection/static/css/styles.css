@@ -168,36 +168,6 @@ button:disabled,
   justify-content: center;
 }
 
-/* .loader {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  display: block;
-  margin: 15px auto;
-  position: relative;
-  color: #003681;
-  box-sizing: border-box;
-  animation: animloader 2s linear infinite;
-}
-
-@keyframes animloader {
-  0% {
-    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
-  }
-  25% {
-    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 2px;
-  }
-  50% {
-    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 2px, -38px 0 0 -2px;
-  }
-  75% {
-    box-shadow: 14px 0 0 2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
-  }
-  100% {
-    box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
-  }
-} */
-
 .loader {
     background:linear-gradient(#149B3B, #004097);
     -webkit-mask:radial-gradient(farthest-side,#0000 calc(100% - 5px),#fff 0);
@@ -221,10 +191,27 @@ button:disabled,
 }
 
 .error-popup{
-    height:40px;
+    height:80px;
     background-color:#FFF3EB ;
     width:100%;
     display:flex;
     justify-content: space-around;
     display:none;
+}
+
+.button-loader{
+        background:linear-gradient(#149B3B, #004097);
+        -webkit-mask:radial-gradient(farthest-side,#0000 calc(100% - 5px),#fff 0);
+                mask:radial-gradient(farthest-side,#0000 calc(100% - 5px),#fff 0);
+        border-radius: 50%;  
+        /* position: fixed; */
+        inset : calc(50% - 50px);
+        animation: rot 1s linear infinite; 
+        height:40px;
+        width:40px;
+        display:none;
+        align-self:center;
+      }
+      @keyframes rot {
+        100% { transform: rotate(360deg); }
 }

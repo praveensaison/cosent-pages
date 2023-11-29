@@ -10,9 +10,9 @@
 
 <body>
 <main class="main-container">
-    <div class="center-content align-center" id="loader">
+    <!-- <div class="center-content align-center" id="loader">
         <div class="loader"></div>
-    </div>
+    </div> -->
    
     <div id="id-error-popup" class="error-popup">
         <div style="display:flex;align-items:center">
@@ -58,7 +58,7 @@
             </button>
         </div> -->
     </div>
-    <div class="submit-section">
+    <div class="submit-section" id="id-submit-section">
         <div id="id-consent-section" class="consent-checkbox" style="display:none">
             <input type="checkbox" id="consentCheckbox" onchange="toggleSubmitButton()">
             <label for="consentCheckbox" style="margin-left:8px">I allow Kisetsu Saison Finance (India) Private Limited to fetch my Aadhaar XML
@@ -71,6 +71,7 @@
             <button style="display:none" disabled id="submitButton" onclick="submitOTP()" type="submit">Submit
             </button>
         </div>
+        <div class="button-loader"></div>
     </div>
     <div style="margin-top:4%">
         <p style="font-size: 10px;color:#707070">
