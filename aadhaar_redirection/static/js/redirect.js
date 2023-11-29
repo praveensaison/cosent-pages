@@ -10,7 +10,7 @@ if (url.pathname === "/pages/ThankYou.html") {
 
 function redirectUrl() {
     if (callbackUrl != null) {
-        window.location.href = callbackUrl;
+        window.location.replace(callbackUrl);
     }
 }
 
