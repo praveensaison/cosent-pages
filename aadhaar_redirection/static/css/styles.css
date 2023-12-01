@@ -56,7 +56,7 @@ button,
     font-family: 'Kanit-Regular', sans-serif;
     /* margin: 15px; */
     background-color: #E2E2E2;
-    background: linear-gradient(to right, #1D478E , #1C4488);
+    background: linear-gradient(to right, #1D478E 0%, #161742 100%);
     color: white;
     padding: 10px 20px;
     font-size: 16px;
@@ -69,14 +69,14 @@ button,
 
 button:hover:not([disabled]),
 .submit-button2 button:hover:not([disabled]) {
-    background: linear-gradient(to right, #1D478E , #1C4488);
+    background: linear-gradient(to right, #1D478E 0%, #161742 100%);
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 button:active:not([disabled]),
 .submit-button2 button:active:not([disabled]) {
-    background: linear-gradient(to right, #1D478E , #1C4488);
+    background: linear-gradient(to right, #1D478E 0%, #161742 100%);
     transform: translateY(1px);
     box-shadow: none;
 }
@@ -94,7 +94,6 @@ button:disabled,
 #aadhaarSection {
     display: none;
     margin:20px;
-    margin-top:10vh;
 }
 
 .otp-container {
@@ -195,23 +194,10 @@ button:disabled,
     background-color:#FFF3EB ;
     width:100%;
     display:flex;
+    position:fixed;
+    z-index: 2;
+    top:0;
     justify-content: space-around;
     display:none;
 }
 
-.button-loader{
-        background:linear-gradient(#149B3B, #004097);
-        -webkit-mask:radial-gradient(farthest-side,#0000 calc(100% - 5px),#fff 0);
-                mask:radial-gradient(farthest-side,#0000 calc(100% - 5px),#fff 0);
-        border-radius: 50%;  
-        /* position: fixed; */
-        inset : calc(50% - 50px);
-        animation: rot 1s linear infinite; 
-        height:40px;
-        width:40px;
-        display:none;
-        align-self:center;
-      }
-      @keyframes rot {
-        100% { transform: rotate(360deg); }
-}

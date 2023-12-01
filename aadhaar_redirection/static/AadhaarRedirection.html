@@ -15,12 +15,16 @@
     </div>
    
     <div id="id-error-popup" class="error-popup">
-        <div style="display:flex;align-items:center;height:40px">
+        <div style="display:flex;align-items:center;height:40px;">
         <img class="info-img" src="img/information-button.png" alt="Info Image"/>
         <div style="font-size: 10px;margin-left:5px;font-weight: 500;" id="otpRetryMessage"></div></div></div>
 
-    <div style="background-color: #FFFFFF; padding: 10px 20px;display:flex;justify-content: flex-start;">
+    <div style="background-color: #FFFFFF; padding: 10px 20px;display:flex;justify-content: space-between;width:100vw">
        <p style="font-size:16">KYC Verification</p>
+       <span onclick="redirectUrl()">
+        <img class="close-img" src="img/close.png" alt="Close Image" height="15" width="15"/>
+   </span>
+
     </div>
     <div id="aadhaarSection">
         <div class="input-container">
@@ -50,13 +54,8 @@
 
         <p id="otpErrorMessage" style="color: red;  text-align: center;font-size:10px; display:none">Invalid OTP entered</p>
         <p id="resendCounter" style="color:#1D478E;  text-align: center;font-size:10px;display:none"></p>
-        <p id="resendOtp" style="color:#1D478E;  text-align: center; font-size:10px" onclick="generateOtp()"><u>Resend OTP</u></p>
-
-
-        <!-- <div class="submit-button2" style="display: flex;justify-content: center">
-            <button disabled id="submitButton" onclick="submitOTP()" type="submit">Submit
-            </button>
-        </div> -->
+        <p id="resendOtp" style="color:#1D478E;  text-align: center; font-size:10px;display:none" onclick="generateOtp()"><u>Resend OTP</u></p>
+        <p id="retryResendMessage" style="color: red;text-align: center;font-size: 10px;display:none"></p>
     </div>
     <div class="submit-section" id="id-submit-section">
         <div id="id-consent-section" class="consent-checkbox" style="display:none">
@@ -71,12 +70,15 @@
             <button style="display:none" disabled id="submitButton" onclick="submitOTP()" type="submit">Submit
             </button>
         </div>
-        <div class="button-loader"></div>
     </div>
-    <div style="margin-top:4%">
-        <p style="font-size: 10px;color:#707070">
+    <div style="display: flex;
+    flex-direction: row;gap:2;
+    
+    margin: 2%">
+        <div style="font-size: 10px;color:#707070">
             Powered by Credit Saison
-        </p>
+        </div>
+        <img class="logo-img" src="img/Logo.svg" alt="logo Image" width="20" height="20" style="margin-left:2px"/>
     </div>
 </main>
 </body>
