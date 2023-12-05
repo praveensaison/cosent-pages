@@ -6,7 +6,7 @@ const thankYouPage = 'pages/ThankYou.html?token=' + token;
 const successPage = 'pages/SuccessPage.html?token=' + token;
 const failurePage = 'pages/KycErrorPage.html?token=' + token;
 
-const api_url = `https://jn7tpygcmb.execute-api.us-east-1.amazonaws.com/int/api/v1/process-aadhaar`;
+const api_url = `{{API_BASE_URL}}/api/v1/process-aadhaar`;
 
 if (!token) {
     window.location.href = errorPage;
