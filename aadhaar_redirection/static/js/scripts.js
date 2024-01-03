@@ -67,8 +67,10 @@ function validateAadhaarStatus() {
                 document.getElementById("loader").style.display = "none";
                 document.getElementById("aadhaarSection").style.display = "block";
                 document.getElementById("generateOtpButton").style.display = "block";
-            } else if (response.status === 400 || response.status === 500) {
-                window.location.href = errorPage;
+            } else if (response.status === 500) {
+                window.location.href = errorPage;               
+            } else if (response.status === 400) {
+                window.location.href = successPage;
             } else {
                 throw new Error("API error"); // Throw an error if the response status is not 200 or 400 or 500
             }
