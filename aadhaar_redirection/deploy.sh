@@ -23,7 +23,7 @@ deploy_environment() {
   "qa2")
     AWS_REGION=eu-west-1
     BUCKET_NAME="cfn-templates-qa2"
-    API_BASE_URL="https://a8fm3nym3g.execute-api.eu-west-1.amazonaws.com/qa2"
+    API_BASE_URL="https://2oby4umtdc.execute-api.eu-west-1.amazonaws.com/qa2"
     ;;
   "uat")
     AWS_REGION=us-east-1
