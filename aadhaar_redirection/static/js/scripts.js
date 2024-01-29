@@ -67,15 +67,17 @@ function validateAadhaarStatus() {
                 document.getElementById("loader").style.display = "none";
                 document.getElementById("aadhaarSection").style.display = "block";
                 document.getElementById("generateOtpButton").style.display = "block";
-            } else if (response.status === 400 || response.status === 500) {
-                window.location.href = errorPage;
+            } else if (response.status === 500) {
+                window.location.href = errorPage;               
+            } else if (response.status === 400) {
+                window.location.href = successPage;
             } else {
                 throw new Error("API error"); // Throw an error if the response status is not 200 or 400 or 500
             }
         })
         .catch(error => {
             console.log("error: ", error);
-            window.location.href = error404Page;
+            window.location.href = errorPage;
         });
 }
 
@@ -125,7 +127,7 @@ function generateOtp() {
                 aadhaarInput.readOnly = false; // Make input editable again
                 // aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
             } else if (response.status === 500) {
-                window.location.href = error404Page;
+                window.location.href = errorPage;
             } else {
                 throw new Error("API error"); // Throw an error if the response status is not 200
             }
@@ -286,7 +288,7 @@ function submitOTP() {
                                 window.location.href = failurePage;
                                 // setTimeout(redirectUrl, 4000);
                             } else {
-                                window.location.href = error404Page;
+                                window.location.href = errorPage;
                             }
                         })
                     }
