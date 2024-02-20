@@ -1,0 +1,96 @@
+<HTML>
+
+<HEAD>
+
+    <TITLE>Consent Page</TITLE>
+
+</HEAD>
+
+<BODY onload="submit()">
+
+<script>
+           var url = new URL(window.location.href);
+            var token = url.searchParams.get("token");
+            if(!token){
+                window.location.href = '/ErrorPage.html'
+            }
+        function submit() {
+            console.log("submit")
+
+
+            const other_params = {
+                headers: {
+                    Origin: window.location.origin,
+                    Authorization: `Bearer ${token}`,
+                },
+                method: "POST",
+
+            };
+           let domain = window.location.origin.replace('customerconsent','api')
+
+
+            fetch(`${domain}/api/v2/customerConsent`, other_params)
+                .then(response => {
+                    // handle the response
+                    console.log(response)
+                    if (response.status === 200) {
+                        window.location.href = '/emailVerificationThankYou.html'
+                    }
+                    else if (response.status === 409) {
+                        window.location.href = '/verificationCaptured.html'
+
+                    }
+                    else if (response.status === 500) {
+                        window.location.href = '/ErrorPage.html'
+
+                    }
+                    return response
+                })
+                .catch(error => {
+                    console.log(error,'e')
+                    // handle the error
+                    window.location.href = '/ErrorPage.html'
+
+                });
+        }
+    </script>
+</BODY>
+<style>
+    .body {
+        margin: 20px 65px;
+        color: #161617;
+
+    }
+
+    .content {
+        margin: 0px 65px;
+    }
+
+    .center-title {
+        text-align: center;
+        letter-spacing: 0px;
+        color: #004097;
+        opacity: 1;
+        font-size: 25px;
+        font-family: 'Helvetica-Bold';
+        margin: 1% 30%;
+
+    }
+
+    .support-text {
+        background-color: #F8F8F8;
+        padding: 20px 0px;
+        text-align: center;
+        color: #A7A7A8;
+    }
+
+    .center-text {
+        text-align: center;
+        letter-spacing: 0px;
+        color: #A7A7A8;
+        opacity: 1;
+        margin: 30px 100px;
+    }
+</style>
+
+</HTML>
