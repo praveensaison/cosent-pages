@@ -6,7 +6,7 @@ const thankYouPage = 'pages/ThankYou.html?token=' + token;
 const successPage = 'pages/SuccessPage.html?token=' + token;
 const failurePage = 'pages/KycErrorPage.html?token=' + token;
 
-const api_url = `{{API_BASE_URL}}/api/v1/process-aadhaar`;
+const api_url = `/api/v1/process-aadhaar`;
 
 if (!token) {
     window.location.href = errorPage;
@@ -165,7 +165,8 @@ function generateOtp() {
                     } else {
                         document.getElementById("resendCounter").style.display = "none";
                         document.getElementById("resendOtp").style.display = "block";
-                        aadhaarInput.readOnly = true; // Make input read only 
+                        aadhaarInput.readOnly = true; // Make input read only
+                        
                     }
                 }
 
