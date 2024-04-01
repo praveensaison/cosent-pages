@@ -21,14 +21,14 @@
         <button
           id="rejectButton"
           class="button-style reject-disable"
-          onclick="rejectClicked()"
+          onclick="submitClicked('REJECTED')"
         >
           Reject
         </button>
         <button
           id="approveButton"
           class="button-style disable"
-          onclick="approveClicked()"
+          onclick="submitClicked('APPROVED')"
         >
           Approve
         </button>
@@ -36,6 +36,13 @@
     </div>
 
     <script>
+      var url = new URL(window.location.href);
+      var token = url.searchParams.get("token");
+
+      if (!token) {
+        window.location.href = "/ErrorPage.html";
+      }
+
       function enableApprove() {
         let commentText = document.getElementById("approverComment").value;
         let approveButton = document.getElementById("approveButton");
@@ -66,8 +73,42 @@
         }
       }
 
-      function approveClicked() {
-        console.log("APRROVE CLICKED");
+      function submitClicked(status) {
+        let commentText = document.getElementById("approverComment").value;
+
+        const requestBody = {
+          Status: status,
+          Remark: commentText,
+        };
+
+        const other_params = {
+          headers: {
+            Origin: window.location.origin,
+            Authorization: `Bearer ${token}`,
+          },
+          mode: "cors",
+          body: JSON.stringify(requestBody),
+          method: "POST",
+        };
+
+        let domain = window.location.origin.replace("rateapproval", "api");
+
+        fetch(`${domain}/api/v1/rate-approval`, other_params)
+          .then((response) => {
+            // handle the response
+
+            if (response.status === 200) {
+              window.location.href = "/ThankYou.html";
+            } else if (response.status === 409) {
+              window.location.href = "/rateApprovalCaptured.html";
+            } else if (response.status === 500) {
+              window.location.href = "/ErrorPage.html";
+            }
+            return response;
+          })
+          .catch((error) => {
+            console.log(error, "e");
+          });
       }
 
       function rejectClicked() {
