@@ -82,18 +82,17 @@
         };
 
         const other_params = {
+          method: "POST",
           headers: {
             Origin: window.location.origin,
             Authorization: `Bearer ${token}`,
           },
-          mode: "cors",
-          body: JSON.stringify(requestBody),
-          method: "POST",
+          body: JSON.stringify(requestBody)
         };
 
         let domain = window.location.origin.replace("rateapproval", "api");
 
-        fetch(`${domain}/api/v1/rate-approval`, other_params)
+        fetch(`https://nbm2n6e0yc.execute-api.us-east-1.amazonaws.com/qa/api/v1/rate-approval`, other_params)
           .then((response) => {
             // handle the response
 

@@ -71,7 +71,7 @@ deploy_environment() {
       --profile "$AWS_PROFILE" \
       --parameter-overrides EnvironmentType="$ENV"
     cd static
-    aws s3 sync . "s3://rate_approval-$ENV-$ACCOUNT_ID-$AWS_REGION"
+    aws s3 sync . "s3://rate-approval-$ENV-$ACCOUNT_ID-$AWS_REGION"
   )
 
   echo "Deployment for $ENV environment completed"
