@@ -112,10 +112,6 @@ Resources:
             ResponsePagePath: "/rateApproval.html"
             ResponseCode: '200'
             ErrorCachingMinTTL: '300'
-          - ErrorCode: '409'
-            ResponsePagePath: "/alreadyCapturedError.html"
-            ResponseCode: '200'
-            ErrorCachingMinTTL: '300'
       Tags:
         - Key: Service
           Value: hawkgirl
