@@ -21,48 +21,6 @@ Conditions:
   EnvironmentInt: !Equals [ !Ref EnvironmentType, "int" ]
 
 Resources:
-
-  rateApprovalBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Sub 'rate-approval-${EnvironmentType}-${AWS::AccountId}-${AWS::Region}'
-      AccessControl: Private
-      BucketEncryption:
-        ServerSideEncryptionConfiguration:
-          - ServerSideEncryptionByDefault:
-              SSEAlgorithm: AES256
-      WebsiteConfiguration:
-        IndexDocument: rateApproval.html
-        ErrorDocument: Error404.html
-      Tags:
-        - Key: Service
-          Value: hawkgirl
-        - Key: Owner
-          Value: neutrons
-        - Key: Department
-          Value: Product
-        - Key: Stage
-          Value: None
-
-  cloudFrontOriginAccessIdentity:
-    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
-    Properties:
-      CloudFrontOriginAccessIdentityConfig:
-        Comment: !Sub 'CloudFront OAI for rate approval redirection bucket'
-
-  rateApprovalBucketPolicy:
-    Type: AWS::S3::BucketPolicy
-    Properties:
-      Bucket: !Ref 'rateApprovalBucket'
-      PolicyDocument:
-        Id: PolicyForCloudFrontPrivateContent
-        Statement:
-          Effect: Allow
-          Principal:
-            AWS: !Join [ '', [ 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ', !Ref cloudFrontOriginAccessIdentity ] ]
-          Action: s3:GetObject
-          Resource: !Join [ '', [ 'arn:aws:s3:::', !Ref 'rateApprovalBucket', /* ] ]
-
   
   rateApprovalDistribution:
     Type: 'AWS::CloudFront::Distribution'
@@ -95,10 +53,10 @@ Resources:
           TargetOriginId: !Sub 'rate_approval_bucket origin'
           ViewerProtocolPolicy: https-only
         Origins:
-          - DomainName: !Join [ '', [ !Ref 'rateApprovalBucket', '.s3.amazonaws.com' ] ]
+          - DomainName: !Join [ '', [ !ImportValue rate-approval, '.s3.amazonaws.com' ] ]
             Id: !Sub 'rate_approval_bucket origin'
             S3OriginConfig:
-              OriginAccessIdentity: !Sub 'origin-access-identity/cloudfront/${cloudFrontOriginAccessIdentity}'
+              OriginAccessIdentity: !Join [ '', [ 'origin-access-identity/cloudfront/', !ImportValue rateapprovalS3CFIdentity ] ]              
         CustomErrorResponses:
           - ErrorCode: '403'
             ResponsePagePath: "/rateApproval.html"
@@ -153,9 +111,6 @@ Resources:
 
 
 Outputs:
-  BucketName:
-    Value: !Ref 'rateApprovalBucket'
-    Description: Name of S3 bucket to hold website content
   CloudfrontEndpoint:
     Value: !Ref rateApprovalDistribution
     Description: Endpoint for Cloudfront distribution
