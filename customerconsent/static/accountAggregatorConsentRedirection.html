@@ -1,0 +1,64 @@
+<HTML>
+
+<HEAD>
+
+    <TITLE>Thank You</TITLE>
+
+</HEAD>
+
+<BODY BGCOLOR="FFFFFF" onload="checkStatus()">
+    <div style="background-color: #F8F8F8;padding: 20px 0px">
+        <IMG SRC="img/Logo.svg" width="200px" height="64px" ALIGN="BOTTOM">
+    </div>
+    <centre style="margin-top: 10px;" id="successImg">
+        <IMG SRC="img/thankyou.png" width="250px" height="300px" ALIGN="BOTTOM" class="center">
+    </centre>
+    <centre style="margin-top: 10px;" id="failureImg">
+        <IMG SRC="img/consentCaptured.png" width="250px" height="300px" ALIGN="BOTTOM" class="center">
+    </centre>
+    <div class="content" id="successContent"> Thank You. We have received your consent through account aggregator.
+    </div>
+    <div class="content" id="failureContent"> Sorry. Your consent through account aggregator is failed,
+        please connect with sales agent </div>
+    <script>
+
+        function checkStatus() {
+            var url = new URL(window.location.href);
+            var status = url.searchParams.get("status");
+
+            document.getElementById("successContent").style.display = "block";
+            document.getElementById("successImg").style.display ="block";
+            document.getElementById("failureContent").style.display ="none";
+            document.getElementById("failureImg").style.display ="none";
+
+            if (status == "false") {
+                document.getElementById("successContent").style.display = "none";
+                document.getElementById("successImg").style.display ="none";
+                document.getElementById("failureContent").style.display ="block";
+                document.getElementById("failureImg").style.display ="block";
+            }
+        }
+    </script>
+</BODY>
+<style>
+    .body {
+        margin: 20px 65px;
+        color: #161617;
+
+    }
+    .content {
+        margin: 0px 65px;
+        margin-top: 20px;
+        display: block;
+        text-align: center;
+        font-size: 25px;
+    }
+
+    .center {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+</HTML>
