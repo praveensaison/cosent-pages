@@ -165,8 +165,7 @@ function generateOtp() {
                     } else {
                         document.getElementById("resendCounter").style.display = "none";
                         document.getElementById("resendOtp").style.display = "block";
-                        aadhaarInput.readOnly = true; // Make input read only
-                        
+                        aadhaarInput.readOnly = true; // Make input read only 
                     }
                 }
 
