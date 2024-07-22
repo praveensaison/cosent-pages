@@ -1,0 +1,116 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  static-site
+
+  Sample SAM Template for static-site
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 30
+
+Parameters:
+  EnvironmentType:
+    Description: Environment Type
+    Type: String
+
+Conditions:
+  EnvironmentNotProd: !Not [ !Equals [ !Ref EnvironmentType, "production" ] ]
+  EnvironmentProd: !Equals [ !Ref EnvironmentType, "production" ]
+  EnvironmentInt: !Equals [ !Ref EnvironmentType, "int" ]
+
+Resources:
+  
+  rateApprovalDistribution:
+    Type: 'AWS::CloudFront::Distribution'
+    Properties:
+      Fn::Transform:
+        Name: "GetSSMParameter"
+        Parameters:
+          parameterName: KSF-Wildcard-SSL-Certificate
+      DistributionConfig:
+        Enabled: 'true'
+        DefaultRootObject: rateApproval.html
+        Aliases:
+          - !If
+            - EnvironmentProd
+            - !Sub "rateapproval.creditsaison.in"
+            - !If
+              - EnvironmentInt
+              - !Join [ "", [ "rateapproval", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
+              - !Join [
+                "",
+                [ "rateapproval", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
+              ]
+        ViewerCertificate:
+          MinimumProtocolVersion: TLSv1.2_2021
+          SslSupportMethod: 'sni-only'
+          AcmCertificateArn: "$$KSF-Wildcard-SSL-Certificate$$"
+        DefaultCacheBehavior:
+          ForwardedValues:
+            QueryString: False
+          TargetOriginId: !Sub 'rate_approval_bucket origin'
+          ViewerProtocolPolicy: https-only
+        Origins:
+          - DomainName: !Join [ '', [ !ImportValue rate-approval, '.s3.amazonaws.com' ] ]
+            Id: !Sub 'rate_approval_bucket origin'
+            S3OriginConfig:
+              OriginAccessIdentity: !Join [ '', [ 'origin-access-identity/cloudfront/', !ImportValue rateapprovalS3CFIdentity ] ]              
+        CustomErrorResponses:
+          - ErrorCode: '403'
+            ResponsePagePath: "/rateApproval.html"
+            ResponseCode: '200'
+            ErrorCachingMinTTL: '300'
+          - ErrorCode: '404'
+            ResponsePagePath: "/rateApproval.html"
+            ResponseCode: '200'
+            ErrorCachingMinTTL: '300'
+          - ErrorCode: '500'
+            ResponsePagePath: "/rateApproval.html"
+            ResponseCode: '200'
+            ErrorCachingMinTTL: '300'
+      Tags:
+        - Key: Service
+          Value: hawkgirl
+        - Key: Owner
+          Value: neutrons
+        - Key: Department
+          Value: Product
+        - Key: Stage
+          Value: None
+
+
+  R53DnsRecordSet:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      AliasTarget:
+        DNSName: !GetAtt [ rateApprovalDistribution, DomainName ]
+        EvaluateTargetHealth: false
+        HostedZoneId: Z2FDTNDATAQYW2
+      Comment: !Sub "DNS Record for rate approval redirection"
+      HostedZoneName: !If
+        - EnvironmentProd
+        - "creditsaison.in."
+        - !If
+          - EnvironmentInt
+          - !Join [ "", [ !Ref EnvironmentType, ".creditsaison.in." ] ]
+          - !Join [ "", [ !Ref EnvironmentType, ".creditsaison.xyz." ] ]
+      Name: !If
+        - EnvironmentProd
+        - !Sub "rateapproval.creditsaison.in"
+        - !If
+          - EnvironmentInt
+          - !Join [ "", [ "rateapproval", ".", !Ref EnvironmentType, ".creditsaison.in" ] ]
+          - !Join [
+            "",
+            [ "rateapproval", ".", !Ref EnvironmentType, ".creditsaison.xyz" ],
+          ]
+      Type: A
+
+
+
+Outputs:
+  CloudfrontEndpoint:
+    Value: !Ref rateApprovalDistribution
+    Description: Endpoint for Cloudfront distribution
