@@ -3,7 +3,7 @@ const token = url.searchParams.get("token");
 const errorPage = 'pages/ErrorPage.html?token=' + token;
 const successPage = 'pages/SuccessPage.html?token=' + token;
 const failurePage = 'pages/KycErrorPage.html?token=' + token;
-const digioRedirectPage = 'pages/DigioRedirection.html?token=' + token;
+const digioRedirectPage = 'DigioRedirection.html?token=' + token;
 const digioCancelPage = 'pages/DigioCancel.html?token=' + token;
 const digioCheckLaterPage = 'pages/DigioCheckLater.html?token=' + token;
 
