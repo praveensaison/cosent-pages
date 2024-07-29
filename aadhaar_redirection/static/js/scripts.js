@@ -38,20 +38,21 @@ function generateOtp() {
 
     const button = document.getElementById("generateOtpButton");
     const aadhaarInput = document.getElementById("aadhaarInput");
+    const consentCheckbox = document.getElementById("consentCheckbox");
     document.getElementById("resendOtp").style.display = "none";
 
     document.getElementById("aadhaarErrorMessage").style.display = "none";
     document.getElementById("retryResendMessage").style.display = "none";
 
-    button.disabled = true; // Disable the button
-    aadhaarInput.readOnly = true; // Make input read-only
-    // aadhaarInput.style.backgroundColor = "#f7f7f5"; // Change input background color
-
     aadhaarNo = aadhaarInput.value.replace(/\s/g, ""); // Remove spaces from aadhaarNumber
-    if (aadhaarNo.length !== 12) {
+    if (aadhaarNo.length !== 12 || !consentCheckbox.checked) {
         document.getElementById("aadhaarErrorMessage").style.display = "block";
         return; // Return early if Aadhaar number length is not 12
     }
+
+    button.disabled = true; // Disable the button
+    aadhaarInput.readOnly = true; // Make input read-only
+    aadhaarInput.style.backgroundColor = "#f7f7f5"; // Change input background color
 
     const requestBody = {
         aadhaarNo: aadhaarNo

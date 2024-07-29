@@ -1,11 +1,7 @@
 function toggleGenerateOtpButton() {
-    let consentCheckbox = document.getElementById("consentCheckbox");
-    document.getElementById("generateOtpButton").disabled = !consentCheckbox.checked;
-}
-
-function handleCheckboxChange(event) {
-    const checkbox = event.target;
-    document.getElementById("generateOtpButton").disabled = !checkbox.checked;
+    const consentCheckbox = document.getElementById("consentCheckbox");
+    const aadhaarInput = document.getElementById("aadhaarInput");
+    document.getElementById("generateOtpButton").disabled = !(aadhaarInput.value.length === 14 && consentCheckbox.checked);
 }
 
 function formatAndValidateAadhaarInput(input) {
@@ -25,7 +21,8 @@ function handleOnPasteOtp(event) {
     const value = data.split("");
 
     let otpValid = true
-    inputs.forEach((input) => otpValid = otpValid && input.value.match(/\d/))
+    const reg = new RegExp('^[0-9]$')
+    inputs.forEach((input, index) => otpValid = otpValid && reg.test(value[index]))
 
     if (value.length === inputs.length && otpValid) {
         inputs.forEach((input, index) => (input.value = value[index]));
@@ -49,7 +46,8 @@ function handleOtp(event) {
     }
 
     let otpValid = true
-    inputs.forEach((input) => otpValid = otpValid && input.value.match(/\d/))
+    const reg = new RegExp('^[0-9]$')
+    inputs.forEach((input) => otpValid = otpValid && reg.test(input.value))
     document.getElementById("submitButton").disabled = !otpValid
 }
 

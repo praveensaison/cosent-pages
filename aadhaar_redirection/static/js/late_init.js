@@ -17,11 +17,6 @@ inputs.forEach((input, index) => {
 // Call the toggleGenerateOtpButton function initially to set the initial state of the Generate Otp button
 toggleGenerateOtpButton();
 
-// Add event listener for checkbox change
-const consentCheckbox = document.getElementById("consentCheckbox");
-consentCheckbox.addEventListener("change", handleCheckboxChange);
-
-
 if (url.searchParams.has("status")) {
     // Handle Digio Redirection
     digioStatus = url.searchParams.get("status")
