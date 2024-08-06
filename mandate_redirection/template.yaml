@@ -70,7 +70,7 @@ Resources:
       Fn::Transform:
         Name: "GetSSMParameter"
         Parameters:
-          parameterName: KSF-Wildcard-SSL-Certificate
+          parameterName: KSF-Wildcard-SSL-Certificate-us-east-1
       DistributionConfig:
         Enabled: 'true'
         DefaultRootObject: MandateRedirection.html
@@ -88,7 +88,7 @@ Resources:
         ViewerCertificate:
           MinimumProtocolVersion: TLSv1.2_2021
           SslSupportMethod: 'sni-only'
-          AcmCertificateArn: "$$KSF-Wildcard-SSL-Certificate$$"
+          AcmCertificateArn: "$$KSF-Wildcard-SSL-Certificate-us-east-1$$"
         DefaultCacheBehavior:
           ForwardedValues:
             QueryString: False
