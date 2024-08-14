@@ -129,7 +129,7 @@
             let domain = window.location.origin.replace('customerconsent', 'api')
     
     
-            fetch(`${domain}/api/v1/jwt-datapoint-aggregator`, other_params)
+            fetch(`https://jn7tpygcmb.execute-api.us-east-1.amazonaws.com/int/api/v1/jwt-datapoint-aggregator`, other_params)
                 .then(response => {
                     // handle the response
                     console.log(response)
