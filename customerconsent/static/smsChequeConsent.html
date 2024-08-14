@@ -121,6 +121,9 @@
                     Authorization: `Bearer ${token}`,
                 },
                 method: "POST",
+                body: JSON.stringify({
+                    strategy: "Type_1"
+                })
     
             };
             let domain = window.location.origin.replace('customerconsent', 'api')
