@@ -1,245 +1,233 @@
-<HTML>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consent Page</title>
+</head>
+<body bgcolor="FFFFFF">
 
-    <HEAD>
-    
-    
-        <TITLE>Consent Page</TITLE>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    </HEAD>
-    
-    <BODY BGCOLOR="FFFFFF">
-    
-    <div style="background-color: #F8F8F8;padding: 20px 0px">
-        <IMG SRC="img/Logo.svg" width="200px" height="64px" ALIGN="BOTTOM">
+<div style="background-color: #F8F8F8; padding: 20px 0;">
+    <img src="img/Logo.svg" width="200px" height="64px" align="bottom">
+</div>
+
+<center style="margin-top: 10px;">
+    <img src="img/VectorSmartObject3.png" width="200px" height="174px" align="bottom">
+</center>
+
+<div class="content">
+    Dear Customer,
+</div>
+
+<div class="content">
+    <p>As mentioned earlier, please click on the 'I agree' button to give your consent.</p>
+    <p>If you have any questions or need further assistance, feel free to reach out to us.</p>
+</div>
+
+<div class="content">
+    <br><b>Details of the Loan</b>
+    <div style="width: 50%; padding: 0; border: 1px solid #caccd3; margin: 10px 65px;">
+        <table>
+            <tbody>
+                <tr>
+                    <td style="width: 20%; border-right: 1px solid #caccd3; border-bottom: 1px solid #caccd3; padding: 5px 20px;">
+                        Loan Amount
+                    </td>
+                    <td id="loanamount" style="width: 25%; border-bottom: 1px solid #caccd3; padding: 5px 20px;"></td>
+                </tr>
+                <tr>
+                    <td style="width: 20%; border-right: 1px solid #caccd3; padding: 5px 20px;">
+                        Disbursal Amount
+                    </td>
+                    <td id="totaldisbursalamount" style="width: 25%; padding: 5px 20px;"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <center style="margin-top: 10px;">
-        <IMG SRC="img/VectorSmartObject3.png" width="200px" height="174px" ALIGN="BOTTOM">
-    
-    </center>
-    <div class="content">
-        Dear Customer,
+</div>
+
+<div class="content">
+    <br><b>Details of the Cheque</b><br><br>
+    <div style="width: 50%; margin-bottom: 4px; padding: 0; border: 3px solid #a4a6ad; margin: 10px 65px;">
+        <table id="chequeDetailsTable" style="margin: 0; padding: 5px 20px; border-collapse: collapse; width:100%">
+            <!-- Rows will be populated here -->
+        </table>
     </div>
-    <div class="content">
-        <p>As mentioned earlier, please click on the 'I agree' button to give your consent.
-           </p>
-        <p> If you have any questions or need further assistance, feel free to reach out to us.</p>
-    </div>
-    
-    <div class="content">
-        <br><b>Details of the Loan</b>
-        <div style="width: 50%; padding: 0; border: 1px solid #caccd3;  margin: 10px 65px ;">
-      
-       <table >
-           <tbody>
-          <tr>
-             <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;margin: 0; width: 20%; border-right: 1px solid #caccd3; border-bottom: 1px solid #caccd3; padding: 5px 20px;"> Loan Amount
-             <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;margin: 0; width: 25%;  border-bottom: 1px solid #caccd3;padding: 5px 20px;">  ${loanamount}
-          </tr>
-          <tr>
-             <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;margin: 0; width: 20%; border-right: 1px solid #caccd3;  padding: 5px 20px;"> Disbursal Amount
-             <td  style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;margin: 0; width: 25%;padding: 5px 20px;">  ${totaldisbursalamount}
-    
-          </tr>
-       </tbody>
-       </table>
-    </div>
-    </div>
-    <div class="content">
-    
-       <br><b>Details of the Cheque</b><br><br>
-       <div style="width: 50%; margin-bottom: 4px; padding: 0; border: 3px solid #a4a6ad; margin: 10px 65px ;">
-      <table style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; padding: 5px 20px; border-collapse: collapse; width:100%">
-         <tbody>
-          <#list chequeDetails as values>
-          <tr>
-             <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;margin: 0; width: 20%; border-right: 1px solid #caccd3; border-bottom: 1px solid #caccd3; padding: 5px 20px;"> Favouring </td>
-             <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;margin: 0; width: 25%; border-bottom: 1px solid #caccd3;padding: 5px 20px;">   ${values.beneficiaryName}
-          </tr>
-          <tr>
-             <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;margin: 0; width: 20%; border-right: 1px solid #caccd3; border-bottom: 1px solid #caccd3; padding: 5px 20px;"> Amount in Figures
-             <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;margin: 0; width: 25%;  border-bottom: 1px solid #caccd3;padding: 5px 20px;">   ${values.disbursalAmount}
-          </tr>
-          <tr>
-             <td  style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;margin: 0; width: 20%; border-right: 1px solid #caccd3; border-bottom: 1px solid #caccd3; padding: 5px 20px;"> Cheque Number
-             <td  style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;margin: 0; width: 25%;  border-bottom: 1px solid #caccd3;padding: 5px 20px;">  ${values.utr}
-          </tr>
-          <tr>
-             <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;margin: 0; width: 20%; border-right: 1px solid #caccd3; border-bottom: 3px solid #a4a6ad;padding: 5px 20px;"> Cheque Issuance Date
-             <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;margin: 0; width: 25%; border-bottom: 3px solid #a4a6ad; padding: 5px 20px;">  ${values.valueDate}
-    
-          </tr>
-          </#list>
-          </tbody>
-       </table>
-    </div>
-    </div>
-    
-    
-    <div class="content" style="margin-bottom: 10px "><br>
-       It is our organization’s objective to provide amicable financial solutions to our customers and we are excited for our journey together. Please feel free to connect with us on the below mentioned touchpoints: <br>
-    </div>
-    <div class="content" style="margin-bottom: 10px ">
-       Visit our website : <a href="creditsaison.in" target="_blank">creditsaison.in</a><br>
-       Call us at : 1800-1038-961<br>
-       Email us at: <a href="support@creditsaison-in.com" target="_blank">support@creditsaison-in.com</a>
-    </div>
-    
-    
-    <div style="display: flex;justify-content: center;margin:20px"> <button type="submit" style="background-color: #004097;
-            width: 120px;
-            height: 50px;
-            border-radius: 10px;
-            color:  white;
-            cursor: pointer;
-            border-color: #004097;" onclick="submit()">I Agree</button> </div>
-    <div class="support-text">
-        For any help & support you can reach us at <a style="color:#1F6FDC" href="mailto:support@creditsaison-in.com"
-                                                      target="_blank">support@creditsaison-in.com</a>
-    </div>
-    <div style="text-align: center;color:#A7A7A8;margin: 20px 0px">© Kisetsu Saison Finance India Private Limited 2021
-    </div>
-    
-    
-    <script>
-        var url = new URL(window.location.href);
-        var token = url.searchParams.get("token");
-        if (!token) {
-            window.location.href = '/ErrorPage.html'
-        }
-    
-        window.addEventListener('load', function() {
-            loadVariables();
+</div>
+
+<div class="content" style="margin-bottom: 10px">
+    It is our organization’s objective to provide amicable financial solutions to our customers and we are excited for our journey together. Please feel free to connect with us on the below mentioned touchpoints: <br>
+</div>
+
+<div class="content" style="margin-bottom: 10px">
+    Visit our website: <a href="creditsaison.in" target="_blank">creditsaison.in</a><br>
+    Call us at: 1800-1038-961<br>
+    Email us at: <a href="mailto:support@creditsaison-in.com" target="_blank">support@creditsaison-in.com</a>
+</div>
+
+<div style="display: flex; justify-content: center; margin: 20px">
+    <button type="submit" style="background-color: #004097; width: 120px; height: 50px; border-radius: 10px; color: white; cursor: pointer; border-color: #004097;" onclick="submit()">I Agree</button>
+</div>
+
+<div class="support-text">
+    For any help & support you can reach us at <a style="color:#1F6FDC" href="mailto:support@creditsaison-in.com" target="_blank">support@creditsaison-in.com</a>
+</div>
+
+<div style="text-align: center; color:#A7A7A8; margin: 20px 0px">
+    © Kisetsu Saison Finance India Private Limited 2021
+</div>
+
+<script>
+    var url = new URL(window.location.href);
+    var token = url.searchParams.get("token");
+
+    window.addEventListener('load', function () {
+        loadVariables();
+    });
+
+    function loadVariables() {
+        console.log("Loading variables new 1");
+        const other_params = {
+            headers: {
+                Origin: window.location.origin,
+                Authorization: `Bearer ${token}`,
+            },
+            method: "POST",
+            body: JSON.stringify({
+                strategy: "TYPE_1"
+            })
+        };
+
+        let domain = window.location.origin.replace('customerconsent', 'api');
+
+        fetch(`https://jn7tpygcmb.execute-api.us-east-1.amazonaws.com/int/api/v1/jwt-datapoint-aggregator`, other_params)
+            .then(response => response.json())
+            .then(data => {
+                let resData = data.message
+                console.log('Getting response: ', resData);
+                populateTable(resData);
+            })
+            .catch(error => {
+                console.log(error, 'e');
+                // handle the error
+                // window.location.href = '/ErrorPage.html';
+            });
+    }
+
+    function populateTable(data) {
+        document.getElementById("loanamount").textContent = data.loanamount;
+        document.getElementById("totaldisbursalamount").textContent = data.totaldisbursalamount;
+
+        const chequeTable = document.getElementById("chequeDetailsTable");
+        chequeTable.innerHTML = ''; // Clear existing rows
+
+        data.chequeDetails.forEach((values,index) => {
+            chequeTable.innerHTML += `
+                <tr>
+                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 20%; border-right: 1px solid #caccd3; border-bottom: 1px solid #caccd3; padding: 5px 20px;"> <b>Favouring ${index+1}</b> </td>
+                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 25%; border-bottom: 1px solid #caccd3; padding: 5px 20px;">${values.beneficiaryName}</td>
+                </tr>
+                <tr>
+                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 20%; border-right: 1px solid #caccd3; border-bottom: 1px solid #caccd3; padding: 5px 20px;"> Amount in Figures </td>
+                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 25%; border-bottom: 1px solid #caccd3; padding: 5px 20px;">${values.disbursalAmount}</td>
+                </tr>
+                <tr>
+                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 20%; border-right: 1px solid #caccd3; border-bottom: 1px solid #caccd3; padding: 5px 20px;"> Cheque Number </td>
+                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 25%; border-bottom: 1px solid #caccd3; padding: 5px 20px;">${values.utr}</td>
+                </tr>
+                <tr>
+                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 20%; border-right: 1px solid #caccd3; border-bottom: 3px solid #a4a6ad; padding: 5px 20px;"> Cheque Issuance Date </td>
+                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 25%; border-bottom: 3px solid #a4a6ad; padding: 5px 20px;">${values.valueDate}</td>
+                </tr>
+            `;
+            // chequeTable.innerHTML += row;
         });
-    
-        function loadVariables() {
-            // Your function logic here
-            console.log("Loading variables");
-            const other_params = {
-                headers: {
-                    Origin: window.location.origin,
-                    Authorization: `Bearer ${token}`,
-                },
-                method: "POST",
-                body: JSON.stringify({
-                    strategy: "TYPE_1"
-                })
-    
-            };
-            let domain = window.location.origin.replace('customerconsent', 'api')
-    
-    
-            fetch(`https://jn7tpygcmb.execute-api.us-east-1.amazonaws.com/int/api/v1/jwt-datapoint-aggregator`, other_params)
-                .then(response => {
-                    // handle the response
-                    console.log(response)
-                    let values
-                    return response
-                })
-                .catch(error => {
-                    console.log(error, 'e')
-                    // handle the error
-                    window.location.href = '/ErrorPage.html'
-    
-                });
-        }
-    
-    
-    
-        function submit() {
-            console.log("submit")
-    
-    
-            const other_params = {
-                headers: {
-                    Origin: window.location.origin,
-                    Authorization: `Bearer ${token}`,
-                },
-                method: "POST",
-    
-            };
-            let domain = window.location.origin.replace('customerconsent', 'api')
-    
-    
-            fetch(`${domain}/api/v2/customerConsent`, other_params)
-                .then(response => {
-                    // handle the response
-                    console.log(response)
-                    if (response.status === 200) {
-                        window.location.href = '/chequeConsentAck.html'
-                    }
-                    else if (response.status === 409) {
-                        window.location.href = '/chequeConsentAck.html'
-    
-                    }
-                    else if (response.status === 500) {
-                        window.location.href = '/ErrorPage.html'
-    
-                    }
-                    return response
-                })
-                .catch(error => {
-                    console.log(error, 'e')
-                    // handle the error
-                    window.location.href = '/ErrorPage.html'
-    
-                });
-        }
-    </script>
-    
-    
-    </BODY>
-    <style>
-        .body {
-            margin: 20px 65px;
-            color: #161617;
-    
-        }
-    
-        p {
-            text-indent: 30px;
-            text-align: justify;
-        }
-    
-        .content {
-            margin: 0px 65px;
-        }
-    
-        .center-title {
-            text-align: center;
-            letter-spacing: 0px;
-            color: #004097;
-            opacity: 1;
-            font-size: 25px;
-            font-family: 'Helvetica-Bold';
-            margin: 1% 30%;
-    
-        }
-    
-        div.scroll {
-                margin: 0px 65px;
-                padding: 4px;
-                background-color: rgb(249, 255, 249);
-                height: 250px;
-                overflow-x: hidden;
-                overflow-y: auto;
-                text-align: justify;
-            }
-    
-        .support-text {
-            background-color: #F8F8F8;
-            padding: 20px 0px;
-            text-align: center;
-            color: #A7A7A8;
-        }
-    
-        .center-text {
-            text-align: center;
-            letter-spacing: 0px;
-            color: #A7A7A8;
-            opacity: 1;
-            margin: 30px 100px;
-        }
-    </style>
-    
-    </HTML>
+    }
+
+    function submit() {
+        console.log("submit");
+
+        const other_params = {
+            headers: {
+                Origin: window.location.origin,
+                Authorization: `Bearer ${token}`,
+            },
+            method: "POST"
+        };
+
+        let domain = window.location.origin.replace('customerconsent', 'api');
+
+        fetch(`${domain}/api/v2/customerConsent`, other_params)
+            .then(response => {
+                // handle the response
+                console.log(response);
+                if (response.status === 200) {
+                    window.location.href = '/chequeConsentAck.html';
+                } else if (response.status === 409) {
+                    window.location.href = '/chequeConsentAck.html';
+                } else if (response.status === 500) {
+                    window.location.href = '/ErrorPage.html';
+                }
+                return response;
+            })
+            .catch(error => {
+                console.log(error, 'e');
+                // handle the error
+                window.location.href = '/ErrorPage.html';
+            });
+    }
+</script>
+
+<style>
+    .body {
+        margin: 20px 65px;
+        color: #161617;
+    }
+
+    p {
+        text-indent: 30px;
+        text-align: justify;
+    }
+
+    .content {
+        margin: 0px 65px;
+    }
+
+    .center-title {
+        text-align: center;
+        letter-spacing: 0px;
+        color: #004097;
+        opacity: 1;
+        font-size: 25px;
+        font-family: 'Helvetica-Bold';
+        margin: 1% 30%;
+    }
+
+    div.scroll {
+        margin: 0px 65px;
+        padding: 4px;
+        background-color: rgb(249, 255, 249);
+        height: 250px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        text-align: justify;
+    }
+
+    .support-text {
+        background-color: #F8F8F8;
+        padding: 20px 0px;
+        text-align: center;
+        color: #A7A7A8;
+    }
+
+    .center-text {
+        text-align: center;
+        letter-spacing: 0px;
+        color: #A7A7A8;
+        opacity: 1;
+        margin: 30px 100px;
+    }
+</style>
+
+</body>
+</html>
