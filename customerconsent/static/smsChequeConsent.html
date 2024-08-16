@@ -86,7 +86,6 @@
     });
 
     function loadVariables() {
-        console.log("Loading variables new 1");
         const other_params = {
             headers: {
                 Origin: window.location.origin,
@@ -104,13 +103,12 @@
             .then(response => response.json())
             .then(data => {
                 let resData = data.message
-                console.log('Getting response: ', resData);
                 populateTable(resData);
             })
             .catch(error => {
                 console.log(error, 'e');
                 // handle the error
-                // window.location.href = '/ErrorPage.html';
+                window.location.href = '/ErrorPage.html';
             });
     }
 
@@ -164,7 +162,7 @@
                 if (response.status === 200) {
                     window.location.href = '/chequeConsentAck.html';
                 } else if (response.status === 409) {
-                    window.location.href = '/chequeConsentAck.html';
+                    window.location.href = '/chequeConsentAlreadyCaptured.html';
                 } else if (response.status === 500) {
                     window.location.href = '/ErrorPage.html';
                 }
