@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consent Page</title>
 </head>
-<body bgcolor="FFFFFF">
+<body>
 
-<div style="background-color: #F8F8F8; padding: 20px 0;">
-    <img src="img/Logo.svg" width="200px" height="64px" align="bottom">
+<div class="header">
+    <img src="img/Logo.svg" width="200px" height="64px" alt="Logo">
 </div>
 
-<center style="margin-top: 10px;">
-    <img src="img/VectorSmartObject3.png" width="200px" height="174px" align="bottom">
-</center>
+<div class="centered">
+    <img src="img/VectorSmartObject3.png" width="200px" height="174px" alt="Vector Object">
+</div>
 
 <div class="content">
     Dear Customer,
@@ -26,20 +26,16 @@
 
 <div class="content">
     <br><b>Details of the Loan</b>
-    <div style="width: 50%; padding: 0; border: 1px solid #caccd3; margin: 10px 65px;">
+    <div class="loan-details">
         <table>
             <tbody>
                 <tr>
-                    <td style="width: 20%; border-right: 1px solid #caccd3; border-bottom: 1px solid #caccd3; padding: 5px 20px;">
-                        Loan Amount
-                    </td>
-                    <td id="loanamount" style="width: 25%; border-bottom: 1px solid #caccd3; padding: 5px 20px;"></td>
+                    <td>Loan Amount</td>
+                    <td id="loanamount"></td>
                 </tr>
                 <tr>
-                    <td style="width: 20%; border-right: 1px solid #caccd3; padding: 5px 20px;">
-                        Disbursal Amount
-                    </td>
-                    <td id="totaldisbursalamount" style="width: 25%; padding: 5px 20px;"></td>
+                    <td>Disbursal Amount</td>
+                    <td id="totaldisbursalamount"></td>
                 </tr>
             </tbody>
         </table>
@@ -48,32 +44,30 @@
 
 <div class="content">
     <br><b>Details of the Cheque</b><br><br>
-    <div style="width: 50%; margin-bottom: 4px; padding: 0; border: 3px solid #a4a6ad; margin: 10px 65px;">
-        <table id="chequeDetailsTable" style="margin: 0; padding: 5px 20px; border-collapse: collapse; width:100%">
+    <div class="cheque-details">
+        <table id="chequeDetailsTable">
             <!-- Rows will be populated here -->
         </table>
     </div>
 </div>
 
-<div class="content" style="margin-bottom: 10px">
+<div class="content">
     It is our organization’s objective to provide amicable financial solutions to our customers and we are excited for our journey together. Please feel free to connect with us on the below mentioned touchpoints: <br>
 </div>
 
-<div class="content" style="margin-bottom: 10px">
-    Visit our website: <a href="creditsaison.in" target="_blank">creditsaison.in</a><br>
+<div class="content">
+    Visit our website: <a href="https://creditsaison.in" target="_blank">creditsaison.in</a><br>
     Call us at: 1800-1038-961<br>
     Email us at: <a href="mailto:support@creditsaison-in.com" target="_blank">support@creditsaison-in.com</a>
 </div>
 
-<div style="display: flex; justify-content: center; margin: 20px">
-    <button type="submit" style="background-color: #004097; width: 120px; height: 50px; border-radius: 10px; color: white; cursor: pointer; border-color: #004097;" onclick="submit()">I Agree</button>
-</div>
+<button type="submit" class="btn-submit" onclick="submit()">I Agree</button>
 
 <div class="support-text">
     For any help & support you can reach us at <a style="color:#1F6FDC" href="mailto:support@creditsaison-in.com" target="_blank">support@creditsaison-in.com</a>
 </div>
 
-<div style="text-align: center; color:#A7A7A8; margin: 20px 0px">
+<div class="footer">
     © Kisetsu Saison Finance India Private Limited 2021
 </div>
 
@@ -86,6 +80,7 @@
     });
 
     function loadVariables() {
+        console.log("Loading variables new 1");
         const other_params = {
             headers: {
                 Origin: window.location.origin,
@@ -102,7 +97,8 @@
         fetch(`https://jn7tpygcmb.execute-api.us-east-1.amazonaws.com/int/api/v1/jwt-datapoint-aggregator`, other_params)
             .then(response => response.json())
             .then(data => {
-                let resData = data.message
+                let resData = data.message;
+                console.log('Getting response: ', resData);
                 populateTable(resData);
             })
             .catch(error => {
@@ -113,32 +109,32 @@
     }
 
     function populateTable(data) {
+
         document.getElementById("loanamount").textContent = data.loanamount;
         document.getElementById("totaldisbursalamount").textContent = data.totaldisbursalamount;
 
         const chequeTable = document.getElementById("chequeDetailsTable");
-        chequeTable.innerHTML = ''; // Clear existing rows
+        chequeTable.innerHTML = '';
 
-        data.chequeDetails.forEach((values,index) => {
+        data.chequeDetails.forEach((values, index) => {
             chequeTable.innerHTML += `
                 <tr>
-                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 20%; border-right: 1px solid #caccd3; border-bottom: 1px solid #caccd3; padding: 5px 20px;"> <b>Favouring ${index+1}</b> </td>
-                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 25%; border-bottom: 1px solid #caccd3; padding: 5px 20px;">${values.beneficiaryName}</td>
+                    <td><b>Favouring ${index + 1}</b></td>
+                    <td>${values.beneficiaryName}</td>
                 </tr>
                 <tr>
-                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 20%; border-right: 1px solid #caccd3; border-bottom: 1px solid #caccd3; padding: 5px 20px;"> Amount in Figures </td>
-                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 25%; border-bottom: 1px solid #caccd3; padding: 5px 20px;">${values.disbursalAmount}</td>
+                    <td>Amount in Figures</td>
+                    <td>${values.disbursalAmount}</td>
                 </tr>
                 <tr>
-                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 20%; border-right: 1px solid #caccd3; border-bottom: 1px solid #caccd3; padding: 5px 20px;"> Cheque Number </td>
-                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 25%; border-bottom: 1px solid #caccd3; padding: 5px 20px;">${values.utr}</td>
+                    <td>Cheque Number</td>
+                    <td>${values.utr}</td>
                 </tr>
                 <tr>
-                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 20%; border-right: 1px solid #caccd3; border-bottom: 3px solid #a4a6ad; padding: 5px 20px;"> Cheque Issuance Date </td>
-                    <td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; margin: 0; width: 25%; border-bottom: 3px solid #a4a6ad; padding: 5px 20px;">${values.valueDate}</td>
+                    <td>Cheque Issuance Date</td>
+                    <td>${values.valueDate}</td>
                 </tr>
             `;
-            // chequeTable.innerHTML += row;
         });
     }
 
@@ -162,7 +158,7 @@
                 if (response.status === 200) {
                     window.location.href = '/chequeConsentAck.html';
                 } else if (response.status === 409) {
-                    window.location.href = '/chequeConsentAlreadyCaptured.html';
+                    window.location.href = '/chequeConsentAck.html';
                 } else if (response.status === 500) {
                     window.location.href = '/ErrorPage.html';
                 }
@@ -177,53 +173,96 @@
 </script>
 
 <style>
-    .body {
-        margin: 20px 65px;
+    body {
+        background-color: #FFFFFF;
+        font-family: Arial, sans-serif;
         color: #161617;
+        margin: 0;
+        padding: 0;
     }
 
-    p {
-        text-indent: 30px;
-        text-align: justify;
+    .header {
+        background-color: #F8F8F8;
+        padding: 20px;
+        text-align: center;
     }
 
     .content {
-        margin: 0px 65px;
-    }
-
-    .center-title {
-        text-align: center;
-        letter-spacing: 0px;
-        color: #004097;
-        opacity: 1;
-        font-size: 25px;
-        font-family: 'Helvetica-Bold';
-        margin: 1% 30%;
-    }
-
-    div.scroll {
-        margin: 0px 65px;
-        padding: 4px;
-        background-color: rgb(249, 255, 249);
-        height: 250px;
-        overflow-x: hidden;
-        overflow-y: auto;
+        margin: 20px;
         text-align: justify;
     }
 
-    .support-text {
-        background-color: #F8F8F8;
-        padding: 20px 0px;
-        text-align: center;
-        color: #A7A7A8;
+    .content p {
+        text-indent: 30px;
     }
 
-    .center-text {
+    .loan-details, .cheque-details {
+        /* width: 100%; */
+        max-width: 600px;
+        /* margin: 20px auto; */
+        padding: 0;
+        border: 1px solid #caccd3;
+        box-sizing: border-box;
+    }
+
+    .loan-details table, .cheque-details table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+    }
+
+    .loan-details td, .cheque-details td {
+        padding: 10px;
+        border: 1px solid #caccd3;
+        word-wrap: break-word;
+    }
+
+    .cheque-details {
+        border: 3px solid #a4a6ad;
+    }
+
+    .centered {
         text-align: center;
-        letter-spacing: 0px;
+        margin: 20px 0;
+    }
+
+    .support-text, .footer {
+        text-align: center;
         color: #A7A7A8;
-        opacity: 1;
-        margin: 30px 100px;
+        padding: 20px;
+        background-color: #F8F8F8;
+        margin-top: 20px;
+    }
+
+    .btn-submit {
+        background-color: #004097;
+        width: 120px;
+        height: 50px;
+        border-radius: 10px;
+        color: white;
+        cursor: pointer;
+        border: none;
+        margin: 20px auto;
+        display: block;
+    }
+
+    @media screen and (max-width: 768px) {
+        .loan-details, .cheque-details {
+            width: 90%;
+        }
+
+        .content {
+            margin: 10px;
+        }
+
+        .content p {
+            text-indent: 15px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            max-width: 200px;
+        }
     }
 </style>
 
