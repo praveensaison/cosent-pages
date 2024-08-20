@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consent Page</title>
+</head>
+<body>
+
+<div class="header">
+    <img src="img/Logo.svg" width="200px" height="64px" alt="Logo">
+</div>
+
+<div class="centered">
+    <img src="img/VectorSmartObject3.png" width="200px" height="174px" alt="Vector Object">
+</div>
+
+<div class="content">
+    Dear Customer,
+</div>
+
+<div class="content">
+    <p>As mentioned earlier, please click on the 'I agree' button to give your consent.</p>
+    <p>If you have any questions or need further assistance, feel free to reach out to us.</p>
+</div>
+
+<div class="content">
+    <br><b>Details of the Loan</b>
+    <div class="loan-details">
+        <table>
+            <tbody>
+                <tr>
+                    <td>Loan Amount</td>
+                    <td id="loanamount"></td>
+                </tr>
+                <tr>
+                    <td>Disbursal Amount</td>
+                    <td id="totaldisbursalamount"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="content">
+    <br><b>Details of the Cheque</b><br><br>
+    <div class="cheque-details">
+        <table id="chequeDetailsTable">
+            <!-- Rows will be populated here -->
+        </table>
+    </div>
+</div>
+
+<div class="content">
+    It is our organization’s objective to provide amicable financial solutions to our customers and we are excited for our journey together. Please feel free to connect with us on the below mentioned touchpoints: <br>
+</div>
+
+<div class="content">
+    Visit our website: <a href="https://creditsaison.in" target="_blank">creditsaison.in</a><br>
+    Call us at: 1800-1038-961<br>
+    Email us at: <a href="mailto:support@creditsaison-in.com" target="_blank">support@creditsaison-in.com</a>
+</div>
+
+<button type="submit" class="btn-submit" onclick="submit()">I Agree</button>
+
+<div class="support-text">
+    For any help & support you can reach us at <a style="color:#1F6FDC" href="mailto:support@creditsaison-in.com" target="_blank">support@creditsaison-in.com</a>
+</div>
+
+<div class="footer">
+    © Kisetsu Saison Finance India Private Limited 2021
+</div>
+
+<script>
+    var url = new URL(window.location.href);
+    var token = url.searchParams.get("token");
+    
+    if(!token) {
+        window.location.href = '/ErrorPage.html'
+    }
+
+    window.addEventListener('load', function () {
+        loadVariables();
+    });
+
+    function loadVariables() {
+        const other_params = {
+            headers: {
+                Origin: window.location.origin,
+                Authorization: `Bearer ${token}`,
+            },
+            method: "POST",
+            body: JSON.stringify({
+                strategy: "TYPE_1"
+            })
+        };
+
+        let domain = window.location.origin.replace('customerconsent', 'api');
+
+        fetch(`https://jn7tpygcmb.execute-api.us-east-1.amazonaws.com/int/api/v1/jwt-datapoint-aggregator`, other_params)
+            .then(response => response.json())
+            .then(data => {
+                let resData = data.message;
+                populateTable(resData);
+            })
+            .catch(error => {
+                console.log(error, 'e');
+                // handle the error
+                window.location.href = '/ErrorPage.html';
+            });
+    }
+
+    function populateTable(data) {
+
+        document.getElementById("loanamount").textContent = data.loanamount;
+        document.getElementById("totaldisbursalamount").textContent = data.totaldisbursalamount;
+
+        const chequeTable = document.getElementById("chequeDetailsTable");
+        chequeTable.innerHTML = '';
+
+        data.chequeDetails.forEach((values, index) => {
+            chequeTable.innerHTML += `
+                <tr>
+                    <td><b>Favouring ${index + 1}</b></td>
+                    <td>${values.beneficiaryName}</td>
+                </tr>
+                <tr>
+                    <td>Amount in Figures</td>
+                    <td>${values.disbursalAmount}</td>
+                </tr>
+                <tr>
+                    <td>Cheque Number</td>
+                    <td>${values.utr}</td>
+                </tr>
+                <tr>
+                    <td>Cheque Issuance Date</td>
+                    <td>${values.valueDate}</td>
+                </tr>
+            `;
+        });
+    }
+
+    function submit() {
+        const other_params = {
+            headers: {
+                Origin: window.location.origin,
+                Authorization: `Bearer ${token}`,
+            },
+            method: "POST"
+        };
+
+        let domain = window.location.origin.replace('customerconsent', 'api');
+
+        fetch(`${domain}/api/v2/customerConsent`, other_params)
+            .then(response => {
+                // handle the response
+                if (response.status === 200) {
+                    window.location.href = '/chequeConsentAck.html';
+                } else if (response.status === 409) {
+                    window.location.href = '/chequeConsentAlreadyCaptured.html';
+                } else if (response.status === 500) {
+                    window.location.href = '/ErrorPage.html';
+                }
+                return response;
+            })
+            .catch(error => {
+                console.log(error, 'e');
+                // handle the error
+                window.location.href = '/ErrorPage.html';
+            });
+    }
+</script>
+
+<style>
+    body {
+        background-color: #FFFFFF;
+        font-family: Arial, sans-serif;
+        color: #161617;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        background-color: #F8F8F8;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .content {
+        margin: 20px;
+        text-align: justify;
+    }
+
+    .content p {
+        text-indent: 30px;
+    }
+
+    .loan-details, .cheque-details {
+        /* width: 100%; */
+        max-width: 600px;
+        /* margin: 20px auto; */
+        padding: 0;
+        border: 1px solid #caccd3;
+        box-sizing: border-box;
+    }
+
+    .loan-details table, .cheque-details table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+    }
+
+    .loan-details td, .cheque-details td {
+        padding: 10px;
+        border: 1px solid #caccd3;
+        word-wrap: break-word;
+    }
+
+    .cheque-details {
+        border: 3px solid #a4a6ad;
+    }
+
+    .centered {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .support-text, .footer {
+        text-align: center;
+        color: #A7A7A8;
+        padding: 20px;
+        background-color: #F8F8F8;
+        margin-top: 20px;
+    }
+
+    .btn-submit {
+        background-color: #004097;
+        width: 120px;
+        height: 50px;
+        border-radius: 10px;
+        color: white;
+        cursor: pointer;
+        border: none;
+        margin: 20px auto;
+        display: block;
+    }
+
+    @media screen and (max-width: 768px) {
+        .loan-details, .cheque-details {
+            width: 90%;
+        }
+
+        .content {
+            margin: 10px;
+        }
+
+        .content p {
+            text-indent: 15px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            max-width: 200px;
+        }
+    }
+</style>
+
+</body>
+</html>
