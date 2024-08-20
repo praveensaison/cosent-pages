@@ -74,13 +74,16 @@
 <script>
     var url = new URL(window.location.href);
     var token = url.searchParams.get("token");
+    
+    if(!token) {
+        window.location.href = '/ErrorPage.html'
+    }
 
     window.addEventListener('load', function () {
         loadVariables();
     });
 
     function loadVariables() {
-        console.log("Loading variables new 1");
         const other_params = {
             headers: {
                 Origin: window.location.origin,
@@ -98,7 +101,6 @@
             .then(response => response.json())
             .then(data => {
                 let resData = data.message;
-                console.log('Getting response: ', resData);
                 populateTable(resData);
             })
             .catch(error => {
@@ -139,8 +141,6 @@
     }
 
     function submit() {
-        console.log("submit");
-
         const other_params = {
             headers: {
                 Origin: window.location.origin,
@@ -154,11 +154,10 @@
         fetch(`${domain}/api/v2/customerConsent`, other_params)
             .then(response => {
                 // handle the response
-                console.log(response);
                 if (response.status === 200) {
                     window.location.href = '/chequeConsentAck.html';
                 } else if (response.status === 409) {
-                    window.location.href = '/chequeConsentAck.html';
+                    window.location.href = '/chequeConsentAlreadyCaptured.html';
                 } else if (response.status === 500) {
                     window.location.href = '/ErrorPage.html';
                 }
