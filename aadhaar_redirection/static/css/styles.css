@@ -14,8 +14,12 @@ body {
 
 }
 
-.main-container{
-    display:flex;flex-direction:column;align-items: center;justify-content: space-between;height:100vh;
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
 }
 
 .heading {
@@ -27,7 +31,6 @@ body {
 
 .input-container {
     margin: 20px;
-  
 }
 
 .input-container input {
@@ -35,8 +38,6 @@ body {
     width: 85%;
     height: 16px;
     padding: 10px;
-    /* border: 1px solid #CCC;
-    border-radius: 4px; */
     font-size: 14px;
     text-align: center;
     background-color: #ffffff;
@@ -46,17 +47,42 @@ body {
 .input-container input:read-only {
     background-color: #D3D3D3;
 }
+
 .input-container input:focus {
-    outline:none;
+    outline: none;
 }
+
+.aadhaar-input {
+    border: none;
+    border-bottom: 1px solid #707070
+}
+
+.aadhaar-input::placeholder {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.aadhaar-description {
+    color: #707070;
+    text-align: center;
+    font-size: 10px;
+    font-style: italic;
+}
+
+.aadhaar-error-message {
+    color: red;
+    text-align: center;
+    font-size: 10px;
+    display: none
+}
+
 button,
 .submit-button2 button {
     width: 100%;
     border-radius: 20px;
     font-family: 'Kanit-Regular', sans-serif;
     /* margin: 15px; */
-    background-color: #E2E2E2;
-    background: linear-gradient(to right, #1D478E 0%, #161742 100%);
+    background: #E2E2E2 linear-gradient(to right, #1D478E 0%, #161742 100%);
     color: white;
     padding: 10px 20px;
     font-size: 16px;
@@ -93,7 +119,7 @@ button:disabled,
 
 #aadhaarSection {
     display: none;
-    margin:20px;
+    margin: 20px;
 }
 
 .otp-container {
@@ -122,7 +148,7 @@ button:disabled,
     font-size: 20px;
     padding: 6px;
     text-align: center;
-    border-radius: 0px;
+    border-radius: 0;
     margin: 4px;
     border: 1px solid #1D478E;
     background: #ffffff;
@@ -147,57 +173,167 @@ button:disabled,
 }
 
 .consent-checkbox {
-    display:flex;
-    margin: 0px 20px 20px 20px;
+    display: none;
+    margin: 0 20px 20px 20px;
     font-size: 10px;
-    color:#707070;
-    }
+    color: #707070;
+}
 
 .center-content {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
-.align-center{
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  align-items: center;
-  justify-content: center;
+
+.align-center {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: center;
 }
 
 .loader {
-    background:linear-gradient(#149B3B, #004097);
-    -webkit-mask:radial-gradient(farthest-side,#0000 calc(100% - 5px),#fff 0);
-            mask:radial-gradient(farthest-side,#0000 calc(100% - 5px),#fff 0);
-    border-radius: 50%;  
+    background: linear-gradient(#149B3B, #004097);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 5px), #fff 0);
+    mask: radial-gradient(farthest-side, #0000 calc(100% - 5px), #fff 0);
+    border-radius: 50%;
     position: fixed;
-    inset : calc(50% - 50px);
-    animation: rot 1s linear infinite; 
-    height:80px;
-    width:80px
-  }
-  @keyframes rot {
-    100% { transform: rotate(360deg); }
- }
-  
+    inset: calc(50% - 50px);
+    animation: rot 1s linear infinite;
+    height: 80px;
+    width: 80px
+}
+
+@keyframes rot {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .submit-section {
-    margin-top:20vh;
+    margin-top: 20vh;
     display: flex;
-    width: 350px; 
+    width: 350px;
     flex-direction: column;
 }
 
-.error-popup{
-    height:40px;
-    background-color:#FFF3EB ;
-    width:100%;
-    display:flex;
-    position:fixed;
-    z-index: 2;
-    top:0;
-    justify-content: space-around;
-    display:none;
+.digio-submit-section {
+    display: flex;
+    width: 350px;
+    flex-direction: column;
 }
 
+.error-popup-container {
+    height: 40px;
+    background-color: #FFF3EB;
+    width: 100%;
+    display: none;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    justify-content: space-around;
+}
+
+.error-popup {
+    display: flex;
+    align-items: center;
+    height: 40px;
+}
+
+.kyc-verification-container {
+    background-color: #FFFFFF;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 100vw
+}
+
+.font-size-16 {
+    font-size: 16px
+}
+
+.footer-container {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    margin: 2%
+}
+
+.footer-message {
+    font-size: 10px;
+    color: #707070
+}
+
+.otp-retry-message {
+    font-size: 10px;
+    margin-left: 5px;
+    font-weight: 500;
+}
+
+.enter-otp {
+    font-size: 14px;
+    color: #707070;
+}
+
+.otp-message {
+    font-size: 10px;
+    color: #707070;
+}
+
+.otp-error-message {
+    color: red;
+    text-align: center;
+    font-size: 10px;
+    display: none;
+}
+
+.resend-countdown {
+    color: #1D478E;
+    text-align: center;
+    font-size: 10px;
+    display: none;
+}
+
+.resend-otp {
+    color: #1D478E;
+    text-align: center;
+    font-size: 10px;
+    display: none;
+}
+
+.resend-message {
+    color: red;
+    text-align: center;
+    font-size: 10px;
+    display: none;
+}
+
+.uidai-failed-container {
+    gap: 2vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.uidai-failed-text {
+    text-align: center;
+    color: #1D478E;
+}
+
+.digio-text-container {
+    display: none;
+    flex-direction: column;
+    text-align: center;
+}
+
+#digio-heading-text {
+    font-weight: 600;
+    font-size: 18px;
+    color: #1D478E;
+}
+
+#digio-normal-text {
+    font-size: 12px;
+    color: #707070;
+}

@@ -1,64 +1,13 @@
-let url = new URL(window.location.href);
-const token = url.searchParams.get("token");
-const errorPage = 'pages/ErrorPage.html?token=' + token;
-const error404Page = 'pages/Error404.html?token=' + token;
-const thankYouPage = 'pages/ThankYou.html?token=' + token;
-const successPage = 'pages/SuccessPage.html?token=' + token;
-const failurePage = 'pages/KycErrorPage.html?token=' + token;
-
-const api_url = `{{API_BASE_URL}}/api/v1/process-aadhaar`;
-
-if (!token) {
-    window.location.href = errorPage;
-}
-
-let requestId = "";
-let aadhaarNo = "";
-
-let resendOtpCount = 0;
-let otpSubmitCount = 0;
-
-const callbackUrl = getCallbackUrlFromToken()
-
-// Validate Aadhaar Pull Status
-validateAadhaarStatus()
-
-function getCallbackUrlFromToken() {
-    var tokenJson = parseJwt(token);
-    return tokenJson['payload']['callbackUrl'];
-}
-
-function parseJwt(token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    return JSON.parse(jsonPayload);
-}
-
-function formatAndValidateAadhaarInput(input) {
-    var inputValue = input.value;
-    var digitsOnly = inputValue.replace(/\D/g, ""); // Remove non-digit characters
-    input.value = digitsOnly;
-    let value = input.value.replace(/\s/g, "").replace(/(\d{4})(?=\d)/g, "$1 ");
-    input.value = value;
-
-    let button = document.getElementById("generateOtpButton");
-    button.disabled = input.value.length !== 14; // Disable the button if Aadhaar number length is not 14
-}
-
 function validateAadhaarStatus() {
-    console.log("validateAadhaarPull")
+    console.log("inside validateAadhaarPull")
 
-    var aadhaarStatusParams = {
-            method: "POST", headers: {
-                Origin: window.location.origin, Authorization: `Bearer ${token}`, "Content-Type": "application/json",
-            }, body: JSON.stringify({
-                aadhaarStatus: true
-            }),
-        };
+    const aadhaarStatusParams = {
+        method: "POST", headers: {
+            Origin: window.location.origin, Authorization: `Bearer ${token}`, "Content-Type": "application/json",
+        }, body: JSON.stringify({
+            aadhaarStatus: true
+        }),
+    };
 
     fetch(api_url, aadhaarStatusParams)
         .then(response => {
@@ -67,8 +16,10 @@ function validateAadhaarStatus() {
                 document.getElementById("loader").style.display = "none";
                 document.getElementById("aadhaarSection").style.display = "block";
                 document.getElementById("generateOtpButton").style.display = "block";
+                document.getElementById("id-consent-section").style.display = "flex";
+                document.getElementById("consentCheckbox").checked = false;
             } else if (response.status === 500) {
-                window.location.href = errorPage;               
+                window.location.href = errorPage;
             } else if (response.status === 400) {
                 window.location.href = successPage;
             } else {
@@ -84,26 +35,24 @@ function validateAadhaarStatus() {
 function generateOtp() {
     console.log("generateOtp");
     document.getElementById("id-error-popup").style.display = "none";
-    document.getElementById("consentCheckbox").checked = false;
 
-    var button = document.getElementById("generateOtpButton");
-    var aadhaarInput = document.getElementById("aadhaarInput");
+    const button = document.getElementById("generateOtpButton");
+    const aadhaarInput = document.getElementById("aadhaarInput");
+    const consentCheckbox = document.getElementById("consentCheckbox");
     document.getElementById("resendOtp").style.display = "none";
-
 
     document.getElementById("aadhaarErrorMessage").style.display = "none";
     document.getElementById("retryResendMessage").style.display = "none";
 
-
-    button.disabled = true; // Disable the button
-    aadhaarInput.readOnly = true; // Make input read-only
-    // aadhaarInput.style.backgroundColor = "#f7f7f5"; // Change input background color
-
     aadhaarNo = aadhaarInput.value.replace(/\s/g, ""); // Remove spaces from aadhaarNumber
-    if (aadhaarNo.length !== 12) {
+    if (aadhaarNo.length !== 12 || !consentCheckbox.checked) {
         document.getElementById("aadhaarErrorMessage").style.display = "block";
         return; // Return early if Aadhaar number length is not 12
     }
+
+    button.disabled = true; // Disable the button
+    aadhaarInput.readOnly = true; // Make input read-only
+    aadhaarInput.style.backgroundColor = "#f7f7f5"; // Change input background color
 
     const requestBody = {
         aadhaarNo: aadhaarNo
@@ -122,10 +71,11 @@ function generateOtp() {
                 return response.json(); // Parse the response JSON
             } else if (response.status === 400) {
                 // Show invalid aadhaar number message
-                document.getElementById("aadhaarErrorMessage").innerText = 'Please enter a valid Aadhaar number.'
                 document.getElementById("aadhaarErrorMessage").style.display = "block";
                 aadhaarInput.readOnly = false; // Make input editable again
-                // aadhaarInput.style.backgroundColor = "#F0F0F0"; // Restore input background color
+                document.getElementById("consentCheckbox").checked = false;
+            } else if (response.status === 410) {
+                window.location.href = digioRedirectPage;
             } else if (response.status === 500) {
                 window.location.href = errorPage;
             } else {
@@ -140,20 +90,20 @@ function generateOtp() {
                 requestId = data.requestId
                 // Remove error message if any
                 document.getElementById("aadhaarErrorMessage").style.display = 'none';
+                document.getElementById("aadhaarDescription").style.display = 'none';
                 document.getElementById("retryResendMessage").style.display = "none";
                 document.getElementById("otpErrorMessage").style.display = 'none';
                 document.getElementById("otpSection").style.display = "block";
                 document.getElementById("submitButton").style.display = "block";
-                document.getElementById("id-consent-section").style.display = "flex";
                 document.getElementById("generateOtpButton").style.display = "none";
+                document.getElementById("id-consent-section").style.display = "none";
                 document.querySelectorAll(".otp-field input").forEach(input => {
                     input.disabled = false;
                 });
                 otpSubmitCount = 0;
                 clearOtpInputs();
-                document.getElementById("consentCheckbox").disabled = false;
 
-                var countdown = 60; // Countdown in seconds
+                let countdown = 60; // Countdown in seconds
 
                 // Function to update the button text with the remaining countdown
                 function updateButton() {
@@ -165,7 +115,7 @@ function generateOtp() {
                     } else {
                         document.getElementById("resendCounter").style.display = "none";
                         document.getElementById("resendOtp").style.display = "block";
-                        aadhaarInput.readOnly = true; // Make input read only 
+                        aadhaarInput.readOnly = true; // Make input read only
                     }
                 }
 
@@ -178,7 +128,7 @@ function generateOtp() {
                 }
                 // Disable caching of the thank-you page
                 window.history.pushState({}, '', window.location.href);
-                window.onpopstate = function (event) {
+                window.onpopstate = function () {
                     window.location.href = errorPage;
                 };
 
@@ -194,44 +144,11 @@ function generateOtp() {
         });
 }
 
-function handleOtp(event) {
-    document.getElementById("id-error-popup").style.display = "none";
-    document.getElementById("otpErrorMessage").style.display = 'none';
-    const input = event.target;
-    let value = input.value;
-    let isValidInput = value.match(/\d/); // Only allow digits
-    input.value = isValidInput ? value[0] : "";
-    let fieldIndex = input.dataset.index;
-    if (fieldIndex < inputs.length - 1 && isValidInput) {
-        input.nextElementSibling.focus();
-    }
-    if (event.key === "Backspace" && fieldIndex > 0) {
-        input.previousElementSibling.focus();
-    }
-}
-
-
-function handleOnPasteOtp(event) {
-    document.getElementById("id-error-popup").style.display = "none";
-    document.getElementById("otpErrorMessage").style.display = 'none';
-    const data = event.clipboardData.getData("text");
-    const value = data.split("");
-    if (value.length === inputs.length) {
-        inputs.forEach((input, index) => (input.value = value[index]));
-    }
-}
-
-function redirectUrl() {
-    if (callbackUrl != null) {
-        window.location.href = callbackUrl;
-    }
-}
-
 function submitOTP() {
     console.log("submitOTP");
     document.getElementById("id-error-popup").style.display = "none";
-    var otpInputs = document.querySelectorAll(".otp-field input");
-    var otp = "";
+    const otpInputs = document.querySelectorAll(".otp-field input");
+    let otp = "";
     otpInputs.forEach(input => {
         otp += input.value;
     });
@@ -240,7 +157,7 @@ function submitOTP() {
         return; // Return early if OTP length is not 6
     }
     document.getElementById("otpErrorMessage").style.display = 'none';
-    var submitOtpParams = {
+    const submitOtpParams = {
         method: "POST", headers: {
             Origin: window.location.origin, Authorization: `Bearer ${token}`, "Content-Type": "application/json",
         }, body: JSON.stringify({
@@ -248,8 +165,7 @@ function submitOTP() {
         }),
     };
 
-    const submitButton = document.getElementById("submitButton");
-    submitButton.disabled = true
+    document.getElementById("submitButton").disabled = true
 
     fetch(api_url, submitOtpParams)
         .then(response => {
@@ -266,8 +182,7 @@ function submitOTP() {
                     document.getElementById("otpRetryMessage").innerText = `You have 0 tries left on this OTP.`;
                     document.getElementById("id-error-popup").style.display = "flex";
                     document.getElementById("consentCheckbox").disabled = true;
-                    const submitButton = document.getElementById("submitButton");
-                    submitButton.disabled = true
+                    document.getElementById("submitButton").disabled = true
                     if (resendOtpCount >= 3) {
                         const exceedParam = {
                             method: "POST", headers: {
@@ -283,49 +198,81 @@ function submitOTP() {
                         document.getElementById("submitButton").disabled = true;
                         fetch(api_url, exceedParam).then(response => {
                             console.log(response)
-                            if (response.status === 410) {
-                                window.location.href = failurePage;
-                                // setTimeout(redirectUrl, 4000);
-                            } else {
-                                window.location.href = errorPage;
-                            }
+                            window.location.href = digioRedirectPage
                         })
                     }
-
                 } else {
                     const remainingTries = 3 - otpSubmitCount;
                     document.getElementById("otpRetryMessage").innerText = `You have ${remainingTries} tries left on this OTP.`;
                     document.getElementById("id-error-popup").style.display = "flex";
-                    const submitButton = document.getElementById("submitButton");
-                    submitButton.disabled = false
+                    document.getElementById("submitButton").disabled = false
                 }
             } else {
-                throw new Error("API error"); // Throw an error if the response status is not 200 or 401
+                throw new Error("API error"); // Throw an error if the response status is not 200 or 400
             }
         })
         .catch(error => {
             console.log(error, 'e');
+            window.location.href = digioRedirectPage
+        });
+}
+
+function startDigioFlow() {
+    console.log("inside startDigioFlow")
+
+    const startDigioParams = {
+        method: "POST", headers: {
+            Origin: window.location.origin, Authorization: `Bearer ${token}`, "Content-Type": "application/json",
+        }, body: JSON.stringify({
+            startDigio: true
+        }),
+    };
+
+    fetch(api_url, startDigioParams)
+        .then(response => {
+            console.log(response);
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                window.location.href = errorPage;
+            }
+        })
+        .then(data => {
+            if (data !== undefined && "digioUrl" in data) {
+                const redirectUrl = window.location.origin + '/AadhaarRedirection.html?token=' + token
+                window.location.href = data.digioUrl + '&redirect_url=' + redirectUrl
+            } else {
+                throw new Error("Response data is undefined");
+            }
+        })
+        .catch(error => {
+            console.log("error in startDigioFlow: ", error);
             window.location.href = errorPage;
         });
 }
 
-function toggleSubmitButton() {
-    let consentCheckbox = document.getElementById("consentCheckbox");
-    const submitButton = document.getElementById("submitButton");
+function digioFetchAadhaarData() {
+    console.log("inside digioFetchAadhaarData")
 
-    submitButton.disabled = !consentCheckbox.checked;
-}
+    const fetchDataParams = {
+        method: "POST", headers: {
+            Origin: window.location.origin, Authorization: `Bearer ${token}`, "Content-Type": "application/json",
+        }, body: JSON.stringify({
+            digioFetchAadhaarData: true
+        }),
+    };
 
-function handleCheckboxChange(event) {
-    const checkbox = event.target;
-    const submitButton = document.getElementById("submitButton");
-
-    submitButton.disabled = !checkbox.checked;
-}
-
-function clearOtpInputs() {
-    const otpInputs = document.querySelectorAll(".otp-field input");
-    otpInputs.forEach(input => {
-        input.value = "";
-    });
+    fetch(api_url, fetchDataParams)
+        .then(response => {
+            console.log(response);
+            if (response.status === 200) {
+                window.location.href = successPage;
+            } else {
+                window.location.href = digioCheckLaterPage;
+            }
+        })
+        .catch(error => {
+            console.log("error in digioFetchAadhaarData: ", error);
+            window.location.href = digioCheckLaterPage;
+        });
 }
