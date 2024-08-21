@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Aadhaar Redirection Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/styles.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="js/utils.js"></script>
     <script src="js/scripts.js"></script>
+    <script src="js/init.js"></script>
 </head>
 
 <body>
@@ -13,35 +16,39 @@
     <div class="center-content align-center" id="loader">
         <div class="loader"></div>
     </div>
-   
-    <div id="id-error-popup" class="error-popup">
-        <div style="display:flex;align-items:center;height:40px;">
-        <img class="info-img" src="img/information-button.png" alt="Info Image"/>
-        <div style="font-size: 10px;margin-left:5px;font-weight: 500;" id="otpRetryMessage"></div></div></div>
 
-    <div style="background-color: #FFFFFF; padding: 10px 20px;display:flex;justify-content: space-between;width:100vw">
-       <p style="font-size:16">KYC Verification</p>
-       <span onclick="redirectUrl()">
-        <img class="close-img" src="img/close.png" alt="Close Image" height="15" width="15"/>
-   </span>
-
+    <div id="id-error-popup" class="error-popup-container">
+        <div class="error-popup">
+            <img id="info-img" src="img/information-button.png" alt="Info Image"/>
+            <div class="otp-retry-message" id="otpRetryMessage"></div>
+        </div>
     </div>
+
+    <div class="kyc-verification-container">
+        <p class="font-size-16">KYC Verification</p>
+        <span onclick="redirectUrl()">
+            <img id="close-img" src="img/close.png" alt="close icon" height="15px" width="15px"/>
+        </span>
+    </div>
+
     <div id="aadhaarSection">
         <div class="input-container">
-        <img class="id-img" src="img/ID.png" alt="Id Image"/>
-            <input id="aadhaarInput" maxlength="14" oninput="formatAndValidateAadhaarInput(this)"
-                   placeholder="Aadhar number" style="border:none;border-bottom:1px solid #707070"
-                   type="text" inputmode="numeric">
+            <img class="id-img" src="img/ID.png" alt="Id Image"/>
+            <input id="aadhaarInput" inputmode="numeric" maxlength="14" oninput="formatAndValidateAadhaarInput(this)"
+                   placeholder="Aadhaar number" class="aadhaar-input" type="text">
         </div>
-        <p id="aadhaarDescription" style="color: #707070;text-align: center;font-size: 10px;font-style: italic;">Enter the 12-digit Aadhaar number linked to your
-            registered mobile number </p>
-        <p id="aadhaarErrorMessage" style="color: red;text-align: center;font-size: 10px;display:none">Please enter a valid Aadhaar
-            number</p>
+        <p id="aadhaarDescription" class="aadhaar-description">
+            Enter the 12-digit Aadhaar number linked to your registered mobile number
+        </p>
+        <p id="aadhaarErrorMessage" class="aadhaar-error-message">Please enter a valid Aadhaar number</p>
     </div>
+
     <div id="otpSection">
         <div class="otp-container">
-            <p style="font-size: 14px;color:#707070;">Enter OTP</p>
-            <p style="font-size: 10px;color:#707070;">An OTP is sent to your registered mobile number for verification</p>
+            <p class="enter-otp">Enter OTP</p>
+            <p class="otp-message">
+                An OTP is sent to your registered mobile number for verification
+            </p>
             <div class="otp-field">
                 <input maxlength="1" type="text" inputmode="numeric"/>
                 <input maxlength="1" type="text" inputmode="numeric"/>
@@ -51,58 +58,42 @@
                 <input maxlength="1" type="text" inputmode="numeric"/>
             </div>
         </div>
-
-        <p id="otpErrorMessage" style="color: red;  text-align: center;font-size:10px; display:none">Invalid OTP entered</p>
-        <p id="resendCounter" style="color:#1D478E;  text-align: center;font-size:10px;display:none"></p>
-        <p id="resendOtp" style="color:#1D478E;  text-align: center; font-size:10px;display:none" onclick="generateOtp()"><u>Resend OTP</u></p>
-        <p id="retryResendMessage" style="color: red;text-align: center;font-size: 10px;display:none"></p>
+        <p id="otpErrorMessage" class="otp-error-message">Invalid OTP entered</p>
+        <p id="resendCounter" class="resend-countdown"></p>
+        <p id="resendOtp" class="resend-otp" onclick="generateOtp()"><u>Resend OTP</u></p>
+        <p id="retryResendMessage" class="resend-message"></p>
     </div>
+
     <div class="submit-section" id="id-submit-section">
-        <div id="id-consent-section" class="consent-checkbox" style="display:none">
-            <input type="checkbox" id="consentCheckbox" onchange="toggleSubmitButton()">
-            <label for="consentCheckbox" style="margin-left:8px">I allow Kisetsu Saison Finance (India) Private Limited to fetch my Aadhaar XML
-                details from UIDAI</label>
+        <div id="id-consent-section" class="consent-checkbox">
+            <input type="checkbox" id="consentCheckbox" onchange="toggleGenerateOtpButton()">
+            <label for="consentCheckbox" style="margin-left:8px">
+                I allow Kisetsu Saison Finance (India) Private Limited to fetch my Aadhaar XML details from
+                UIDAI/Digilocker
+            </label>
         </div>
         <div class="submit-button2">
-            <button style="display:none" disabled id="generateOtpButton" onclick="generateOtp()" type="submit">Send Otp</button>
+            <button style="display:none" disabled id="generateOtpButton" onclick="generateOtp()" type="submit">
+                Send Otp
+            </button>
         </div>
-          <div class="submit-button2">
-            <button style="display:none" disabled id="submitButton" onclick="submitOTP()" type="submit">Submit
+        <div class="submit-button2">
+            <button style="display: none" disabled id="submitButton" onclick="submitOTP()" type="submit">
+                Submit
             </button>
         </div>
     </div>
-    <div style="display: flex;
-    flex-direction: row;gap:2;
-    
-    margin: 2%">
-        <div style="font-size: 10px;color:#707070">
-            Powered by Credit Saison
-        </div>
-        <img class="logo-img" src="img/Logo.svg" alt="logo Image" width="20" height="20" style="margin-left:2px"/>
+
+    <div class="digio-text-container" id="digio-text-section" >
+            <div id="digio-heading-text">Aadhar fetch is in progress</div>
+            <div id="digio-normal-text">Please do not go back or exit when this is in progress</div>
+    </div>
+
+    <div class="footer-container">
+        <div class="footer-message">Powered by Credit Saison</div>
+        <img id="cs-logo" src="img/cs-logo.svg" alt="Logo" width="20" height="20"/>
     </div>
 </main>
 </body>
+<script src="js/late_init.js"></script>
 </html>
-
-
-<script>
-    const aadhaarInput = document.getElementById("aadhaarInput");
-    aadhaarInput.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            generateOtp();
-        }
-    });
-    const inputs = document.querySelectorAll(".otp-field input");
-    inputs.forEach((input, index) => {
-        input.dataset.index = index;
-        input.addEventListener("keyup", handleOtp);
-        input.addEventListener("paste", handleOnPasteOtp);
-    });
-
-    // Call the toggleSubmitButton function initially to set the initial state of the submit button
-    toggleSubmitButton();
-    // Add event listener for checkbox change
-    const consentCheckbox = document.getElementById("consentCheckbox");
-    consentCheckbox.addEventListener("change", handleCheckboxChange);
-</script>

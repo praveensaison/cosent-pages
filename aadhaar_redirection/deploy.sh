@@ -11,13 +11,13 @@ deploy_environment() {
 
   case $ENV in
   "dev")
-    AWS_REGION=us-east-1
-    BUCKET_NAME="cfn-templates-v2-dev"
+    AWS_REGION=ap-south-1
+    BUCKET_NAME="cfn-templates-v2-ap-south-1-dev"
     API_BASE_URL=""
     ;;
   "qa")
-    AWS_REGION=us-east-1
-    BUCKET_NAME="cfn-templates-v2-qa"
+    AWS_REGION=ap-south-1
+    BUCKET_NAME="cfn-templates-v2-ap-south-1-qa"
     API_BASE_URL=""
     ;;
   "qa2")
@@ -26,9 +26,9 @@ deploy_environment() {
     API_BASE_URL="https://2oby4umtdc.execute-api.eu-west-1.amazonaws.com/qa2"
     ;;
   "uat")
-    AWS_REGION=us-east-1
-    BUCKET_NAME="cfn-templates-v2-uat"
-    API_BASE_URL="https://nhoncxolud.execute-api.us-east-1.amazonaws.com/uat"
+    AWS_REGION=ap-south-1
+    BUCKET_NAME="cfn-templates-v2-ap-south-1-uat"
+    API_BASE_URL="https://nk2dbo2u6e.execute-api.ap-south-1.amazonaws.com/uat"
     ;;
   "int")
     AWS_REGION=us-east-1
@@ -46,8 +46,8 @@ deploy_environment() {
     ;;
   esac
 
-  echo "Replacing API_BASE_URL in script.js with $API_BASE_URL"
-  sed "s~{{API_BASE_URL}}~$API_BASE_URL~g" static/js/scripts.js > static/js/scripts_modified.tmp && mv static/js/scripts_modified.tmp static/js/scripts.js
+  echo "Replacing API_BASE_URL in init.js with $API_BASE_URL"
+  sed "s~{{API_BASE_URL}}~$API_BASE_URL~g" static/js/init.js > static/js/init_modified.tmp && mv static/js/init_modified.tmp static/js/init.js
 
   echo "Deploying $ENV environment"
   echo "Setting stack name as $STACK_NAME"
