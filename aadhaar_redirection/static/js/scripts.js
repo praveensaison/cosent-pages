@@ -228,6 +228,8 @@ function startDigioFlow() {
         }),
     };
 
+    document.getElementById("digioSubmitButton").disabled = true
+
     fetch(api_url, startDigioParams)
         .then(response => {
             console.log(response);
