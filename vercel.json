@@ -3,7 +3,7 @@
   "routes": [
     {
       "src": "/",
-      "dest": "/static/kotak.html"
+      "dest": "/customerconsent/static/kotak.html"
     }
   ],
   "cleanUrls": true,
