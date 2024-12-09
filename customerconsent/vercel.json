@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/",
+      "dest": "/static/kotak.html"
+    }
+  ],
+  "cleanUrls": true,
+  "trailingSlash": false
+}

@@ -1,3 +1,4 @@
 .idea
 */.aws-sam
 .DS_Store
+.vercel
