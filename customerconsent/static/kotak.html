@@ -142,6 +142,20 @@
             align-items: center;
             gap: 5px;
         }
+        .submit-button {
+            background-color: #4a4a4a;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #333;
+        }
     </style>
 </head>
 <body>
@@ -150,21 +164,21 @@
         <span>Hum hain... hamesha</span>
     </div>
 
-    <form>
+    <form id="kotakForm" onsubmit="handleSubmit(event)">
         <h2>Membership Form cum Declaration of Good Health</h2>
         
         <div class="plan-options">
             <label>
-                <input type="checkbox" name="plan" value="kotak-group-assure"> Kotak Group Assure (UIN:107N051V05)
+                <input type="checkbox" name="plan_kotak_group_assure" value="kotak-group-assure"> Kotak Group Assure (UIN:107N051V05)
             </label>
             <label>
-                <input type="checkbox" name="plan" value="kotak-group-shield"> Kotak Group Shield (UIN:107N050V07)
+                <input type="checkbox" name="plan_kotak_group_shield" value="kotak-group-shield"> Kotak Group Shield (UIN:107N050V07)
             </label>
             <label>
-                <input type="checkbox" name="plan" value="kotak-complete-cover" checked> Kotak Complete Cover Group Plan (UIN:107N018V09)
+                <input type="checkbox" name="plan_kotak_complete_cover" value="kotak-complete-cover" checked> Kotak Complete Cover Group Plan (UIN:107N018V09)
             </label>
             <label>
-                <input type="checkbox" name="plan" value="kotak-credit-term"> Kotak Credit Term Group (UIN:107N006V05)
+                <input type="checkbox" name="plan_kotak_credit_term" value="kotak-credit-term"> Kotak Credit Term Group (UIN:107N006V05)
             </label>
         </div>
 
@@ -177,17 +191,17 @@
                 <div class="form-row">
                     <div class="field-label">Name of the Policyholder:</div>
                     <div class="field-value">
-                        <input type="text" value="KISETSU SAISON FINANCE (INDIA) PRIVATE LIMITED" readonly style="width: 100%;">
+                        <input type="text" name="policyholder_name" value="KISETSU SAISON FINANCE (INDIA) PRIVATE LIMITED" readonly style="width: 100%;">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <div class="field-label">Policy Number:</div>
-                        <input type="text" value="CD000316- BL" readonly>
+                        <input type="text" name="policy_number" value="CD000316- BL" readonly>
                     </div>
                     <div class="form-group">
                         <div class="field-label">Plan Option:</div>
-                        <input type="text" value="Life Cover" readonly>
+                        <input type="text" name="plan_option" value="Life Cover" readonly>
                     </div>
                 </div>
             </div>
@@ -199,33 +213,33 @@
                 <div class="form-row">
                     <div class="form-group">
                         <div class="field-label">Sum Assured:</div>
-                        <input type="text">
+                        <input type="text" name="sum_assured">
                     </div>
                     <div class="form-group">
                         <div class="field-label">Premium:</div>
-                        <input type="text">
+                        <input type="text" name="premium">
                     </div>
                     <div class="form-group">
                         <div class="field-label">Cover Term:</div>
-                        <input type="text">
+                        <input type="text" name="cover_term">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="field-label">Premium Payment Term:</div>
                     <div class="checkbox-group">
-                        <label><input type="checkbox" checked> Single</label>
-                        <label><input type="checkbox"> Regular</label>
-                        <label><input type="checkbox"> Limited</label>
+                        <label><input type="checkbox" name="premium_payment_term_single" checked> Single</label>
+                        <label><input type="checkbox" name="premium_payment_term_regular"> Regular</label>
+                        <label><input type="checkbox" name="premium_payment_term_limited"> Limited</label>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="field-label">Premium Payment Mode:</div>
                     <div class="checkbox-group">
-                        <label><input type="checkbox" checked> Single</label>
-                        <label><input type="checkbox"> Yearly</label>
-                        <label><input type="checkbox"> Half-Yearly</label>
-                        <label><input type="checkbox"> Quarterly</label>
-                        <label><input type="checkbox"> Monthly</label>
+                        <label><input type="checkbox" name="premium_payment_mode_single" checked> Single</label>
+                        <label><input type="checkbox" name="premium_payment_mode_yearly"> Yearly</label>
+                        <label><input type="checkbox" name="premium_payment_mode_half_yearly"> Half-Yearly</label>
+                        <label><input type="checkbox" name="premium_payment_mode_quarterly"> Quarterly</label>
+                        <label><input type="checkbox" name="premium_payment_mode_monthly"> Monthly</label>
                     </div>
                 </div>
             </div>
@@ -237,28 +251,28 @@
                 <div class="form-row">
                     <div class="form-group">
                         <div class="field-label">Loan Account No.:</div>
-                        <input type="text">
+                        <input type="text" name="loan_account_no">
                     </div>
                     <div class="form-group">
                         <div class="field-label">Customer ID No.:</div>
-                        <input type="text">
+                        <input type="text" name="customer_id_no">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="field-label">Member Name:</div>
-                    <input type="text" style="width: 300px;">
+                    <input type="text" name="member_name" style="width: 300px;">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <div class="field-label">Date of Birth:</div>
-                        <input type="date">
+                        <input type="date" name="date_of_birth">
                     </div>
                     <div class="form-group">
                         <div class="field-label">Gender:</div>
                         <div class="gender-group">
-                            <label><input type="radio" name="gender"> Male</label>
-                            <label><input type="radio" name="gender"> Female</label>
-                            <label><input type="radio" name="gender"> Transgender</label>
+                            <label><input type="radio" name="gender" value="male"> Male</label>
+                            <label><input type="radio" name="gender" value="female"> Female</label>
+                            <label><input type="radio" name="gender" value="transgender"> Transgender</label>
                         </div>
                     </div>
                 </div>
@@ -273,21 +287,21 @@
                 </div>
                 <div class="form-row">
                     <div class="field-label">Name:</div>
-                    <input type="text" style="width: 300px;">
+                    <input type="text" name="nominee_name" style="width: 300px;">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <div class="field-label">Date of Birth:</div>
-                        <input type="date">
+                        <input type="date" name="nominee_date_of_birth">
                     </div>
                     <div class="form-group">
                         <div class="field-label">Mobile No.:</div>
-                        <input type="text">
+                        <input type="text" name="nominee_mobile_no">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="field-label">Email ID:</div>
-                    <input type="email" style="width: 300px;">
+                    <input type="email" name="nominee_email_id" style="width: 300px;">
                 </div>
             </div>
         </div>
@@ -309,7 +323,7 @@
 
         <div class="form-row" style="margin-top: 20px;">
             <label style="display: flex; align-items: flex-start; gap: 5px;">
-                <input type="checkbox" checked style="margin-top: 3px;">
+                <input type="checkbox" name="green_world" checked style="margin-top: 3px;">
                 <span>Do your bit for green world & Switch to e-communication. Kindly (✓) if you would like to receive all policy related documents and communication on the email address provided by me through any other electronic means</span>
             </label>
         </div>
@@ -372,13 +386,13 @@
             <div class="section-content">
                 <div class="form-row">
                     <div class="checkbox-group">
-                        <label><input type="checkbox"> Scribe</label>
-                        <label><input type="checkbox"> Vernacular language</label>
+                        <label><input type="checkbox" name="scribe"> Scribe</label>
+                        <label><input type="checkbox" name="vernacular_language"> Vernacular language</label>
                     </div>
                 </div>
                 <div class="declaration-text">
                     <p>(Applicable only where form is filled in by a scribe or signed in vernacular language or where the form is filled in by a representative/duly authorized person with disability)</p>
-                    <p>I, <input type="text" style="width: 200px;"> (full name) have explained to the member the contents of this form in his own language and he/she has fully understood the same. Also, I have explained that all virtues benefits contained therein, the member and/or the heirs,executors/administrator/assignees of the member shall not be entitled to receive any benefits including, inter alia, benefits under any insurance policy procured on the faith of this Form.</p>
+                    <p>I, <input type="text" name="scribe_name" style="width: 200px;"> (full name) have explained to the member the contents of this form in his own language and he/she has fully understood the same. Also, I have explained that all virtues benefits contained therein, the member and/or the heirs,executors/administrator/assignees of the member shall not be entitled to receive any benefits including, inter alia, benefits under any insurance policy procured on the faith of this Form.</p>
                 </div>
 
                 <div class="form-row" style="margin-top: 20px;">
@@ -386,15 +400,15 @@
                         <tr>
                             <td style="width: 33%;">
                                 <div class="field-label">Place:</div>
-                                <input type="text" style="width: 80%;">
+                                <input type="text" name="scribe_place" style="width: 80%;">
                             </td>
                             <td style="width: 33%;">
                                 <div class="field-label">Date:</div>
-                                <input type="date" style="width: 80%;">
+                                <input type="date" name="scribe_date" style="width: 80%;">
                             </td>
                             <td style="width: 33%;">
                                 <div class="field-label">Signature of the Scribe:</div>
-                                <input type="text" style="width: 80%;">
+                                <input type="text" name="scribe_signature" style="width: 80%;">
                             </td>
                         </tr>
                     </table>
@@ -405,15 +419,15 @@
                         <tr>
                             <td style="width: 33%;">
                                 <div class="field-label">Place:</div>
-                                <input type="text" style="width: 80%;">
+                                <input type="text" name="witness_place" style="width: 80%;">
                             </td>
                             <td style="width: 33%;">
                                 <div class="field-label">Date:</div>
-                                <input type="date" style="width: 80%;">
+                                <input type="date" name="witness_date" style="width: 80%;">
                             </td>
                             <td style="width: 33%;">
                                 <div class="field-label">Witness / Policyholder Authorized Signatory:</div>
-                                <input type="text" style="width: 80%;">
+                                <input type="text" name="witness_signature" style="width: 80%;">
                             </td>
                         </tr>
                     </table>
@@ -437,6 +451,54 @@
                 </div>
             </div>
         </div>
+        <button type="submit" class="submit-button">Submit Form</button>
     </form>
+
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const form = document.getElementById('kotakForm');
+            const formData = new FormData(form);
+            const formObject = {};
+            
+            // Convert FormData to object
+            formData.forEach((value, key) => {
+                // Handle checkboxes
+                if (form.elements[key].type === 'checkbox') {
+                    formObject[key] = form.elements[key].checked;
+                }
+                // Handle radio buttons
+                else if (form.elements[key].type === 'radio') {
+                    if (form.elements[key].checked) {
+                        formObject[key] = value;
+                    }
+                }
+                // Handle other input types
+                else {
+                    formObject[key] = value;
+                }
+            });
+
+            // Log the form data
+            console.log('Form Data:', formObject);
+
+            // You can send this data to your backend API
+            // fetch('/api/submit-form', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify(formObject)
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     console.log('Success:', data);
+            // })
+            // .catch((error) => {
+            //     console.error('Error:', error);
+            // });
+        }
+    </script>
 </body>
 </html>
