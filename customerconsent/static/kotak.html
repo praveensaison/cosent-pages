@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Form cum Declaration of Good Health</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .header {
+            background-color: #4a4a4a;
+            color: white;
+            padding: 8px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header img {
+            height: 30px;
+        }
+        .header span {
+            font-style: italic;
+            font-size: 14px;
+        }
+        form {
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            font-size: 18px;
+            margin: 0 0 20px 0;
+            color: #333;
+            font-weight: normal;
+        }
+        .plan-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .plan-options label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+        }
+        .form-section {
+            border: 1px solid #ddd;
+            margin: 15px 0;
+            background-color: white;
+        }
+        .section-header {
+            background-color: #4a4a4a;
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .section-content {
+            padding: 15px;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        label {
+            font-size: 13px;
+            color: #333;
+        }
+        input[type="text"], 
+        input[type="date"],
+        input[type="email"] {
+            border: 1px solid #ccc;
+            padding: 5px 8px;
+            font-size: 13px;
+            border-radius: 3px;
+        }
+        input[readonly] {
+            background-color: #f5f5f5;
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+        }
+        input[type="checkbox"], 
+        input[type="radio"] {
+            margin: 0;
+        }
+        .important-note {
+            background-color: #f8f8f8;
+            padding: 8px;
+            font-size: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+        }
+        .declaration-text {
+            font-size: 12px;
+            margin: 10px 0;
+        }
+        .declaration-text ol {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+        .declaration-text li {
+            margin-bottom: 5px;
+        }
+        .field-label {
+            min-width: 120px;
+        }
+        .field-value {
+            flex: 1;
+        }
+        .gender-group {
+            display: flex;
+            gap: 15px;
+        }
+        .gender-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="#" alt="Kotak Life Logo" style="height: 40px;">
+        <span>Hum hain... hamesha</span>
+    </div>
+
+    <form>
+        <h2>Membership Form cum Declaration of Good Health</h2>
+        
+        <div class="plan-options">
+            <label>
+                <input type="checkbox" name="plan" value="kotak-group-assure"> Kotak Group Assure (UIN:107N051V05)
+            </label>
+            <label>
+                <input type="checkbox" name="plan" value="kotak-group-shield"> Kotak Group Shield (UIN:107N050V07)
+            </label>
+            <label>
+                <input type="checkbox" name="plan" value="kotak-complete-cover" checked> Kotak Complete Cover Group Plan (UIN:107N018V09)
+            </label>
+            <label>
+                <input type="checkbox" name="plan" value="kotak-credit-term"> Kotak Credit Term Group (UIN:107N006V05)
+            </label>
+        </div>
+
+        <div class="important-note">
+            IMPORTANT NOTE: Any additional text written or qualification
+        </div>
+
+        <div class="form-section">
+            <div class="section-content">
+                <div class="form-row">
+                    <div class="field-label">Name of the Policyholder:</div>
+                    <div class="field-value">
+                        <input type="text" value="KISETSU SAISON FINANCE (INDIA) PRIVATE LIMITED" readonly style="width: 100%;">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="field-label">Policy Number:</div>
+                        <input type="text" value="CD000316- BL" readonly>
+                    </div>
+                    <div class="form-group">
+                        <div class="field-label">Plan Option:</div>
+                        <input type="text" value="Life Cover" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="section-header">1. PLAN DETAILS</div>
+            <div class="section-content">
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="field-label">Sum Assured:</div>
+                        <input type="text">
+                    </div>
+                    <div class="form-group">
+                        <div class="field-label">Premium:</div>
+                        <input type="text">
+                    </div>
+                    <div class="form-group">
+                        <div class="field-label">Cover Term:</div>
+                        <input type="text">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field-label">Premium Payment Term:</div>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" checked> Single</label>
+                        <label><input type="checkbox"> Regular</label>
+                        <label><input type="checkbox"> Limited</label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field-label">Premium Payment Mode:</div>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" checked> Single</label>
+                        <label><input type="checkbox"> Yearly</label>
+                        <label><input type="checkbox"> Half-Yearly</label>
+                        <label><input type="checkbox"> Quarterly</label>
+                        <label><input type="checkbox"> Monthly</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="section-header">2. LIFE ASSURED'S DETAILS</div>
+            <div class="section-content">
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="field-label">Loan Account No.:</div>
+                        <input type="text">
+                    </div>
+                    <div class="form-group">
+                        <div class="field-label">Customer ID No.:</div>
+                        <input type="text">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field-label">Member Name:</div>
+                    <input type="text" style="width: 300px;">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="field-label">Date of Birth:</div>
+                        <input type="date">
+                    </div>
+                    <div class="form-group">
+                        <div class="field-label">Gender:</div>
+                        <div class="gender-group">
+                            <label><input type="radio" name="gender"> Male</label>
+                            <label><input type="radio" name="gender"> Female</label>
+                            <label><input type="radio" name="gender"> Transgender</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="section-header">3. NOMINEE DETAILS</div>
+            <div class="section-content">
+                <div class="important-note">
+                    * Nominee needs to be a major i.e. above 18 years of age and should be one of the following: Husband, Wife, Son, Daughter, Father, Mother, Brother, Sister, Grandfather or Grandmother.
+                </div>
+                <div class="form-row">
+                    <div class="field-label">Name:</div>
+                    <input type="text" style="width: 300px;">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <div class="field-label">Date of Birth:</div>
+                        <input type="date">
+                    </div>
+                    <div class="form-group">
+                        <div class="field-label">Mobile No.:</div>
+                        <input type="text">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="field-label">Email ID:</div>
+                    <input type="email" style="width: 300px;">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="section-header">4. DECLARATION OF GOOD HEALTH</div>
+            <div class="section-content">
+                <div class="declaration-text">
+                    <p>I hereby declare that:</p>
+                    <ol>
+                        <li>I am in good health and perform all my routine activities independently</li>
+                        <li>I have never had any physical defect, deformity or disability (mental inability to function normally, physically or mentally) affecting my day to day activities</li>
+                        <li>I have never undergone nor have I been advised to undergo any major surgical procedure</li>
+                        <li>I have never suffered and am not currently suffering from any major diseases</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row" style="margin-top: 20px;">
+            <label style="display: flex; align-items: flex-start; gap: 5px;">
+                <input type="checkbox" checked style="margin-top: 3px;">
+                <span>Do your bit for green world & Switch to e-communication. Kindly (✓) if you would like to receive all policy related documents and communication on the email address provided by me through any other electronic means</span>
+            </label>
+        </div>
+
+        <div class="form-section">
+            <div class="section-header">5. DECLARATION BY LIFE INSURED</div>
+            <div class="section-content">
+                <div class="declaration-text">
+                    <div class="form-row">
+                        <label style="display: flex; align-items: flex-start; gap: 5px;">
+                            <span>8. For Females Lives Only:</span>
+                        </label>
+                    </div>
+                    <div class="form-row" style="margin-left: 20px;">
+                        <label style="display: flex; align-items: flex-start; gap: 5px;">
+                            <span>a) I am currently not pregnant. I am not suffering from or nor have suffered from any complication of pregnancy.</span>
+                        </label>
+                    </div>
+                    <div class="form-row" style="margin-left: 20px;">
+                        <label style="display: flex; align-items: flex-start; gap: 5px;">
+                            <span>b) I am not suffering from or nor have suffered from any diseases of breast/ uterus/ cervix?</span>
+                        </label>
+                    </div>
+                    
+                    <div class="important-note" style="margin-top: 15px;">
+                        Following questions are applicable ONLY when "Critical Illness Cover/ Disability Cover" is opted
+                    </div>
+                    
+                    <div class="form-row">
+                        <label style="display: flex; align-items: flex-start; gap: 5px;">
+                            <span>9. I have not had any proposal and / or policy for life, health, accident or critical illness, including renewals / revivals therefor, declined or deferred by any insurance company in India or overseas. I do not engage or intend to engage in any business, sport or occupation of a hazardous nature.</span>
+                        </label>
+                    </div>
+                    
+                    <div class="form-row">
+                        <label style="display: flex; align-items: flex-start; gap: 5px;">
+                            <span>10. I have never been diagnosed with any form of internal or external congenital anomaly or defect. i.e. any condition(s) which is present since birth, and which is abnormal with reference to form, structure or position.</span>
+                        </label>
+                    </div>
+
+                    <div class="form-row" style="margin-top: 20px;">
+                        <p>I further declare that the above statements are true and complete in every respect related to my health and will form the basis of insurance cover to me from Kotak Mahindra Life Insurance Company Ltd.(KLI). I further hereby agree and give my consent to the Policyholder for use of the contents of this declaration by KLI for examining and processing my claim arising, in respect of the insurance cover that may be provided to me under the referred group policy.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="section-header">6. AUTHORIZATION FOR CLAIM PAYMENT</div>
+            <div class="section-content">
+                <div class="declaration-text">
+                    <p style="font-style: italic;">(Applicable only for Entities approved by IRDAI)</p>
+                    <p>I authorize KLI to pay the benefits under this policy, first towards the loan outstanding, by paying the same directly to the Policyholder and balance, if any, may be paid directly and/or by negotiating basis, as the case may be. I certify that this authorization is being effected by me, voluntarily and with full knowledge of its implications.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="section-header">7. DECLARATION BY FILLING IN THE FORM</div>
+            <div class="section-content">
+                <div class="form-row">
+                    <div class="checkbox-group">
+                        <label><input type="checkbox"> Scribe</label>
+                        <label><input type="checkbox"> Vernacular language</label>
+                    </div>
+                </div>
+                <div class="declaration-text">
+                    <p>(Applicable only where form is filled in by a scribe or signed in vernacular language or where the form is filled in by a representative/duly authorized person with disability)</p>
+                    <p>I, <input type="text" style="width: 200px;"> (full name) have explained to the member the contents of this form in his own language and he/she has fully understood the same. Also, I have explained that all virtues benefits contained therein, the member and/or the heirs,executors/administrator/assignees of the member shall not be entitled to receive any benefits including, inter alia, benefits under any insurance policy procured on the faith of this Form.</p>
+                </div>
+
+                <div class="form-row" style="margin-top: 20px;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 33%;">
+                                <div class="field-label">Place:</div>
+                                <input type="text" style="width: 80%;">
+                            </td>
+                            <td style="width: 33%;">
+                                <div class="field-label">Date:</div>
+                                <input type="date" style="width: 80%;">
+                            </td>
+                            <td style="width: 33%;">
+                                <div class="field-label">Signature of the Scribe:</div>
+                                <input type="text" style="width: 80%;">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="form-row">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 33%;">
+                                <div class="field-label">Place:</div>
+                                <input type="text" style="width: 80%;">
+                            </td>
+                            <td style="width: 33%;">
+                                <div class="field-label">Date:</div>
+                                <input type="date" style="width: 80%;">
+                            </td>
+                            <td style="width: 33%;">
+                                <div class="field-label">Witness / Policyholder Authorized Signatory:</div>
+                                <input type="text" style="width: 80%;">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="section-content">
+                <div class="important-note" style="margin-top: 15px;">
+                    <p><strong>Section 41 of the Insurance Act, 1938 as amended from time to time states:</strong> No person shall allow or offer to allow, either directly or indirectly, as an inducement to any person to take or renew or continue an insurance in respect of any kind of risk relating to lives or property in India, any rebate of the whole or part of the commission payable or any rebate of the premium shown on the policy, nor shall any person taking out or renewing or continuing a policy accept any rebate, except such rebate as may be allowed in accordance with the published prospectuses or tables of the insurer.</p>
+                    
+                    <p><strong>Section 45 of the Insurance Act, 1938 as amended from time states:</strong> The provisions of Section 45 of the Insurance Act 1938 are applicable to the above contract. Please refer to Section 45 either on our website or contact our intermediary or visit the nearest branch for the full text. https://kotaklife.com/assets/images/uploads/why_kotaklife/section3_45_of_insurance_act_1938.pdf</p>
+                    
+                    <p><strong>Free Look Period:</strong> The member is offered 30 days (for policies having a cover term of less than a year)/free look period from the date of receipt of the Certificate of Insurance wherein the Member may choose to return the Certificate of Insurance within 30 days of receipt for policies having a cover term of more than a year) of receipt if he is not agreeable with any of the terms and conditions of the part and receive the applicable refund amount.</p>
+                </div>
+
+                <div style="margin-top: 20px; font-size: 12px;">
+                    <p><strong>Kotak Mahindra Life Insurance Company Ltd.</strong> CIN: U66030MH2000PLC128503; Regd. Office: 2nd Floor, Plot # C-12, G-Block, BKC, Bandra (E), Mumbai- 400 051. Website: https://www.kotaklife.com, Email:kli.groupoperations@kotak.com, Toll Free No: 1800 120 7856</p>
+                    <p>Trade Logo displayed above belongs to Kotak Mahindra Bank Limited and is used by Kotak Mahindra Life Insurance Company Ltd. under license.</p>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
