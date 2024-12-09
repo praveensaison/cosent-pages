@@ -1,11 +1,8 @@
 {
-  "version": 2,
   "routes": [
     {
       "src": "/",
       "dest": "/customerconsent/static/kotak.html"
     }
-  ],
-  "cleanUrls": true,
-  "trailingSlash": false
+  ]
 }
