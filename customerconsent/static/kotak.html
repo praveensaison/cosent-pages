@@ -280,28 +280,58 @@
         </div>
 
         <div class="form-section">
-            <div class="section-header">3. NOMINEE DETAILS</div>
+            <div class="section-header">3. NOMINEE DETAILS*</div>
             <div class="section-content">
-                <div class="important-note">
-                    * Nominee needs to be a major i.e. above 18 years of age and should be one of the following: Husband, Wife, Son, Daughter, Father, Mother, Brother, Sister, Grandfather or Grandmother.
-                </div>
-                <div class="form-row">
-                    <div class="field-label">Name:</div>
-                    <input type="text" name="nominee_name" style="width: 300px;">
-                </div>
+                <p style="font-size: 12px; font-style: italic; margin-bottom: 10px;">* Nominee needs to be a major i.e. above 18 years of age and should be one of the following: Husband, Wife, Son, Daughter, Father, Mother, Brother, Sister, Grandfather or Grandmother.</p>
                 <div class="form-row">
                     <div class="form-group">
-                        <div class="field-label">Date of Birth:</div>
-                        <input type="date" name="nominee_date_of_birth">
-                    </div>
-                    <div class="form-group">
-                        <div class="field-label">Mobile No.:</div>
-                        <input type="text" name="nominee_mobile_no">
+                        <label for="nomineeName">Name:</label>
+                        <input type="text" id="nomineeName" name="nomineeName" value="Praveen yengilichetty" required>
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="field-label">Email ID:</div>
-                    <input type="email" name="nominee_email_id" style="width: 300px;">
+                    <div class="form-group">
+                        <label for="nomineeDob">Date of Birth:</label>
+                        <input type="date" id="nomineeDob" name="nomineeDob" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nomineeGender">Gender:</label>
+                        <input type="text" id="nomineeGender" name="nomineeGender" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nomineeMobile">Mobile No.:</label>
+                        <input type="text" id="nomineeMobile" name="nomineeMobile" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nomineeEmail">Email ID:</label>
+                        <input type="email" id="nomineeEmail" name="nomineeEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nomineeRelationship">Relationship to Life to be Insured:</label>
+                        <input type="text" id="nomineeRelationship" name="nomineeRelationship" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="nomineeAddress">Present Address:</label>
+                        <input type="text" id="nomineeAddress" name="nomineeAddress" style="width: 100%;" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="nomineeBankDetails">Bank Account Details:</label>
+                        <input type="text" id="nomineeBankDetails" name="nomineeBankDetails" style="width: 100%;" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="eComm" name="eComm" checked>
+                            Do your bit for green world & Switch to e-communication. Kindly (✓) if you would like to receive all policy related documents and other communication on the email address provided by me through any other electronic means
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
