@@ -156,6 +156,18 @@
         .submit-button:hover {
             background-color: #333;
         }
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .checkbox-label input[type="checkbox"] {
+            margin-top: 5px;
+        }
+        .checkbox-label span {
+            flex: 1;
+        }
     </style>
 </head>
 <body>
@@ -339,63 +351,92 @@
         <div class="form-section">
             <div class="section-header">4. DECLARATION OF GOOD HEALTH</div>
             <div class="section-content">
-                <div class="declaration-text">
-                    <p>I hereby declare that:</p>
-                    <ol>
-                        <li>I am in good health and perform all my routine activities independently</li>
-                        <li>I have never had any physical defect, deformity or disability (mental inability to function normally, physically or mentally) affecting my day to day activities</li>
-                        <li>I have never undergone nor have I been advised to undergo any major surgical procedure</li>
-                        <li>I have never suffered and am not currently suffering from any major diseases</li>
-                    </ol>
-                </div>
+                <p>I hereby declare that:</p>
+                <ol>
+                    <li>I am in good health and perform all my routine activities independently</li>
+                    <li>I have never had any physical defect, deformity or disability (means inability to function normally, physically or mentally) affecting my day to day activities.</li>
+                    <li>I have never undergone nor have I been advised to undergo any major surgical procedure.</li>
+                    <li>I have never suffered and am not currently suffering from:
+                        <ol type="a">
+                            <li>High Blood Pressure, Heart Attack or any other Heart Disease;</li>
+                            <li>Stroke, Paralysis in any form, Epilepsy or any other Cerebrovascular Disease;</li>
+                            <li>Diabetes, thyroid or any other Endocrinal Disease, Kidney Disease;</li>
+                            <li>Any Chronic Liver Disease or any Cancer or Cancerous growth;</li>
+                            <li>Any Lung Disease (eg. Chronic Obstructive Pulmonary Diseases, TB, Parenchymal lung Disease, Pulmonary Embolism etc);</li>
+                            <li>Blood Disorders, Gastro-Intestinal Diseases, or any other disorder of the bones, spine or muscle;</li>
+                            <li>Any Mental or Psychiatric Condition, Epilepsy, any Genetic Disease or any disease related to central nervous system (disease related to brain);</li>
+                            <li>HIV / AIDS or AIDS related complications.</li>
+                        </ol>
+                    </li>
+                    <li>In the last 2 years, I have not –
+                        <ol type="a">
+                            <li>Have a reduction in weight (of more than 10 kgs)</li>
+                            <li>been continuously hospitalised for more than 7 days (other than fractures of leg/arm).</li>
+                            <li>undergone any investigations (including basic radiological and blood tests) other than normal Health Check-ups and Insurance Medicals, or</li>
+                            <li>had adverse result for any blood tests, X-Rays, ECG, Stress Test, Biopsies, CT Scan, MRI, Ultrasonography or 2D/3D Echo etc.</li>
+                        </ol>
+                    </li>
+                    <li>I do not engage or intend to engage in any business, sport or occupation or any hobby of a hazardous nature.</li>
+                    <li>I do not have any habit of smoking, chewing tobacco, alcohol, narcotics in any form in quantities consumed more than that is mentioned below- i. Cigarette sticks / Cigar sticks / Bidi sticks/ Gutka pouch / Paan - 10 units/day, ii. Any Narcotics consumption iii. Alcohol: Beer/Hard Liquor/Wine Quantity- 20 units/ week **(***1 unit= 300 ml of beer, 30 ml of spirits, 100 ml of wine)</li>
+                    <li>For Females Lives Only:
+                        <ol type="a">
+                            <li>I am currently not pregnant. I am not suffering from or nor have suffered from any complication of pregnancy.</li>
+                            <li>I am not suffering from or nor have suffered from any diseases of breast/ uterus/ cervix?</li>
+                        </ol>
+                    </li>
+                </ol>
+                <p><strong>Following questions are applicable ONLY when "Critical Illness Cover / Disability Cover" are opted</strong></p>
+                <ol start="9">
+                    <li>I have not had any proposal and / or policy for life, health, accident or critical illness, including renewals / revivals therefor, declined or deferred by any insurance company in India or Overseas. I do not engage or intend to engage in any business, sport or occupation or any hobby of a hazardous nature.</li>
+                    <li>I have never been diagnosed with any form of internal or external congenital anomaly or defect. i.e. any condition(s) which is present since birth, and which is abnormal with reference to form, structure or position.</li>
+                </ol>
             </div>
         </div>
 
-        <div class="form-row" style="margin-top: 20px;">
-            <label style="display: flex; align-items: flex-start; gap: 5px;">
-                <input type="checkbox" name="green_world" checked style="margin-top: 3px;">
-                <span>Do your bit for green world & Switch to e-communication. Kindly (✓) if you would like to receive all policy related documents and communication on the email address provided by me through any other electronic means</span>
-            </label>
-        </div>
-
         <div class="form-section">
-            <div class="section-header">5. DECLARATION BY LIFE INSURED</div>
+            <div class="section-header">5. DECLARATION BY THE MEMBER / LIFE INSURED</div>
             <div class="section-content">
                 <div class="declaration-text">
                     <div class="form-row">
-                        <label style="display: flex; align-items: flex-start; gap: 5px;">
-                            <span>8. For Females Lives Only:</span>
-                        </label>
-                    </div>
-                    <div class="form-row" style="margin-left: 20px;">
-                        <label style="display: flex; align-items: flex-start; gap: 5px;">
-                            <span>a) I am currently not pregnant. I am not suffering from or nor have suffered from any complication of pregnancy.</span>
-                        </label>
-                    </div>
-                    <div class="form-row" style="margin-left: 20px;">
-                        <label style="display: flex; align-items: flex-start; gap: 5px;">
-                            <span>b) I am not suffering from or nor have suffered from any diseases of breast/ uterus/ cervix?</span>
-                        </label>
-                    </div>
-                    
-                    <div class="important-note" style="margin-top: 15px;">
-                        Following questions are applicable ONLY when "Critical Illness Cover/ Disability Cover" is opted
-                    </div>
-                    
-                    <div class="form-row">
-                        <label style="display: flex; align-items: flex-start; gap: 5px;">
-                            <span>9. I have not had any proposal and / or policy for life, health, accident or critical illness, including renewals / revivals therefor, declined or deferred by any insurance company in India or overseas. I do not engage or intend to engage in any business, sport or occupation of a hazardous nature.</span>
-                        </label>
-                    </div>
-                    
-                    <div class="form-row">
-                        <label style="display: flex; align-items: flex-start; gap: 5px;">
-                            <span>10. I have never been diagnosed with any form of internal or external congenital anomaly or defect. i.e. any condition(s) which is present since birth, and which is abnormal with reference to form, structure or position.</span>
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I further declare that the above statements are true and complete in every respect related to my health and will form the basis of granting insurance cover to me from Kotak Mahindra Life Insurance Company Ltd.[KLI]. I further hereby agree and give my consent to the Policyholder for use of the contents of this declaration by KLI for examining and processing any claim arising, in respect of the insurance cover that may be provided to me under the referred group policy</span>
                         </label>
                     </div>
 
-                    <div class="form-row" style="margin-top: 20px;">
-                        <p>I further declare that the above statements are true and complete in every respect related to my health and will form the basis of insurance cover to me from Kotak Mahindra Life Insurance Company Ltd.(KLI). I further hereby agree and give my consent to the Policyholder for use of the contents of this declaration by KLI for examining and processing my claim arising, in respect of the insurance cover that may be provided to me under the referred group policy.</p>
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I hereby confirm that my intent to participate in the above plan for the Policyholder's customers is purely on a voluntary basis. I confirm and I confirm and agree that the insurance cover, if provided, will be governed by the provisions of the Insurance Act, 1938 and the Policy Contract under which the cover will be offered to me.</span>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I agree and understand that if I contract any of the above diseases between submitting this document and the date of commencement of the cover, I shall not be covered under the policy. I have also not withheld any material information or suppressed any fact. I undertake to notify KLI ('The Company') of any change in my state of health or occupation or any decisions subsequent to the signing of this declaration form and before the acceptance of the risk by the Company.</span>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I understand and agree that if any untrue statement be contained herein, I, my heirs, executors, administrators or assignees shall not be entitled to receive any benefits which may be provided to me on the faith of this declaration, including, inter alia the aforesaid insurance cover. I understand and acknowledge that insurance cover shall be as per terms and conditions detailed in the Policy Contract issued by KLI in favour of the policyholder and that KLI's decision in respect of all aspects of the referred group life insurance plan shall be final & binding.</span>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I/ We hereby agree, consent and authorize Kotak Mahindra Life Insurance Company Limited ("KLI") to collect and use: any information of the member and/ or Proposer, including but not limited to the personal and/ or sensitive personal data or information including KYC document and medical/health information that is contained in this proposal form, available with KLI and/ or otherwise obtained. I/ We expressly agree, consent and authorize KLI to part/share/ disclose and/ or verify such data and information with any entity including but not limited to statutory/ regulatory/ government bodies, individuals, organizations, entities, reinsurers, auditors, investigation agencies, service providers, industry associations/ federations etc., in any form or manner as KLI deems appropriate for the subject insurance cover and also for providing any other form of service(s) including but not limited to underwriting, issuance of cover, claim investigation/ processing/ payment/ settlement, marketing or promotional communications, value added services, risk management activities, policy servicing etc</span>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I hereby give my consent to and authorize the Policyholder/my Doctor/Hospital/Local, State, Central authority/Dealer/Distributor /my past or present Employer / any insurance company, which I may have applied to divulge or convey and KLI to seek any information or particulars (including personal details, medical, health [physical or mental], financials or employment details) relevant to this Form/my admission into the referred Group Insurance Policy to KLI at any point during proposal underwriting and the continuance of my cover hereunder including any claim under the said Policy. I also permit KLI to approach me directly for any clarification and/or other purposes. I hereby voluntarily give my consent to collect, process, receive, possess, store, deal, share or handle my personal data including sensitive personal data including medical records, health, financials, personal details or employment details, information pertaining to my proposal/ this form, COI ( Certificate of Insurance )/ COA( Certificate of Annuity )/ DOGH ( Declaration of Good Health ) with/ from third parties/ vendors associated with the Company for various purposes and activities exclusively related to, proposal underwriting, issuance/servicing of insurance policy and/or settlement of claim and with any statutory, governmental and/ or regulatory authority</span>
+                        </label>
                     </div>
                 </div>
             </div>
