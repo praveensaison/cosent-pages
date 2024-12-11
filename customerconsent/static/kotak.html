@@ -70,14 +70,56 @@
         .form-row {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 10px;
-            align-items: center;
+            gap: 20px;
+            margin-bottom: 15px;
         }
         .form-group {
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            flex: 0 1 auto;
+        }
+        .form-group[style*="flex: 1"] {
+            flex: 1 1 auto;
+            min-width: 300px;
+        }
+        textarea {
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 60px;
+        }
+        .checkbox-group {
+            display: inline-flex;
+            gap: 20px;
+            margin-top: 5px;
+        }
+        .checkbox-group label {
+            white-space: nowrap;
+        }
+        input[type="text"], 
+        input[type="date"],
+        textarea {
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        textarea:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #495057;
+        }
+        .form-group input[readonly] {
+            background-color: #e9ecef;
+            cursor: not-allowed;
         }
         label {
             font-size: 13px;
@@ -96,14 +138,19 @@
         }
         .checkbox-group {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
+            margin: 5px 0;
         }
         .checkbox-group label {
             display: flex;
             align-items: center;
             gap: 5px;
-            font-size: 13px;
+            font-size: 14px;
+            color: #333;
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin: 0;
         }
         input[type="checkbox"], 
         input[type="radio"] {
@@ -168,6 +215,37 @@
         .checkbox-label span {
             flex: 1;
         }
+        .note-section {
+            background-color: #f8f9fa;
+            border-left: 4px solid #6c757d;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .note-section p {
+            margin: 0;
+            line-height: 1.5;
+            font-size: 14px;
+            color: #333;
+        }
+        .note-section strong {
+            color: #495057;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .company-details {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 30px;
+            border: 1px solid #dee2e6;
+        }
+        .company-details p {
+            margin: 5px 0;
+            font-size: 13px;
+            color: #495057;
+        }
     </style>
 </head>
 <body>
@@ -199,6 +277,76 @@
         </div>
 
         <div class="form-section">
+            <div class="section-header">1. PLAN DETAILS</div>
+            <div class="section-content">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sumAssured">Sum Assured:</label>
+                        <input type="text" id="sumAssured" name="sumAssured" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="premium">Premium:</label>
+                        <input type="text" id="premium" name="premium" value="sdmkf" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="coverTerm">Cover Term:</label>
+                        <input type="text" id="coverTerm" name="coverTerm" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Premium Payment Term:</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="paymentTerm" value="single" checked> Single</label>
+                            <label><input type="checkbox" name="paymentTerm" value="regular"> Regular</label>
+                            <label><input type="checkbox" name="paymentTerm" value="limited"> Limited</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Cover Type:</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="coverType" value="singleLife" checked> Single Life</label>
+                            <label><input type="checkbox" name="coverType" value="jointLife"> Joint Life</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Premium Payment Mode:</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="paymentMode" value="single" checked> Single</label>
+                            <label><input type="checkbox" name="paymentMode" value="yearly"> Yearly</label>
+                            <label><input type="checkbox" name="paymentMode" value="halfYearly"> Half-Yearly</label>
+                            <label><input type="checkbox" name="paymentMode" value="quarterly"> Quarterly</label>
+                            <label><input type="checkbox" name="paymentMode" value="monthly"> Monthly</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Benefit Multiplier:</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="benefitMultiplier" value="100" checked> 100%</label>
+                            <label><input type="checkbox" name="benefitMultiplier" value="110"> 110%</label>
+                            <label><input type="checkbox" name="benefitMultiplier" value="120"> 120%</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="interestRate">Interest Rate:</label>
+                        <input type="text" id="interestRate" name="interestRate">
+                    </div>
+                    <div class="form-group">
+                        <label for="moratoriumPeriod">Moratorium Period:</label>
+                        <input type="text" id="moratoriumPeriod" name="moratoriumPeriod">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
             <div class="section-content">
                 <div class="form-row">
                     <div class="field-label">Name of the Policyholder:</div>
@@ -220,72 +368,80 @@
         </div>
 
         <div class="form-section">
-            <div class="section-header">1. PLAN DETAILS</div>
-            <div class="section-content">
-                <div class="form-row">
-                    <div class="form-group">
-                        <div class="field-label">Sum Assured:</div>
-                        <input type="text" name="sum_assured">
-                    </div>
-                    <div class="form-group">
-                        <div class="field-label">Premium:</div>
-                        <input type="text" name="premium">
-                    </div>
-                    <div class="form-group">
-                        <div class="field-label">Cover Term:</div>
-                        <input type="text" name="cover_term">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="field-label">Premium Payment Term:</div>
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="premium_payment_term_single" checked> Single</label>
-                        <label><input type="checkbox" name="premium_payment_term_regular"> Regular</label>
-                        <label><input type="checkbox" name="premium_payment_term_limited"> Limited</label>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="field-label">Premium Payment Mode:</div>
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="premium_payment_mode_single" checked> Single</label>
-                        <label><input type="checkbox" name="premium_payment_mode_yearly"> Yearly</label>
-                        <label><input type="checkbox" name="premium_payment_mode_half_yearly"> Half-Yearly</label>
-                        <label><input type="checkbox" name="premium_payment_mode_quarterly"> Quarterly</label>
-                        <label><input type="checkbox" name="premium_payment_mode_monthly"> Monthly</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-section">
             <div class="section-header">2. LIFE ASSURED'S DETAILS</div>
             <div class="section-content">
                 <div class="form-row">
-                    <div class="form-group">
-                        <div class="field-label">Loan Account No.:</div>
-                        <input type="text" name="loan_account_no">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="loanAccountNo">Loan Account No.:</label>
+                        <input type="text" id="loanAccountNo" name="loanAccountNo" required>
                     </div>
-                    <div class="form-group">
-                        <div class="field-label">Customer ID No.:</div>
-                        <input type="text" name="customer_id_no">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="customerIdNo">Customer ID No.:</label>
+                        <input type="text" id="customerIdNo" name="customerIdNo" required>
                     </div>
                 </div>
+
                 <div class="form-row">
-                    <div class="field-label">Member Name:</div>
-                    <input type="text" name="member_name" style="width: 300px;">
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <div class="field-label">Date of Birth:</div>
-                        <input type="date" name="date_of_birth">
-                    </div>
-                    <div class="form-group">
-                        <div class="field-label">Gender:</div>
-                        <div class="gender-group">
-                            <label><input type="radio" name="gender" value="male"> Male</label>
-                            <label><input type="radio" name="gender" value="female"> Female</label>
-                            <label><input type="radio" name="gender" value="transgender"> Transgender</label>
+                    <div class="form-group" style="flex: 1;">
+                        <label for="memberName">Member Name:</label>
+                        <div style="display: flex; align-items: center;">
+                            <span style="margin-right: 10px; color: #666;">Mr/Ms:</span>
+                            <input type="text" id="memberName" name="memberName" required style="flex: 1;">
                         </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dateOfBirth">Date of Birth:</label>
+                        <input type="date" id="dateOfBirth" name="dateOfBirth" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender:</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="gender" value="male"> Male</label>
+                            <label><input type="checkbox" name="gender" value="female"> Female</label>
+                            <label><input type="checkbox" name="gender" value="transgender"> Transgender</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="address">Address:</label>
+                        <textarea id="address" name="address" rows="2" required style="width: 100%; padding: 8px; border: 1px solid #ced4da; border-radius: 4px;"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top: 20px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="jointLifeName">Name of Joint Life Insured (if any):</label>
+                        <div style="display: flex; align-items: center;">
+                            <span style="margin-right: 10px; color: #666;">Mr/Ms:</span>
+                            <input type="text" id="jointLifeName" name="jointLifeName" style="flex: 1;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="jointDateOfBirth">Date of Birth:</label>
+                        <input type="date" id="jointDateOfBirth" name="jointDateOfBirth">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender:</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="jointGender" value="male"> Male</label>
+                            <label><input type="checkbox" name="jointGender" value="female"> Female</label>
+                            <label><input type="checkbox" name="jointGender" value="transgender"> Transgender</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label for="relationshipWithMember">Relationship with Member:</label>
+                        <input type="text" id="relationshipWithMember" name="relationshipWithMember" style="width: 100%;">
                     </div>
                 </div>
             </div>
@@ -421,7 +577,7 @@
                     <div class="form-row">
                         <label class="checkbox-label">
                             <input type="checkbox" required>
-                            <span>I understand and agree that if any untrue statement be contained herein, I, my heirs, executors, administrators or assignees shall not be entitled to receive any benefits which may be provided to me on the faith of this declaration, including, inter alia the aforesaid insurance cover. I understand and acknowledge that insurance cover shall be as per terms and conditions detailed in the Policy Contract issued by KLI in favour of the policyholder and that KLI's decision in respect of all aspects of the referred group life insurance plan shall be final & binding.</span>
+                            <span>I understand and agree that if any untrue statement be contained herein, I, my heirs, executors, administrators or assignees shall not be entitled to receive any benefits which may be provided to me on the faith of this declaration, including, inter alia, benefits under any insurance policy procured on the faith of this Form.</span>
                         </label>
                     </div>
 
@@ -443,85 +599,111 @@
         </div>
 
         <div class="form-section">
-            <div class="section-header">6. AUTHORIZATION FOR CLAIM PAYMENT</div>
+            <div class="section-header">6. AUTHORISATION OF CLAIM PAYMENT <span style="font-style: italic;">(applicable only for Entities approved by IRDAI)</span></div>
             <div class="section-content">
                 <div class="declaration-text">
-                    <p style="font-style: italic;">(Applicable only for Entities approved by IRDAI)</p>
-                    <p>I authorize KLI to pay the benefits under this policy, first towards the loan outstanding, by paying the same directly to the Policyholder and balance, if any, may be paid directly and/or by negotiating basis, as the case may be. I certify that this authorization is being effected by me, voluntarily and with full knowledge of its implications.</p>
-                </div>
-            </div>
-        </div>
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I authorise KLI to apply the benefits under this policy, first towards the loan outstanding, by paying the same directly to the Policyholder and the balance, if any, may be paid to myself and/or my nominee/legal heirs, as the case may be. I certify that this authorization is being effected in consideration of a loan obtained from the Policyholder. I further certify that the loan outstanding amount as confirmed by the Policyholder shall be considered as final and binding. I declare that the receipt of the benefits by the Policyholder and/or my nominee/ legal heirs shall be a valid and sufficient discharge of KLI's liabilities with respect to the life cover provided to me.</span>
+                        </label>
+                    </div>
 
-        <div class="form-section">
-            <div class="section-header">7. DECLARATION BY FILLING IN THE FORM</div>
-            <div class="section-content">
-                <div class="form-row">
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="scribe"> Scribe</label>
-                        <label><input type="checkbox" name="vernacular_language"> Vernacular language</label>
+                    <div class="form-row signature-section" style="margin-top: 30px; display: flex; gap: 20px;">
+                        <div class="form-group">
+                            <label for="place">Place:</label>
+                            <input type="text" id="place" name="place" required style="width: 200px;">
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date:</label>
+                            <input type="date" id="date" name="date" required>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="signature">Signature of the Life Assured/Proposer:</label>
+                            <input type="text" id="signature" name="signature" required style="width: 100%;">
+                        </div>
                     </div>
                 </div>
-                <div class="declaration-text">
-                    <p>(Applicable only where form is filled in by a scribe or signed in vernacular language or where the form is filled in by a representative/duly authorized person with disability)</p>
-                    <p>I, <input type="text" name="scribe_name" style="width: 200px;"> (full name) have explained to the member the contents of this form in his own language and he/she has fully understood the same. Also, I have explained that all virtues benefits contained therein, the member and/or the heirs,executors/administrator/assignees of the member shall not be entitled to receive any benefits including, inter alia, benefits under any insurance policy procured on the faith of this Form.</p>
-                </div>
-
-                <div class="form-row" style="margin-top: 20px;">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td style="width: 33%;">
-                                <div class="field-label">Place:</div>
-                                <input type="text" name="scribe_place" style="width: 80%;">
-                            </td>
-                            <td style="width: 33%;">
-                                <div class="field-label">Date:</div>
-                                <input type="date" name="scribe_date" style="width: 80%;">
-                            </td>
-                            <td style="width: 33%;">
-                                <div class="field-label">Signature of the Scribe:</div>
-                                <input type="text" name="scribe_signature" style="width: 80%;">
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="form-row">
-                    <table style="width: 100%;">
-                        <tr>
-                            <td style="width: 33%;">
-                                <div class="field-label">Place:</div>
-                                <input type="text" name="witness_place" style="width: 80%;">
-                            </td>
-                            <td style="width: 33%;">
-                                <div class="field-label">Date:</div>
-                                <input type="date" name="witness_date" style="width: 80%;">
-                            </td>
-                            <td style="width: 33%;">
-                                <div class="field-label">Witness / Policyholder Authorized Signatory:</div>
-                                <input type="text" name="witness_signature" style="width: 80%;">
-                            </td>
-                        </tr>
-                    </table>
-                </div>
             </div>
         </div>
 
         <div class="form-section">
+            <div class="section-header">
+                7. DECLARATION BY THE PERSON FILLING IN THE FORM
+                <div style="float: right;">
+                    <label style="margin-right: 20px;">
+                        <input type="checkbox" name="scribe_vernacular"> Scribe / Vernacular languages
+                    </label>
+                    <label>
+                        <input type="checkbox" name="disability"> Disability
+                    </label>
+                </div>
+            </div>
             <div class="section-content">
-                <div class="important-note" style="margin-top: 15px;">
-                    <p><strong>Section 41 of the Insurance Act, 1938 as amended from time to time states:</strong> No person shall allow or offer to allow, either directly or indirectly, as an inducement to any person to take or renew or continue an insurance in respect of any kind of risk relating to lives or property in India, any rebate of the whole or part of the commission payable or any rebate of the premium shown on the policy, nor shall any person taking out or renewing or continuing a policy accept any rebate, except such rebate as may be allowed in accordance with the published prospectuses or tables of the insurer.</p>
-                    
-                    <p><strong>Section 45 of the Insurance Act, 1938 as amended from time states:</strong> The provisions of Section 45 of the Insurance Act 1938 are applicable to the above contract. Please refer to Section 45 either on our website or contact our intermediary or visit the nearest branch for the full text. https://kotaklife.com/assets/images/uploads/why_kotaklife/section3_45_of_insurance_act_1938.pdf</p>
-                    
-                    <p><strong>Free Look Period:</strong> The member is offered 30 days (for policies having a cover term of less than a year)/free look period from the date of receipt of the Certificate of Insurance wherein the Member may choose to return the Certificate of Insurance within 30 days of receipt for policies having a cover term of more than a year) of receipt if he is not agreeable with any of the terms and conditions of the part and receive the applicable refund amount.</p>
+                <p style="font-style: italic; margin-bottom: 15px;">(Applicable only where form is filled in by a scribe or signed in vernacular languages or where the form is filled in by a representative duly authorised by a person with disability)</p>
+                
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label>
+                            <input type="text" placeholder="Full Name" style="width: 300px;"> (full name) have explained to the member the contents of this form in his own language and he/she has fully understood the same. Also, I have explained that if any untrue statement is contained herein, the member, and/or the heirs, executors administrators assignees of the member shall not be entitled to receive any benefits, including, inter alia, benefits under any insurance policy procured on the faith of this Form.
+                        </label>
+                    </div>
                 </div>
 
-                <div style="margin-top: 20px; font-size: 12px;">
-                    <p><strong>Kotak Mahindra Life Insurance Company Ltd.</strong> CIN: U66030MH2000PLC128503; Regd. Office: 2nd Floor, Plot # C-12, G-Block, BKC, Bandra (E), Mumbai- 400 051. Website: https://www.kotaklife.com, Email:kli.groupoperations@kotak.com, Toll Free No: 1800 120 7856</p>
-                    <p>Trade Logo displayed above belongs to Kotak Mahindra Bank Limited and is used by Kotak Mahindra Life Insurance Company Ltd. under license.</p>
+                <div class="signature-section" style="margin-top: 20px;">
+                    <div class="form-row" style="display: flex; gap: 20px; margin-bottom: 15px;">
+                        <div class="form-group">
+                            <label for="scribe_place">Place:</label>
+                            <input type="text" id="scribe_place" name="scribe_place" style="width: 200px;">
+                        </div>
+                        <div class="form-group">
+                            <label for="scribe_date">Date:</label>
+                            <input type="text" id="scribe_date" name="scribe_date" value="KLI/24-25/Oct-XX" readonly style="width: 150px;">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="scribe_signature">Signature of the Scribe:</label>
+                            <input type="text" id="scribe_signature" name="scribe_signature" style="width: 100%;">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row" style="display: flex; gap: 20px;">
+                        <div class="form-group">
+                            <label for="witness_place">Place:</label>
+                            <input type="text" id="witness_place" name="witness_place" style="width: 200px;">
+                        </div>
+                        <div class="form-group">
+                            <label for="witness_date">Date:</label>
+                            <input type="text" id="witness_date" name="witness_date" style="width: 150px;">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="witness_signature">Witness / Policyholder Authorized Signatory:</label>
+                            <input type="text" id="witness_signature" name="witness_signature" style="width: 100%;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="important-notes" style="margin-top: 30px;">
+                    <div class="note-section">
+                        <p><strong>Section 41 of the Insurance Act, 1938 as amended from time to time states:</strong> No person shall allow or offer to allow, either directly or indirectly, as an inducement to any person to take or renew or continue an insurance in respect of any kind of risk relating to lives or property in India, any rebate of the whole or part of the commission payable or any rebate of the premium shown on the policy, nor shall any person taking out or renewing or continuing a policy accept any rebate, except such rebate as may be allowed in accordance with the published prospectuses or tables of the insurer.</p>
+                    </div>
+
+                    <div class="note-section" style="margin-top: 15px;">
+                        <p><strong>Section 45 of the Insurance Act, 1938 as amended from time to time states:</strong> The provisions of Section 45 of the Insurance Act, 1938 are applicable in the above contract. Please refer to Section 45 either on our website or contact our intermediary or visit the nearest branch for the full text. https://kotaklife.com/assets/images/uploads/why_kotak/section38_39_45_of_insurance_act_1938.pdf</p>
+                    </div>
+
+                    <div class="note-section" style="margin-top: 15px;">
+                        <p><strong>Free Look Period:</strong> The member is offered 30 days (except for policies having a cover term of less than a year) free look period from the date of receipt of the Certificate of Insurance wherein the Member may choose to return the Certificate of Insurance within 30 days (except for policies having a cover term of less than a year) of receipt if s/he is not agreeable with any of the terms and conditions of the plan and receive the applicable refund amount.</p>
+                    </div>
+
+                    <div class="company-details" style="margin-top: 20px; border-top: 1px solid #ddd; padding-top: 15px;">
+                        <p>Kotak Mahindra Life Insurance Company Ltd.; CIN: U66030MH2000PLC128503, Regn. No.: 107, Regd.Office: 8th Floor, Plot # C-12, G-Block, BKC, Bandra (E),Mumbai- 400 051. Website:, https://www.kotaklife.com; Email:kli.groupoperations@kotak.com. Toll Free No.–1800 120 7856</p>
+                        <p style="margin-top: 10px;">Ref No.: KLI/24-25/Oct-XX</p>
+                        <p style="margin-top: 10px; font-style: italic;">Trade Logo displayed above belongs to Kotak Mahindra Bank Limited and is used by Kotak Mahindra Life Insurance Company Ltd. under license.</p>
+                    </div>
                 </div>
             </div>
         </div>
+
         <button type="submit" class="submit-button">Submit Form</button>
     </form>
 
