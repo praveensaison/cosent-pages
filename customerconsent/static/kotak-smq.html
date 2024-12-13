@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Form cum Short Medical Questionnaire</title>
+    <style>
+        /* A4 size and page setup */
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            background-color: white;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+
+        /* Header styling */
+        .header {
+            background-color: #4a4a4a;
+            color: white;
+            padding: 6px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .header img {
+            height: 30px;
+        }
+
+        .header .tagline {
+            font-style: italic;
+            font-size: 14px;
+            color: white;
+        }
+
+        h2 {
+            font-size: 16px;
+            margin: 8px 0;
+            font-weight: normal;
+        }
+
+        /* Form sections */
+        .section {
+            border: 1px solid #ddd;
+            margin: 8px 0;
+            background-color: white;
+        }
+
+        .section-header {
+            background-color: #4a4a4a;
+            color: white;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .section-content {
+            padding: 8px;
+        }
+
+        /* Form elements */
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 8px;
+            align-items: flex-start;
+        }
+
+        .form-group {
+            flex: 0 1 auto;
+            margin-bottom: 5px;
+        }
+
+        .form-group[style*="flex: 1"] {
+            flex: 1 1 auto;
+            min-width: 250px;
+        }
+
+        label {
+            font-size: 13px;
+            margin-bottom: 3px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        textarea {
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 13px;
+            width: 100%;
+            box-sizing: border-box;
+            height: 28px;
+        }
+
+        .checkbox-group {
+            display: inline-flex;
+            gap: 15px;
+            margin-top: 2px;
+            flex-wrap: wrap;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+        }
+
+        /* Submit button */
+        .submit-button {
+            background-color: #4a4a4a;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .submit-button:hover {
+            background-color: #333;
+        }
+
+        /* Responsive adjustments */
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+                background: white;
+            }
+            .container {
+                width: 210mm;
+                min-height: 297mm;
+                padding: 10mm;
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+
+        /* Additional utility classes */
+        .text-small {
+            font-size: 11px;
+        }
+        
+        .text-muted {
+            color: #6c757d;
+        }
+
+        .readonly {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+
+        /* Compact spacing for specific elements */
+        .section + .section {
+            margin-top: 5px;
+        }
+
+        input[type="checkbox"] {
+            margin: 0;
+            vertical-align: middle;
+        }
+
+        textarea {
+            height: auto;
+            min-height: 60px;
+        }
+
+        /* Medical history section specific styles */
+        .warning-text {
+            color: #dc3545;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .medical-questions .form-row {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .medical-questions .form-row:last-child {
+            border-bottom: none;
+        }
+
+        .medical-questions label {
+            line-height: 1.4;
+        }
+
+        .medical-questions .checkbox-group {
+            margin-top: 5px;
+        }
+
+        .medical-questions .text-small {
+            display: block;
+            margin-left: 25px;
+            color: #666;
+            font-size: 11px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 50px;
+            font-family: inherit;
+        }
+
+        /* Declaration section specific styles */
+        .declaration-text .form-row {
+            margin-bottom: 12px;
+            border-bottom: none;
+        }
+
+        .declaration-text .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 12px;
+            line-height: 1.4;
+            text-align: justify;
+        }
+
+        .declaration-text input[type="checkbox"] {
+            margin-top: 3px;
+        }
+
+        .declaration-text span {
+            flex: 1;
+        }
+
+        /* Authorization of Claim Payment section specific styles */
+        .authorization-text {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .signature-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .signature-field {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .signature-field label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .signature-field input {
+            width: 100%;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+
+        .signature-space {
+            border-bottom: 1px solid #333;
+            height: 30px;
+            margin-top: 8px;
+        }
+
+        /* Declaration by Person Filling Form section specific styles */
+        .note-text {
+            font-style: italic;
+            margin-bottom: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .declaration-paragraph {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .signature-section {
+            margin-top: 10px;
+        }
+
+        /* Footer section specific styles */
+        .footer-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+        }
+
+        .insurance-act {
+            margin-bottom: 20px;
+        }
+
+        .act-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .act-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .company-details {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .company-details p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .company-details strong {
+            font-weight: bold;
+        }
+
+        .trademark {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .ref-no {
+            text-align: right;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Authorization and Declaration sections */
+        .header-note {
+            font-style: italic;
+            font-weight: normal;
+            font-size: 14px;
+            color: white;
+        }
+
+        .form-type {
+            float: right;
+            margin-left: 15px;
+        }
+
+        .form-type label {
+            margin-right: 20px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .submit-button {
+            background-color: #4a4a4a;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .submit-button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="path_to_kotak_logo.png" alt="Kotak Life">
+            <span class="tagline">Hum hain... hamesha</span>
+        </div>
+
+        <h2>Membership Form cum Short Medical Questionnaire</h2>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Plan Options:</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="plan_type" value="kotak_group_assure"> Kotak Group Assure (UIN:107N051V05)
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="plan_type" value="kotak_group_shield"> Kotak Group Shield (UIN:107N050V07)
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="plan_type" value="kotak_complete_cover" checked> Kotak Complete Cover Group Plan (UIN:107N018V09)
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="plan_type" value="kotak_credit_term"> Kotak Credit Term Group (UIN:107N006V05)
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Name of the Policyholder:</label>
+                <input type="text" value="KISETSU SAISON FINANCE (INDIA) PRIVATE LIMITED" readonly>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Policy Number:</label>
+                <input type="text" value="CD000316- BL" readonly>
+            </div>
+            <div class="form-group">
+                <label>Plan Option:</label>
+                <input type="text" value="Life Cover" readonly>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">PLAN DETAILS</div>
+            <div class="section-content">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Sum Assured:</label>
+                        <input type="text" name="sum_assured">
+                    </div>
+                    <div class="form-group">
+                        <label>Premium:</label>
+                        <input type="text" name="premium">
+                    </div>
+                    <div class="form-group">
+                        <label>Cover Term:</label>
+                        <input type="text" name="cover_term">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>Premium Payment Term:</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="payment_term" value="single" checked> Single
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="payment_term" value="regular"> Regular
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="payment_term" value="limited"> Limited
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>Premium Payment Mode:</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="payment_mode" value="single" checked> Single
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="payment_mode" value="yearly"> Yearly
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="payment_mode" value="half_yearly"> Half-Yearly
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="payment_mode" value="quarterly"> Quarterly
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="payment_mode" value="monthly"> Monthly
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>Benefit Multiplier:</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="benefit_multiplier" value="100" checked> 100%
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="benefit_multiplier" value="110"> 110%
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="benefit_multiplier" value="120"> 120%
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Interest Rate:</label>
+                        <input type="text" name="interest_rate">
+                    </div>
+                    <div class="form-group">
+                        <label>Moratorium Period:</label>
+                        <input type="text" name="moratorium_period">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">PERSONAL DETAILS OF LIFE TO BE INSURED MEMBER</div>
+            <div class="section-content">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Life Insured Name: Mr. / Ms.</label>
+                        <input type="text" name="life_insured_name">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date of Birth:</label>
+                        <input type="date" name="date_of_birth">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender:</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="gender" value="male"> Male
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="gender" value="female"> Female
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="gender" value="transgender"> Transgender
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>Nationality:</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="nationality" value="indian"> Indian
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="nationality" value="nri_pio"> NRI/PIO
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="nationality" value="others"> Others (Specify)
+                            <input type="text" style="width: 150px;">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Country Name:</label>
+                        <input type="text" name="country_name">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>Type of Endrolment:</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="endrolment_type" value="salaried"> Salaried
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="endrolment_type" value="self_employment"> Self-employment
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="endrolment_type" value="housewife"> Housewife
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="endrolment_type" value="retired"> Retired
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="endrolment_type" value="student"> Student
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="endrolment_type" value="others"> Others
+                            <input type="text" style="width: 150px;">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Pan Card Number:</label>
+                        <input type="text" name="pan_number">
+                    </div>
+                    <div class="form-group">
+                        <label>Annual Income:</label>
+                        <input type="text" name="annual_income">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">LOAN DETAILS OF INSURED MEMBER</div>
+            <div class="section-content">
+                <div class="form-row">
+                    <label>Type of Loan:</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="loan_type" value="home_loan"> Home Loan
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="loan_type" value="lap"> Lap
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="loan_type" value="education_loan"> Education Loan
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="loan_type" value="personal_loan"> Personal Loan
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="loan_type" value="business_loan_secured"> Business Loan Secured
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="loan_type" value="business_loan_unsecured" checked> Business Loan Unsecured
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="loan_type" value="vehicle_loan"> Vehicle Loan
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="loan_type" value="credit_card_loan"> Credit Card Loan
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="loan_type" value="commercial_vehicle"> Commercial Vehicle & Equipment
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="loan_type" value="other_loan"> Other Loan
+                            <input type="text" style="width: 150px;">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Loan Account No:</label>
+                        <input type="text" name="loan_account_no">
+                    </div>
+                    <div class="form-group">
+                        <label>Customer ID:</label>
+                        <input type="text" name="customer_id">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Loan Sanctioned Amount:</label>
+                        <input type="text" name="loan_sanctioned_amount">
+                    </div>
+                    <div class="form-group">
+                        <label>Insurance Cover Amount:</label>
+                        <input type="text" name="insurance_cover_amount">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Loan Term:</label>
+                        <input type="text" name="loan_term" placeholder="Years/Months">
+                    </div>
+                    <div class="form-group">
+                        <label>Date of first disbursement of loan:</label>
+                        <input type="date" name="disbursement_date">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>Member Coverage Option:</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="coverage_option" value="single_life" checked> Single Life
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="coverage_option" value="joint_life"> Joint Life
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label>Please specify are you:</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="borrower_type" value="primary" checked> Primary Borrower
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="borrower_type" value="co_borrower"> Co-borrower
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Total number of borrowers including primary borrower:</label>
+                        <input type="number" name="total_borrowers">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">NOMINEE DETAILS</div>
+            <div class="section-content">
+                <div class="note">* Nominee needs to be a major i.e. above 18 years of age and should be one of the following: Husband, Wife, Son, Daughter, Father, Mother, Brother, Sister, Grandfather or Grandmother.</div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <input type="text" name="nominee_name">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date of Birth:</label>
+                        <input type="date" name="nominee_dob">
+                    </div>
+                    <div class="form-group">
+                        <label>Gender:</label>
+                        <input type="text" name="nominee_gender">
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile No.:</label>
+                        <input type="text" name="nominee_mobile">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Email ID:</label>
+                        <input type="email" name="nominee_email">
+                    </div>
+                    <div class="form-group">
+                        <label>Relationship to Life to be Insured:</label>
+                        <input type="text" name="nominee_relationship">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Present Address:</label>
+                        <input type="text" name="nominee_address">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Bank Account Details:</label>
+                        <input type="text" name="nominee_bank_details">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="e_communication" checked>
+                        Do your bit for green world & Switch to e-communication. Kindly (✓) if you would like to receive all policy related documents and other communication on the email address provided by me through any other electronic means
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">MEDICAL HISTORY & OTHER PERSONAL DETAILS OF LIFE TO BE INSURED MEMBER</div>
+            <div class="section-content">
+                <p class="warning-text">Suppressing facts or giving wrong information will adversely impact payment of your claim</p>
+                
+                <div class="form-row">
+                    <div class="form-group" style="flex: 0 0 auto;">
+                        <label>Height</label>
+                        <div style="display: flex; align-items: center; gap: 5px;">
+                            <input type="number" style="width: 80px;" name="height"> Cms
+                        </div>
+                    </div>
+                    <div class="form-group" style="flex: 0 0 auto;">
+                        <label>Weight</label>
+                        <div style="display: flex; align-items: center; gap: 5px;">
+                            <input type="number" style="width: 80px;" name="weight"> Kgs
+                        </div>
+                    </div>
+                </div>
+
+                <div class="medical-questions">
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label>1. Have you consulted any doctor for treatment of any ailment other than common cough or cold or undergone any hospitalization or any investigations (including X rays, ECG, blood tests, biopsies, CT Scan, MRI, Ultrasonography, 2D Echo etc.) in the last 5 years? Have you been absent from work due to any illness or injury for a continuous period of more than 7 days during the last five years?</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label"><input type="radio" name="question1" value="yes"> Yes</label>
+                                <label class="checkbox-label"><input type="radio" name="question1" value="no"> No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label>2. Have you ever been diagnosed with or received treatment for any disability or medical conditions such as Stroke, paralysis, epilepsy or other brain related disease, diabetes, hypertension, elevated cholesterol, any cancer, tumour, abnormal tissue growth or cyst, Mental or nervous disorders including anxiety or depression, heart diseases including heart attack, chest pain, breast diseases, HIV infection or sexually transmitted disease, any thyroid disease, congenital or genetic disease or Physical deformity or disability?</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label"><input type="radio" name="question2" value="yes"> Yes</label>
+                                <label class="checkbox-label"><input type="radio" name="question2" value="no"> No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label>3. Have you ever been diagnosed with or received treatment for disease or disorder of the circulatory system, lungs or respiratory system, digestive system including liver, stomach, gall bladder, pancreas and bowel, blood including anaemia, kidney, urinary bladder, prostate, genital organs, bones, joints, spine or muscle, eye, ear, nose or throat?</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label"><input type="radio" name="question3" value="yes"> Yes</label>
+                                <label class="checkbox-label"><input type="radio" name="question3" value="no"> No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label>4. Do you have any life insurance cover or Have you applied or has any of your applications for a new cover or for reinstatement for life, health, accident, critical illness or any other rider with Kotak Mahindra Life Insurance Company Ltd. or any other insurance company in India or Overseas ever been declined, postponed, withdrawn or accepted with an extra premium or reduced cover or exclusions?</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label"><input type="radio" name="question4" value="yes"> Yes</label>
+                                <label class="checkbox-label"><input type="radio" name="question4" value="no"> No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label>5. Do you engage or intend to engage in any aerial flight other than a fare-paying passenger on a commercial airline, sports, races, business or occupation or any hobby of a hazardous nature such as mining, diving, mountaineering, parachuting, private aviation/racing etc.?</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label"><input type="radio" name="question5" value="yes"> Yes</label>
+                                <label class="checkbox-label"><input type="radio" name="question5" value="no"> No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label>6. Has any member of your immediate family e.g. parents, brothers, sisters suffered from or died of heart disease, stroke, high blood pressure, cancer, kidney failure, diabetes, AIDs, HIV or any other chronic or hereditary/ familial disorders, before the age of 60 years?</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label"><input type="radio" name="question6" value="yes"> Yes</label>
+                                <label class="checkbox-label"><input type="radio" name="question6" value="no"> No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label>7. Do you have any habit of smoking, chewing tobacco, alcohol, narcotics in any form in quantities consumed more than that is mentioned below If "yes", kindly tick below</label>
+                            <div class="checkbox-group" style="margin-left: 20px;">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="habits_cigarette"> i. Cigarette sticks / Cigar sticks / Bidi sticks/ Gutka pouch / Paan - 10 units /day
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="habits_alcohol"> ii. Alcohol: Beer/Hard Liquor/Wine Quantity- 20 units/ week **
+                                </label>
+                                <div class="text-small">**Note: 20 units = 3,900 ml of beer / 1,400 ml of wine / 500 ml of hard liquor</div>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="habits_narcotics"> iii. Any Narcotics consumption
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label>8. Are there any conviction or criminal proceedings against you in any court of law in India or abroad?</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label"><input type="radio" name="question8" value="yes"> Yes</label>
+                                <label class="checkbox-label"><input type="radio" name="question8" value="no"> No</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 1;">
+                            <label>If any of the above questions has been answered as 'Yes', kindly provide all the details and also mention the diagnosis & treatment of the illness / impairment / disability / operation or accident:</label>
+                            <div style="display: flex; flex-direction: column; gap: 8px;">
+                                <textarea name="details1" rows="2" placeholder="1."></textarea>
+                                <textarea name="details2" rows="2" placeholder="2."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">DECLARATION BY THE MEMBER / LIFE INSURED</div>
+            <div class="section-content">
+                <div class="declaration-text">
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I further declare that the above statements (Including any addendum(s) there to all declarations, affidavits and other statements) and or any information sought for by the company from any person authorized by me to provide such information, replied upon by the Company to assess the risk on my life under this declaration) are true and complete in every respect related to my health and will form the basis of granting insurance cover to me, from Kotak Mahindra Life Insurance Company Ltd.[KLI" or "the Company"]. I further hereby agree and give my consent to, KLI for use of the contents of this declaration by KLI for examining and processing any claim arising, in respect of the insurance cover that may be provided to me under the referred group policy.</span>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I hereby confirm that my intent to participate in the above plan for the Policyholder's customers is purely on a voluntary basis, and have further understood the terms and conditions of life insurance cover that maybe extended to me. I confirm and agree that the insurance cover, if provided, will be governed by the provisions of the Insurance Act 1938 and the Policy Contract under which the cover will be offered to me.</span>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I agree and understand that if I contract any of the above diseases between submitting this document and the date of commencement of the cover, I shall not be covered under the policy. I have also not withheld any material information or suppressed any fact. I undertake to notify KLI of any change in my state of health or occupation or any decisions subsequent to the signing of this declaration form and before the acceptance of the risk by the Company.</span>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I/ We also hereby agree, consent and authorize Kotak Mahindra Life Insurance Company Limited ("KLI") to collect and use; any information of the member and/ or Proposer, including but not limited to the personal and/ or sensitive personal data or information including KYC document and medical/health information that is contained in this proposal form, available with KLI and/ or otherwise obtained. I/ We expressly agree, consent and authorize KLI to part/share/ disclose and/ or verify such data and information with any entity including but not limited to statutory/ regulatory/ government bodies, individuals, organizations, entities, reinsurers, auditors, investigation agencies, service providers, industry associations/ federations etc, in any form or manner etc KLI deems appropriate for the subject' life insurance cover and also for providing any other form of service(s) including but not limited to underwriting, issuance of cover, claim investigation/ processing/ payment/ settlement, marketing or promotional communications, value added services, risk management activities, policy servicing etc</span>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I understand and agree that insurance cover shall be as per terms and conditions detailed in the Policy Contract issued by KLI in favour of the policyholder and that KLI's decision in respect of all aspects of the referred group life insurance plan shall be final & binding.</span>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I hereby give my consent to and authorize the Policyholder / my Doctor / Hospital / Local, State, Central authority / Dealer / Distributor / my past or present Employer / any insurance company, which I may have applied to divulge or convey and KLI to seek any information or particulars (including personal details, medical, health [physical or mental], financials or employment details relevant to this Form / my admission into the referred Group Insurance Policy to KLI at any point during proposal underwriting and the continuance of my cover hereunder including any claim under the said Policy. I also permit KLI to approach me directly for any clarification and / or other purposes.</span>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I hereby voluntarily give my consent to collect, process, receive, possess, store, deal, share or handle my personal data including sensitive personal data including medical records, health, financials, personal details or employment details, information pertaining to my proposal/this form, COI( Certificate of Insurance)/ COA( Certificate of Annuity )/ DOGH ( Declaration of Good Health) with/ from third parties/vendors associated with the Company for various purposes and activities exclusively related to, proposal underwriting, issuance/servicing of insurance policy and/or settlement of claim and with any statutory, governmental and/ or regulatory authority</span>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I hereby declare, in case of fraud, misstatement and suppression of material facts the Certificate of Insurance shall be treated in accordance with the Sec 45 of the Insurance Act,1938 as amended from time to time.</span>
+                        </label>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="checkbox-label">
+                            <input type="checkbox" required>
+                            <span>I/ We hereby agree, consent and authorize Kotak Mahindra Life Insurance Company Limited ("KLI") to collect and use; any information of the member and/ or Proposer, including but not limited to the personal and/ or sensitive personal data or information including KYC document and medical/health information that is contained in this proposal form, available with KLI and/ or otherwise obtained. I/ We expressly agree, consent and authorize KLI to part/share/ disclose and/ or verify such data and information with any entity including but not limited to statutory/ regulatory/ government bodies, individuals, organizations, entities, reinsurers, auditors, investigation agencies, service providers, industry associations/ federations etc, in any form or manner etc KLI deems appropriate for the subject' life insurance cover and also for providing any other form of service(s) including but not limited to underwriting, issuance of cover, claim investigation/ processing/ payment/ settlement, marketing or promotional communications, value added services, risk management activities, policy servicing etc</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">AUTHORISATION OF CLAIM PAYMENT <span class="header-note">(applicable only for Entities approved by IRDAI)</span></div>
+            <div class="section-content">
+                <p class="authorization-text">
+                    I authorise KLI to apply the benefits under this policy, first towards the loan outstanding, by paying the same directly to the Policyholder and the balance, if any, may be paid to myself and/or my nominee/legal heirs, as the case may be. I certify that this authorization is being effected in consideration of a loan obtained from the Policyholder. I further certify that the loan outstanding amount as confirmed by the Policyholder shall be considered as final and binding. I declare that the receipt of the benefits by the Policyholder and/or my nominee/ legal heirs shall be a valid and sufficient discharge of KLI's liabilities with respect to the life cover provided to me.
+                </p>
+                <div class="signature-row">
+                    <div class="signature-field">
+                        <label>Place:</label>
+                        <input type="text" name="place">
+                    </div>
+                    <div class="signature-field">
+                        <label>Date:</label>
+                        <input type="date" name="date">
+                    </div>
+                    <div class="signature-field signature-line">
+                        <label>Signature of the Life Insured/Proposer:</label>
+                        <div class="signature-space"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                DECLARATION BY THE PERSON FILLING IN THE FORM
+                <div class="form-type">
+                    <label class="checkbox-label"><input type="checkbox" name="form_type" value="scribe"> Scribe / Vernacular languages</label>
+                    <label class="checkbox-label"><input type="checkbox" name="form_type" value="disability"> Disability</label>
+                </div>
+            </div>
+            <div class="section-content">
+                <p class="note-text"><em>(Applicable only where form is filled in by a scribe or signed in vernacular languages or where the form is filled in by a representative duly authorised by a person with disability)</em></p>
+                
+                <p class="declaration-paragraph">
+                    I, _________________________________ (full name) have explained to the member the contents of this form in his own language and he/she has fully understood the same. Also, I have explained that if any untrue statement is contained herein, the member, and/or the heirs, executors, administrators, assignees of the member shall not be entitled to receive any benefits under the life insurance cover that may be granted to him.
+                </p>
+
+                <div class="signature-section">
+                    <div class="signature-row">
+                        <div class="signature-field">
+                            <label>Place:</label>
+                            <input type="text" name="scribe_place">
+                        </div>
+                        <div class="signature-field">
+                            <label>Date:</label>
+                            <input type="date" name="scribe_date">
+                        </div>
+                        <div class="signature-field signature-line">
+                            <label>Signature of the Scribe:</label>
+                            <div class="signature-space"></div>
+                        </div>
+                    </div>
+                    <div class="signature-row">
+                        <div class="signature-field">
+                            <label>Place:</label>
+                            <input type="text" name="witness_place">
+                        </div>
+                        <div class="signature-field">
+                            <label>Date:</label>
+                            <input type="date" name="witness_date">
+                        </div>
+                        <div class="signature-field signature-line">
+                            <label>Witness / Policyholder Authorized Signatory:</label>
+                            <div class="signature-space"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <div class="insurance-act">
+                <p class="act-title">Section 41 of the Insurance Act, 1938 as amended from time to time states:</p>
+                <p class="act-text">No person shall allow or offer to allow, either directly or indirectly, as an inducement to any person to take or renew or continue an insurance in respect of any kind of risk relating to lives or property in India, any rebate of the whole or part of the commission payable or any rebate of the premium shown on the policy, nor shall any person taking out or renewing or continuing a policy accept any rebate, except such rebate as may be allowed in accordance with the published prospectuses or tables of the insurer.</p>
+            </div>
+
+            <div class="insurance-act">
+                <p class="act-title">Section 45 of the Insurance Act, 1938 as amended from time to time states:</p>
+                <p class="act-text">The provisions of Section 45 of the Insurance Act, 1938 are applicable in the above contract. Please refer to Section 45 on our website or contact our intermediary or visit the nearest branch for the full text. https://kotaklife.com/assets/images/uploads/why_kotak/section38_39_45_of_insurance_act_1938.pdf</p>
+            </div>
+
+            <div class="free-look">
+                <p class="act-text">Free Look Period: The member is offered 30 days (except for policies having a cover term of less than a year) free look period from the date of receipt of the Certificate of Insurance wherein the Member may choose to return the Certificate of Insurance within 30 days (except for policies having a cover term of less than a year) of receipt if s/he is not agreeable with any of the terms and conditions of the plan and receive the applicable refund amount.</p>
+            </div>
+
+            <div class="company-details">
+                <p><strong>Kotak Mahindra Life Insurance Company Ltd.;</strong> CIN: U66030MH2000PLC128503, Regn. No.: 107,</p>
+                <p>Regd.Office: 8th Floor, Plot # C-12, G-Block, BKC, Bandra (E),Mumbai- 400 051.</p>
+                <p>Website:, https://www.kotaklife.com; Email:kli.groupoperations@kotak.com, Toll Free No.–1800 120 7856</p>
+            </div>
+
+            <div class="trademark">
+                <p>Trade Logo displayed above belongs to Kotak Mahindra Bank Limited and is used by Kotak Mahindra Life Insurance Company Ltd. under license.</p>
+                <p class="ref-no">Ref. No.: KLI/24-25/Oct-XX</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
